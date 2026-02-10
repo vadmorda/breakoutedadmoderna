@@ -83,6 +83,13 @@ export function importCode(code){
   if(checksum6(payload) !== sum) throw new Error("Checksum inválido (código corrupto).");
   const json = base64UrlDecode(payload);
   const state = JSON.parse(json);
+      state.completed ??= { seal1:false, seal2:false, seal3:false, seal4:false, final:false };
+  state.puzzles ??= {};
+  state.inventory ??= [];
+  state.flags ??= {};
+  state.attempts ??= {};
+  state.selectedItem ??= null;
+
   if(!state || typeof state !== "object" || state.v !== 1) throw new Error("Estado inválido.");
   return state;
 }
