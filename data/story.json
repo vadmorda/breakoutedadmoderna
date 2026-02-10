@@ -165,6 +165,21 @@
     { "id": "hs_r2_p3", "label": "Prueba 3", "x": 66, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p3" } },
 
     { "id": "hs_exit_r2", "label": "Sello II", "x": 44, "y": 46, "w": 14, "h": 16, "action": { "type": "tryExitR2" } }
+    
   ]
 }
-
+{
+  "id": "r2_success",
+  "title": "Sello II conseguido",
+  "bg": "./assets/img/bg_success.jpg",
+  "text": [
+    "El impresor te entrega un sello y un consejo: «Las ideas viajan más rápido que los barcos.»",
+    "<strong>Has obtenido el SELLO II</strong>.",
+    "<span class='muted'>En el juego completo, este sello abrirá el reto del arte (Renacimiento) o el de ciencia/técnica, según tu ruta.</span>"
+  ],
+  "actions": [
+    { "label": "➡ Volver a la intro", "type": "goto", "target": "intro" },
+    { "label": "➡ Ir a la transición", "type": "goto", "target": "cut_r1_r2" }
+  ],
+  "hotspots": []
+}
