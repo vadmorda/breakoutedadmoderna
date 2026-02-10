@@ -10,7 +10,8 @@
       ],
       "actions": [
         { "label": "▶ Empezar", "type": "goto", "target": "r1_port" },
-        { "label": "↩ Continuar partida", "type": "continue" }
+        { "label": "↩ Continuar partida", "type": "continue" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
       "hotspots": []
     },
@@ -249,10 +250,10 @@
     "El maestro sonríe. «Ahora sí. Ya no miras cuadros: <strong>lees fuentes históricas</strong>.»",
     "<strong>Has obtenido el SELLO III</strong>."
   ],
-  "actions": [
-    { "label": "➡ Volver a la intro", "type": "goto", "target": "intro" },
-    { "label": "➡ Ir a la transición", "type": "goto", "target": "cut_r2_r3" }
-  ],
+ "actions": [
+  { "label": "➡ Continuar (Reto 4)", "type": "goto", "target": "cut_r3_r4" },
+  { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+],
   "hotspots": []
 }
     {
