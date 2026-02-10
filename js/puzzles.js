@@ -43,6 +43,8 @@ if(puzzle.type === "quiz"){
 
   modal.classList.remove("hidden");
 }
+  } else if(puzzle.type === "spot"){
+    renderSpot({ puzzle, body, feedback, onSolve, onFail });
 
 function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   const grid = document.createElement("div");
