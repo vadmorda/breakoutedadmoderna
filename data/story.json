@@ -12,6 +12,8 @@
         { "label": "▶ Empezar", "type": "goto", "target": "r1_port" },
         { "label": "↩ Continuar partida", "type": "continue" },
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
       ],
       "hotspots": []
     },
@@ -27,6 +29,8 @@
       ],
       "actions": [
         { "label": "📜 Hablar con el cartógrafo", "type": "dialog", "text": "«Si quieres mi ayuda, demuéstrame que sabes qué cambia: comercio, ideas y poder…»" }
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
       ],
       "hotspots": [
         {
@@ -37,6 +41,8 @@
           "w": 30,
           "h": 34,
           "action": { "type": "giveItem", "itemId": "mapa_viejo", "toast": "Has conseguido: Mapa viejo" }
+          { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
         },
         {
           "id": "hs_test1",
@@ -46,6 +52,8 @@
           "w": 32,
           "h": 26,
           "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
+          { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
         },
         {
           "id": "hs_test2",
@@ -55,6 +63,8 @@
           "w": 30,
           "h": 26,
           "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
+          { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
         },
         {
           "id": "hs_exit",
@@ -64,6 +74,8 @@
           "w": 18,
           "h": 28,
           "action": { "type": "tryExitR1" }
+          { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
         }
       ]
     },
@@ -79,6 +91,8 @@
       ],
       "actions": [
         { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
       ],
       "hotspots": []
     }
@@ -93,6 +107,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la imprenta", "type": "goto", "target": "r2_printshop" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -109,6 +125,8 @@
   "actions": [
     { "label": "📜 Hablar con el impresor", "type": "dialog", "text": "«Sin razón no hay verdad. Sin imprenta no hay difusión.»" },
     { "label": "↩ Volver al Archivo", "type": "goto", "target": "intro" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": [
     {
@@ -119,6 +137,8 @@
       "w": 26,
       "h": 28,
       "action": { "type": "giveItem", "itemId": "tipos_moviles", "toast": "Has conseguido: Tipos móviles" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_ink",
@@ -128,6 +148,8 @@
       "w": 18,
       "h": 18,
       "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_press",
@@ -143,6 +165,8 @@
         "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
         "failToast": "La prensa te mira como si fueras medieval. Necesitas algo para componer el texto."
       }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_press_ink",
@@ -159,6 +183,8 @@
         "successToast": "Entintas el rodillo y… ¡clac! La prensa imprime un pliego.",
         "failToast": "Sin tipos colocados, la tinta solo sirve para mancharte la historia."
       }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
 
     { "id": "hs_r2_p1", "label": "Prueba 1", "x": 10, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p1" } },
@@ -181,6 +207,8 @@
   "actions": [
     { "label": "➡ Volver a la intro", "type": "goto", "target": "intro" },
     { "label": "➡ Ir a la transición", "type": "goto", "target": "cut_r1_r2" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
   {
@@ -194,6 +222,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la galería", "type": "goto", "target": "r3_gallery" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -208,6 +238,8 @@
   ],
   "actions": [
     { "label": "🎭 Hablar con el maestro", "type": "dialog", "text": "«Perspectiva, proporción, clasicismo… y un mecenas pagando la factura.»" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": [
     {
@@ -218,6 +250,8 @@
       "w": 16,
       "h": 20,
       "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_canvas",
@@ -233,6 +267,8 @@
         "successToast": "Con la lupa descubres líneas de fuga en el boceto. Perspectiva pura.",
         "failToast": "Si tuvieses algo para ver detalles…"
       }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
 
     { "id": "hs_r3_p1", "label": "Prueba 1 (Detalle)", "x": 12, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
@@ -253,6 +289,8 @@
  "actions": [
   { "label": "➡ Continuar (Reto 4)", "type": "goto", "target": "cut_r3_r4" },
   { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+   { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
 ],
   "hotspots": []
 }
@@ -267,6 +305,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la Sala de Mapas", "type": "goto", "target": "r4_maproom" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -281,6 +321,8 @@
   ],
   "actions": [
     { "label": "🧭 Hablar con el navegante", "type": "dialog", "text": "«Portugal bordea África. Castilla se lanza al Atlántico. Y América… ya estaba habitada.»" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": [
     {
@@ -291,6 +333,8 @@
       "w": 16,
       "h": 22,
       "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_bitacora",
@@ -300,6 +344,8 @@
       "w": 18,
       "h": 18,
       "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_globe",
@@ -314,7 +360,9 @@
         "success": { "type": "setFlag", "flag": "r4_map_revealed" },
         "successToast": "Ajustas el astrolabio… y aparecen marcas de ruta en el mapa.",
         "failToast": "Necesitas un instrumento para orientarte (algo del inventario)."
-      }
+      
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+}
     },
 
     { "id": "hs_r4_p1", "label": "Ruta portuguesa", "x": 10, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p1" } },
@@ -337,6 +385,8 @@
   "actions": [
     { "label": "➡ Volver a la intro", "type": "goto", "target": "intro" },
     { "label": "➡ Volver a la sala de mapas", "type": "goto", "target": "r4_maproom" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -351,6 +401,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la Sala de Mapas", "type": "goto", "target": "r4_maproom" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -365,6 +417,8 @@
   ],
   "actions": [
     { "label": "🧭 Hablar con el navegante", "type": "dialog", "text": "«Portugal bordea África. Castilla cruza el Atlántico. Y América ya tenía civilizaciones.»" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": [
     {
@@ -372,12 +426,16 @@
       "label": "Astrolabio",
       "x": 10, "y": 68, "w": 16, "h": 22,
       "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_bitacora",
       "label": "Bitácora",
       "x": 30, "y": 72, "w": 18, "h": 18,
       "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
     {
       "id": "hs_globe",
@@ -390,6 +448,8 @@
         "successToast": "Ajustas el astrolabio… y aparecen marcas de ruta en el mapa.",
         "failToast": "Necesitas un instrumento para orientarte (algo del inventario)."
       }
+      { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
     },
 
     { "id": "hs_r4_p1", "label": "Ruta portuguesa", "x": 10, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p1" } },
@@ -412,6 +472,8 @@
   "actions": [
   { "label": "➡ Ir al reto final", "type": "goto", "target": "cut_r4_final" },
   { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
 ]
 
   "hotspots": []
@@ -426,6 +488,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la Cámara del Archivo", "type": "goto", "target": "final_archive" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -439,6 +503,8 @@
   ],
   "actions": [
     { "label": "➡ Entrar en la Cámara del Archivo", "type": "goto", "target": "final_archive" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
@@ -455,6 +521,8 @@
   "actions": [
     { "label": "🔑 Ver / Copiar código", "type": "openCodeModal" },
     { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+    { "label": "⏭ Seguir misión", "type": "gotoNext" }
+
   ],
   "hotspots": []
 }
