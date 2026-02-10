@@ -410,8 +410,10 @@
     "<span class='muted'>Solo queda el Archivo final: Estado moderno, Reyes Católicos y religión.</span>"
   ],
   "actions": [
-    { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
-  ],
+  { "label": "➡ Ir al reto final", "type": "goto", "target": "cut_r4_final" },
+  { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+]
+
   "hotspots": []
 }
 {
