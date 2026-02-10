@@ -1,0 +1,6 @@
+{
+  "items": [
+    { "id": "mapa_viejo", "name": "Mapa viejo", "desc": "Un mapa con rutas incompletas. Podría ser útil." },
+    { "id": "nota_cartografo", "name": "Nota del cartógrafo", "desc": "Una nota: 'Sin comercio no hay exploración. Sin ideas no hay cambio'." }
+  ]
+}
