@@ -333,6 +333,89 @@
   "reward": { "setFlag": "r4_p4_done" },
   "hints": ["Une continentes.","Piensa en “mundo …”","Es CONECTADO."]
 }
+{
+  "id": "f_p1",
+  "title": "Documento I · El Estado moderno",
+  "type": "match",
+  "prompt": "Relaciona cada elemento con lo que significa en el nacimiento del <strong>Estado moderno</strong>.",
+  "left": [
+    { "id": "l1", "text": "Impuestos" },
+    { "id": "l2", "text": "Ejército permanente" },
+    { "id": "l3", "text": "Burocracia" },
+    { "id": "l4", "text": "Burguesía" }
+  ],
+  "right": [
+    { "id": "r1", "text": "Funcionarios y administración del reino" },
+    { "id": "r2", "text": "Dinero para sostener al Estado" },
+    { "id": "r3", "text": "Fuerza controlada por la monarquía" },
+    { "id": "r4", "text": "Grupo urbano ligado al comercio y dinero" }
+  ],
+  "pairs": { "l1": "r2", "l2": "r3", "l3": "r1", "l4": "r4" },
+  "successText": "✅ Bien. Un Estado fuerte necesita dinero, administración y control militar.",
+  "failText": "❌ Revisa: ¿qué paga el Estado? ¿quién administra? ¿quién manda las armas? ¿quién gana poder en las ciudades?",
+  "reward": { "setFlag": "f_p1_done" },
+  "hints": [
+    "Impuestos = dinero.",
+    "Burocracia = funcionarios.",
+    "Ejército permanente = control militar; Burguesía = ciudades y comercio."
+  ]
+}
+{
+  "id": "f_p2",
+  "title": "Documento II · Reyes Católicos",
+  "type": "order",
+  "prompt": "Ordena estas ideas para explicar cómo consolidan su poder los Reyes Católicos.",
+  "items": [
+    { "id": "a", "text": "Unión dinástica (Castilla y Aragón)" },
+    { "id": "b", "text": "Refuerzo de instituciones y autoridad real" },
+    { "id": "c", "text": "Control del territorio y búsqueda de unidad religiosa" },
+    { "id": "d", "text": "Expansión y proyección exterior (1492 y más allá)" }
+  ],
+  "correctOrder": ["a", "b", "c", "d"],
+  "successText": "✅ Correcto. Unifican, refuerzan el poder y proyectan la monarquía hacia fuera.",
+  "failText": "❌ Revisa: primero se unen, luego refuerzan el poder, después controlan y finalmente se expanden.",
+  "reward": { "setFlag": "f_p2_done" },
+  "hints": [
+    "Primero unión, luego control.",
+    "Las instituciones van antes de la expansión.",
+    "Orden: unión → instituciones → control → expansión."
+  ]
+}
+{
+  "id": "f_p3",
+  "title": "Documento III · Reforma y Contrarreforma",
+  "type": "quiz",
+  "prompt": "¿Qué idea define mejor la <strong>Reforma protestante</strong> en el siglo XVI?",
+  "answers": [
+    { "text": "Fortalecer al Papa como máxima autoridad", "correct": false },
+    { "text": "Criticar abusos y romper la unidad religiosa en Europa", "correct": true },
+    { "text": "Volver al arte clásico de Grecia y Roma", "correct": false },
+    { "text": "Descubrir una nueva ruta hacia la India", "correct": false }
+  ],
+  "successText": "✅ Bien. La Reforma rompe la unidad religiosa y provoca respuestas católicas (Contrarreforma).",
+  "failText": "❌ No. Pista: tiene que ver con críticas religiosas y división en Europa.",
+  "reward": { "setFlag": "f_p3_done" },
+  "hints": [
+    "No es arte ni exploración.",
+    "Se relaciona con críticas a la Iglesia.",
+    "Es la que rompe la unidad religiosa."
+  ]
+}
+{
+  "id": "f_p4",
+  "title": "Cierre del Archivo",
+  "type": "code",
+  "prompt": "La cerradura final exige una palabra clave: <strong>¿qué nace aquí?</strong><br><br>Escribe una palabra (sin tilde) que resuma lo que has demostrado en esta cámara: el nuevo sistema de poder y organización.",
+  "answer": "ESTADOMODERNO",
+  "successText": "✅ Correcto. El Archivo reconoce el nacimiento del Estado moderno.",
+  "failText": "❌ No. Pista: son dos palabras juntas (sin espacio).",
+  "reward": { "setFlag": "f_p4_done" },
+  "hints": [
+    "Es lo que necesita impuestos, burocracia y ejército.",
+    "Son dos palabras: Estado + moderno.",
+    "Escribe ESTADOMODERNO."
+  ]
+}
 
   ]
 }
