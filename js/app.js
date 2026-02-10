@@ -149,6 +149,57 @@ function handleHotspot(hs){
     }
     return;
   }
+  if(act.type === "useItem"){
+    const selected = state.selectedItem;
+
+    // si no hay objeto seleccionado
+    if(!selected){
+      toast("🧠 Te falta algo… selecciona un objeto del inventario.");
+      return;
+    }
+
+    // requiere un objeto concreto
+    if(act.requiresItem && selected !== act.requiresItem){
+      toast(act.failToast || "Eso no sirve aquí…");
+      return;
+    }
+
+    // requiere un flag previo (p.ej. tipos puestos antes de tinta)
+    if(act.requiresFlag && !state.flags[act.requiresFlag]){
+      toast(act.failToast || "Todavía no tiene sentido hacerlo así.");
+      return;
+    }
+
+    // éxito: aplica acción declarada
+    if(act.success){
+      if(act.success.type === "setFlag") setFlag(act.success.flag);
+      if(act.success.type === "giveItem"){
+        giveItem(act.success.itemId);
+        if(act.success.setFlag) setFlag(act.success.setFlag);
+      }
+    }
+
+    // opcional: deseleccionar tras usar
+    state.selectedItem = null;
+
+    saveState(state);
+    toast(act.successToast || "✅ Hecho.");
+    render();
+    return;
+  }
+
+  if(act.type === "tryExitR2"){
+    const ok = state.flags.r2_p1_done && state.flags.r2_p2_done && state.flags.r2_p3_done && state.flags.r2_print_done;
+    if(ok){
+      state.completed.seal2 = true;
+      saveState(state);
+      toast("✅ Sello II desbloqueado.");
+      goTo("r2_success");
+    }else{
+      toast("🔒 Te falta demostrar ideas… y hacer funcionar la imprenta.");
+    }
+    return;
+  }
 
   if(act.type === "giveItem"){
     giveItem(act.itemId);
