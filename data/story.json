@@ -414,5 +414,47 @@
   ],
   "hotspots": []
 }
+{
+  "id": "cut_r4_final",
+  "title": "Transición",
+  "bg": "./assets/img/bg_cutscene_final.jpg",
+  "text": [
+    "Con el <strong>Sello IV</strong>, el Archivo tiembla. Las paredes cambian: ya no hay mapas ni cuadros, sino <strong>decretos</strong>, <strong>escudos</strong> y <strong>cartas religiosas</strong>.",
+    "Una placa reza: <em>«Aquí nace el mundo moderno: el poder se organiza y la fe se rompe.»</em>"
+  ],
+  "actions": [
+    { "label": "➡ Entrar en la Cámara del Archivo", "type": "goto", "target": "final_archive" }
+  ],
+  "hotspots": []
+}
+{
+  "id": "cut_r4_final",
+  "title": "Transición",
+  "bg": "./assets/img/bg_cutscene_final.jpg",
+  "text": [
+    "Con el <strong>Sello IV</strong>, el Archivo tiembla. Las paredes cambian: ya no hay mapas ni cuadros, sino <strong>decretos</strong>, <strong>escudos</strong> y <strong>cartas religiosas</strong>.",
+    "Una placa reza: <em>«Aquí nace el mundo moderno: el poder se organiza y la fe se rompe.»</em>"
+  ],
+  "actions": [
+    { "label": "➡ Entrar en la Cámara del Archivo", "type": "goto", "target": "final_archive" }
+  ],
+  "hotspots": []
+}
+{
+  "id": "game_complete",
+  "title": "Archivo abierto",
+  "bg": "./assets/img/bg_complete.jpg",
+  "text": [
+    "El <strong>Archivo de 1492</strong> se abre.",
+    "Has demostrado comprender el paso a la Edad Moderna: ideas, arte, economía, exploraciones… y el nuevo poder.",
+    "<strong>✅ MISIÓN COMPLETADA</strong>",
+    "<span class='muted'>Puedes copiar tu código de progreso como recuerdo (o para enseñar que lo completaste).</span>"
+  ],
+  "actions": [
+    { "label": "🔑 Ver / Copiar código", "type": "openCodeModal" },
+    { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+  ],
+  "hotspots": []
+}
 
 }
