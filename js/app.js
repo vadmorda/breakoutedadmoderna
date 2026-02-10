@@ -87,6 +87,14 @@ function getHint(puzzle){
 function canExitR1(){
   return state.flags.r1_p1_done && state.flags.r1_p2_done && state.completed.seal1;
 }
+function nextScene(){
+  if(!state.completed.seal1) return "r1_port";
+  if(!state.completed.seal2) return "cut_r1_r2";
+  if(!state.completed.seal3) return "cut_r2_r3";
+  if(!state.completed.seal4) return "cut_r3_r4";
+  if(!state.completed.final) return "cut_r4_final";
+  return "game_complete";
+}
 
 /* --------- Navigation --------- */
 function goTo(sceneId){
@@ -133,8 +141,16 @@ function handleAction(action){
     toast(action.text || "…");
     return;
   }
+
+ 
+
+  
 }
-if(action.type === "gotoNext"){
+ if(action.type === "gotoNext"){
+    goTo(nextScene());
+    return;
+  }
+{
   if(!state.completed.seal1) return goTo("r1_port");
   if(!state.completed.seal2) return goTo("cut_r1_r2");
   if(!state.completed.seal3) return goTo("cut_r2_r3");
@@ -396,6 +412,9 @@ function wireUI(){
     render();
   });
 }
+  document.getElementById("btnNext").addEventListener("click", ()=>{
+    goTo(nextScene());
+  });
 
 function refreshExportBox(){
   const box = document.getElementById("exportBox");
