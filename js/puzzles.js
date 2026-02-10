@@ -401,3 +401,12 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
   body.appendChild(note);
 }
 
+  const btnGiveUp = document.getElementById("btnGiveUp");
+  btnGiveUp.onclick = () => {
+    // solo si el docente activó modo docente (ver FASE 9.6)
+    if(!state.flags?.teacherMode){
+      feedback.textContent = "🔒 Solo disponible con modo docente.";
+      return;
+    }
+    feedback.innerHTML = `<span class="small">✅ Solución: ${puzzle.solution || "No definida."}</span>`;
+  };
