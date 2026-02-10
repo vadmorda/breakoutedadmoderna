@@ -3,13 +3,11 @@ import { canEnter } from "./router.js";
 import { renderScene } from "./render.js";
 import { openPuzzleUI } from "./puzzles.js";
 
-
 let story = null;
 let puzzles = null;
 let items = null;
 
 let state = loadState();
-
 const itemsById = {};
 
 async function loadData(){
@@ -33,8 +31,8 @@ function getPuzzle(id){
 }
 
 function toast(msg){
-  // minimal: reuse scene panel feedback by temporary line
   const el = document.getElementById("sceneText");
+  if(!el) return;
   const node = document.createElement("p");
   node.className = "muted";
   node.textContent = msg;
@@ -42,41 +40,42 @@ function toast(msg){
   setTimeout(()=> node.remove(), 2200);
 }
 
+/* --------- State helpers --------- */
 function ensurePuzzleState(puzzleId){
+  state.puzzles ??= {};
   if(!state.puzzles[puzzleId]){
     state.puzzles[puzzleId] = { status: "locked", score: 0 };
   }
 }
-
 function markPuzzleDone(puzzleId){
   ensurePuzzleState(puzzleId);
   state.puzzles[puzzleId].status = "done";
 }
-
 function giveItem(itemId){
   if(!itemId) return;
+  state.inventory ??= [];
   if(!state.inventory.includes(itemId)){
     state.inventory.push(itemId);
   }
 }
-
 function setFlag(flag){
   if(!flag) return;
+  state.flags ??= {};
   state.flags[flag] = true;
 }
-
 function setSeal(sealKey){
   if(!sealKey) return;
+  state.completed ??= { seal1:false, seal2:false, seal3:false, seal4:false, final:false };
   state.completed[sealKey] = true;
 }
-
 function incAttempt(puzzleId){
+  state.attempts ??= {};
   state.attempts[puzzleId] = (state.attempts[puzzleId] || 0) + 1;
   return state.attempts[puzzleId];
 }
 
 function getHint(puzzle){
-  const n = state.attempts[puzzle.id] || 0;
+  const n = state.attempts?.[puzzle.id] || 0;
   const hints = puzzle.hints || [];
   if(!hints.length) return "No hay pistas en esta prueba.";
   if(n >= 6) return hints[2] || hints[hints.length-1];
@@ -85,23 +84,27 @@ function getHint(puzzle){
   return "Prueba primero un par de intentos…";
 }
 
+/* --------- Progress logic --------- */
 function canExitR1(){
-  return state.flags.r1_p1_done && state.flags.r1_p2_done && state.completed.seal1;
+  return !!(state.flags?.r1_p1_done && state.flags?.r1_p2_done && state.completed?.seal1);
 }
-function nextScene(){
-  if(!state.completed.seal1) return "r1_port";
-  if(!state.completed.seal2) return "cut_r1_r2";
-  if(!state.completed.seal3) return "cut_r2_r3";
-  if(!state.completed.seal4) return "cut_r3_r4";
 
-  if(!state.completed.final) return "cut_r4_final";
+function nextScene(){
+  if(!state.completed?.seal1) return "r1_port";
+  if(!state.completed?.seal2) return "cut_r1_r2";
+  if(!state.completed?.seal3) return "cut_r2_r3";
+  if(!state.completed?.seal4) return "cut_r3_r4";
+  if(!state.completed?.final) return "cut_r4_final";
   return "game_complete";
 }
 
 /* --------- Navigation --------- */
 function goTo(sceneId){
   const sc = getScene(sceneId);
-  if(!sc) return;
+  if(!sc){
+    toast("⚠️ Escena no encontrada: " + sceneId);
+    return;
+  }
 
   if(!canEnter(sc, state)){
     toast("🔒 Aún no puedes entrar ahí.");
@@ -129,117 +132,46 @@ function render(){
   });
 }
 
+/* --------- Actions --------- */
 function handleAction(action){
   if(action.type === "goto"){
     goTo(action.target);
     return;
   }
+
   if(action.type === "continue"){
-    // si hay estado, ya está; solo ir a currentScene
     goTo(state.currentSceneId || "intro");
     return;
   }
+
   if(action.type === "dialog"){
     toast(action.text || "…");
     return;
   }
 
- 
-
-  
-}
- if(action.type === "gotoNext"){
+  if(action.type === "gotoNext"){
     goTo(nextScene());
     return;
   }
-{
-  if(!state.completed.seal1) return goTo("r1_port");
-  if(!state.completed.seal2) return goTo("cut_r1_r2");
-  if(!state.completed.seal3) return goTo("cut_r2_r3");
-   if(!state.completed.seal4) return goTo("cut_r3_r4");
-if(!state.completed.final) return goTo("cut_r4_final");
-return goTo("game_complete");
-}
-if(action.type === "openCodeModal"){
-  refreshExportBox();
-  document.getElementById("modalCode").classList.remove("hidden");
-  return;
+
+  if(action.type === "openCodeModal"){
+    refreshExportBox();
+    document.getElementById("modalCode")?.classList.remove("hidden");
+    return;
+  }
 }
 
+/* --------- Hotspots --------- */
 function handleHotspot(hs){
   const act = hs.action;
   if(!act) return;
 
-  // aventura gráfica: usar objeto seleccionado (si procede)
   if(act.type === "tryExitR1"){
     if(canExitR1()){
       toast("✅ La puerta cede. Entras al archivo.");
       goTo("r1_success");
     }else{
       toast("🔒 La puerta no se abre. Te faltan pruebas.");
-    }
-    return;
-  }
-  if(act.type === "useItem"){
-    const selected = state.selectedItem;
-
-    // si no hay objeto seleccionado
-    if(!selected){
-      toast("🧠 Te falta algo… selecciona un objeto del inventario.");
-      return;
-    }
-
-    // requiere un objeto concreto
-    if(act.requiresItem && selected !== act.requiresItem){
-      toast(act.failToast || "Eso no sirve aquí…");
-      return;
-    }
-
-    // requiere un flag previo (p.ej. tipos puestos antes de tinta)
-    if(act.requiresFlag && !state.flags[act.requiresFlag]){
-      toast(act.failToast || "Todavía no tiene sentido hacerlo así.");
-      return;
-    }
-
-    // éxito: aplica acción declarada
-    if(act.success){
-      if(act.success.type === "setFlag") setFlag(act.success.flag);
-      if(act.success.type === "giveItem"){
-        giveItem(act.success.itemId);
-        if(act.success.setFlag) setFlag(act.success.setFlag);
-      }
-    }
-
-    // opcional: deseleccionar tras usar
-    state.selectedItem = null;
-
-    saveState(state);
-    toast(act.successToast || "✅ Hecho.");
-    render();
-    return;
-  }
-
-  if(act.type === "tryExitR2"){
-    const ok = state.flags.r2_p1_done && state.flags.r2_p2_done && state.flags.r2_p3_done && state.flags.r2_print_done;
-    if(ok){
-      state.completed.seal2 = true;
-      saveState(state);
-      toast("✅ Sello II desbloqueado.");
-      goTo("r2_success");
-    }else{
-      toast("🔒 Te falta demostrar ideas… y hacer funcionar la imprenta.");
-    }
-    return;
-  }
-  if(act.type === "tryExitR3"){
-    const ok = state.flags.r3_p1_done && state.flags.r3_p2_done && state.flags.r3_p3_done && state.flags.r3_found_perspective;
-    if(ok){
-      state.completed.seal3 = true;
-      saveState(state);
-      toast("✅ Sello III desbloqueado.");
-      goTo("r3_success");
-    }else{
-      toast("🔒 Te falta mirar mejor: pruebas y/o el detalle con la lupa.");
     }
     return;
   }
@@ -256,65 +188,122 @@ function handleHotspot(hs){
     openPuzzle(act.puzzleId);
     return;
   }
-}
-  if(act.type === "tryExitR4"){
+
+  if(act.type === "useItem"){
+    const selected = state.selectedItem;
+
+    if(!selected){
+      toast("🧠 Te falta algo… selecciona un objeto del inventario.");
+      return;
+    }
+
+    if(act.requiresItem && selected !== act.requiresItem){
+      toast(act.failToast || "Eso no sirve aquí…");
+      return;
+    }
+
+    if(act.requiresFlag && !state.flags?.[act.requiresFlag]){
+      toast(act.failToast || "Todavía no tiene sentido hacerlo así.");
+      return;
+    }
+
+    if(act.success){
+      if(act.success.type === "setFlag") setFlag(act.success.flag);
+
+      if(act.success.type === "giveItem"){
+        giveItem(act.success.itemId);
+        if(act.success.setFlag) setFlag(act.success.setFlag);
+      }
+    }
+
+    state.selectedItem = null;
+    saveState(state);
+    toast(act.successToast || "✅ Hecho.");
+    render();
+    return;
+  }
+
+  if(act.type === "tryExitR2"){
     const ok =
-      state.flags.r4_map_revealed &&
-      state.flags.r4_p1_done &&
-      state.flags.r4_p2_done &&
-      state.flags.r4_p3_done &&
-      state.flags.r4_p4_done;
+      state.flags?.r2_p1_done &&
+      state.flags?.r2_p2_done &&
+      state.flags?.r2_p3_done &&
+      state.flags?.r2_print_done;
 
     if(ok){
-      state.completed.seal4 = true;
+      setSeal("seal2");
+      saveState(state);
+      toast("✅ Sello II desbloqueado.");
+      goTo("r2_success");
+    }else{
+      toast("🔒 Te falta demostrar ideas… y hacer funcionar la imprenta.");
+    }
+    return;
+  }
+
+  if(act.type === "tryExitR3"){
+    const ok =
+      state.flags?.r3_p1_done &&
+      state.flags?.r3_p2_done &&
+      state.flags?.r3_p3_done &&
+      state.flags?.r3_found_perspective;
+
+    if(ok){
+      setSeal("seal3");
+      saveState(state);
+      toast("✅ Sello III desbloqueado.");
+      goTo("r3_success");
+    }else{
+      toast("🔒 Te falta mirar mejor: pruebas y/o el detalle con la lupa.");
+    }
+    return;
+  }
+
+  if(act.type === "tryExitR4"){
+    const ok =
+      state.flags?.r4_map_revealed &&
+      state.flags?.r4_p1_done &&
+      state.flags?.r4_p2_done &&
+      state.flags?.r4_p3_done &&
+      state.flags?.r4_p4_done;
+
+    if(ok){
+      setSeal("seal4");
       saveState(state);
       toast("✅ Sello IV desbloqueado.");
       goTo("r4_success");
     }else{
-      toast("🔒 Te falta: rutas, América… y revelar el mapa con el astrolabio.");
+      toast("🔒 Te falta: revelar el mapa con el astrolabio y completar las 4 pruebas.");
     }
     return;
   }
-if(act.type === "tryExitR4"){
-  const ok =
-    state.flags.r4_map_revealed &&
-    state.flags.r4_p1_done &&
-    state.flags.r4_p2_done &&
-    state.flags.r4_p3_done &&
-    state.flags.r4_p4_done;
 
-  if(ok){
-    state.completed.seal4 = true;
-    saveState(state);
-    toast("✅ Sello IV desbloqueado.");
-    goTo("r4_success");
-  }else{
-    toast("🔒 Te falta: revelar el mapa con el astrolabio y completar las 4 pruebas.");
-  }
-  return;
-}
-if(act.type === "tryExitFinal"){
-  const ok =
-    state.flags.f_p1_done &&
-    state.flags.f_p2_done &&
-    state.flags.f_p3_done &&
-    state.flags.f_p4_done;
+  if(act.type === "tryExitFinal"){
+    const ok =
+      state.flags?.f_p1_done &&
+      state.flags?.f_p2_done &&
+      state.flags?.f_p3_done &&
+      state.flags?.f_p4_done;
 
-  if(ok){
-    state.completed.final = true;
-    saveState(state);
-    toast("🔓 El Archivo se abre…");
-    goTo("game_complete");
-  }else{
-    toast("🔒 Aún no. Te faltan documentos por resolver.");
+    if(ok){
+      setSeal("final");
+      saveState(state);
+      toast("🔓 El Archivo se abre…");
+      goTo("game_complete");
+    }else{
+      toast("🔒 Aún no. Te faltan documentos por resolver.");
+    }
+    return;
   }
-  return;
 }
 
-/* --------- Puzzle handling --------- */
+/* --------- Puzzles --------- */
 function openPuzzle(puzzleId){
   const pz = getPuzzle(puzzleId);
-  if(!pz) return;
+  if(!pz){
+    toast("⚠️ Puzzle no encontrado: " + puzzleId);
+    return;
+  }
 
   ensurePuzzleState(pz.id);
   state.puzzles[pz.id].status = "in_progress";
@@ -327,12 +316,12 @@ function openPuzzle(puzzleId){
       applyReward(puzzle.reward);
       markPuzzleDone(puzzle.id);
       saveState(state);
-      // auto-check: if seal got, keep
       render();
     },
     onFail: (puzzle)=>{
       incAttempt(puzzle.id);
       saveState(state);
+      render();
     },
     onHint: (puzzle)=>{
       const hint = getHint(puzzle);
@@ -347,31 +336,31 @@ function applyReward(reward){
   if(reward.giveItem) giveItem(reward.giveItem);
   if(reward.setSeal) setSeal(reward.setSeal);
 
-  // si ya están ambas flags, asegura sello (por si ajustas luego)
-  if(state.flags.r1_p1_done && state.flags.r1_p2_done){
-    state.completed.seal1 = true;
+  // auto-sello 1: si están las 2 flags
+  if(state.flags?.r1_p1_done && state.flags?.r1_p2_done){
+    setSeal("seal1");
   }
 }
 
 /* --------- Modal wiring --------- */
 function wireUI(){
-  // puzzle modal close
-  document.getElementById("puzzleClose").addEventListener("click", ()=>{
-    document.getElementById("modalPuzzle").classList.add("hidden");
+  // cerrar puzzle modal
+  document.getElementById("puzzleClose")?.addEventListener("click", ()=>{
+    document.getElementById("modalPuzzle")?.classList.add("hidden");
   });
 
   // Code modal open/close
   const modalCode = document.getElementById("modalCode");
-  document.getElementById("btnExport").addEventListener("click", ()=>{
+  document.getElementById("btnExport")?.addEventListener("click", ()=>{
     refreshExportBox();
-    modalCode.classList.remove("hidden");
+    modalCode?.classList.remove("hidden");
   });
-  document.getElementById("codeClose").addEventListener("click", ()=>{
-    modalCode.classList.add("hidden");
+  document.getElementById("codeClose")?.addEventListener("click", ()=>{
+    modalCode?.classList.add("hidden");
   });
 
-  document.getElementById("btnCopyCode").addEventListener("click", async ()=>{
-    const txt = document.getElementById("exportBox").value;
+  document.getElementById("btnCopyCode")?.addEventListener("click", async ()=>{
+    const txt = document.getElementById("exportBox")?.value || "";
     try{
       await navigator.clipboard.writeText(txt);
       setCodeMsg("✅ Copiado.");
@@ -380,17 +369,17 @@ function wireUI(){
     }
   });
 
-  document.getElementById("btnRefreshCode").addEventListener("click", ()=>{
+  document.getElementById("btnRefreshCode")?.addEventListener("click", ()=>{
     refreshExportBox();
     setCodeMsg("Código actualizado.");
   });
 
-   document.getElementById("btnImportCode").addEventListener("click", ()=>{
-    const code = document.getElementById("importBox").value.trim();
+  // Import / Teacher mode
+  document.getElementById("btnImportCode")?.addEventListener("click", ()=>{
+    const code = (document.getElementById("importBox")?.value || "").trim();
 
-    // Código maestro docente
     if(code.toUpperCase() === "TEACHER1492"){
-      state.flags.teacherMode = true;
+      setFlag("teacherMode");
       saveState(state);
       setCodeMsg("✅ Modo docente activado en este dispositivo.");
       render();
@@ -408,35 +397,35 @@ function wireUI(){
     }
   });
 
-  // modo docente (local): escribe TEACHER1492 en el importBox y pulsa Restaurar
-  // (no importa progreso, solo activa ayuda)
-
   // Save button
-  document.getElementById("btnSave").addEventListener("click", ()=>{
+  document.getElementById("btnSave")?.addEventListener("click", ()=>{
     saveState(state);
     toast("💾 Guardado.");
     refreshExportBox();
   });
 
   // Reset
-  document.getElementById("btnReset").addEventListener("click", ()=>{
+  document.getElementById("btnReset")?.addEventListener("click", ()=>{
     if(!confirm("¿Reiniciar progreso? Esto borra el guardado local.")) return;
     hardReset();
     state = defaultState();
     saveState(state);
     render();
   });
-}
-  document.getElementById("btnNext").addEventListener("click", ()=>{
+
+  // HUD Next button
+  document.getElementById("btnNext")?.addEventListener("click", ()=>{
     goTo(nextScene());
   });
+}
 
 function refreshExportBox(){
   const box = document.getElementById("exportBox");
-  box.value = exportCode(state);
+  if(box) box.value = exportCode(state);
 }
 function setCodeMsg(msg){
-  document.getElementById("codeMsg").textContent = msg;
+  const el = document.getElementById("codeMsg");
+  if(el) el.textContent = msg;
 }
 
 /* --------- Boot --------- */
@@ -444,7 +433,7 @@ function setCodeMsg(msg){
   await loadData();
   wireUI();
 
-  // si el scene guardado no existe, vuelve a intro
+  // si la escena guardada no existe, vuelve a intro
   const sc = getScene(state.currentSceneId);
   if(!sc) state.currentSceneId = "intro";
 
