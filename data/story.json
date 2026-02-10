@@ -95,5 +95,76 @@
   ],
   "hotspots": []
 }
+
+{
+  "id": "r2_printshop",
+  "title": "Reto 2 · La Imprenta y las Ideas",
+  "bg": "./assets/img/bg_printshop.jpg",
+  "text": [
+    "Estás en una imprenta. Hay letras de metal, tinta y papeles apilados.",
+    "El maestro impresor no levanta la vista: «Si quieres pasar, <strong>demuestra que entiendes el Humanismo</strong>… y <strong>haz funcionar la prensa</strong>.»",
+    "<span class='muted'>Tip aventura gráfica: consigue objetos y pruébalos en la prensa.</span>"
+  ],
+  "actions": [
+    { "label": "📜 Hablar con el impresor", "type": "dialog", "text": "«Sin razón no hay verdad. Sin imprenta no hay difusión.»" },
+    { "label": "↩ Volver al Archivo", "type": "goto", "target": "intro" }
+  ],
+  "hotspots": [
+    {
+      "id": "hs_types",
+      "label": "Caja de letras",
+      "x": 8,
+      "y": 62,
+      "w": 26,
+      "h": 28,
+      "action": { "type": "giveItem", "itemId": "tipos_moviles", "toast": "Has conseguido: Tipos móviles" }
+    },
+    {
+      "id": "hs_ink",
+      "label": "Tintero",
+      "x": 36,
+      "y": 70,
+      "w": 18,
+      "h": 18,
+      "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
+    },
+    {
+      "id": "hs_press",
+      "label": "Prensa",
+      "x": 58,
+      "y": 40,
+      "w": 34,
+      "h": 50,
+      "action": {
+        "type": "useItem",
+        "requiresItem": "tipos_moviles",
+        "success": { "type": "setFlag", "flag": "r2_press_types" },
+        "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
+        "failToast": "La prensa te mira como si fueras medieval. Necesitas algo para componer el texto."
+      }
+    },
+    {
+      "id": "hs_press_ink",
+      "label": "Rodillo",
+      "x": 62,
+      "y": 72,
+      "w": 28,
+      "h": 18,
+      "action": {
+        "type": "useItem",
+        "requiresItem": "tinta",
+        "requiresFlag": "r2_press_types",
+        "success": { "type": "giveItem", "itemId": "pliego_impreso", "setFlag": "r2_print_done" },
+        "successToast": "Entintas el rodillo y… ¡clac! La prensa imprime un pliego.",
+        "failToast": "Sin tipos colocados, la tinta solo sirve para mancharte la historia."
+      }
+    },
+
+    { "id": "hs_r2_p1", "label": "Prueba 1", "x": 10, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p1" } },
+    { "id": "hs_r2_p2", "label": "Prueba 2", "x": 38, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p2" } },
+    { "id": "hs_r2_p3", "label": "Prueba 3", "x": 66, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p3" } },
+
+    { "id": "hs_exit_r2", "label": "Sello II", "x": 44, "y": 46, "w": 14, "h": 16, "action": { "type": "tryExitR2" } }
   ]
 }
+
