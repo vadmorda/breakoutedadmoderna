@@ -226,6 +226,24 @@ function handleHotspot(hs){
     return;
   }
 }
+  if(act.type === "tryExitR4"){
+    const ok =
+      state.flags.r4_map_revealed &&
+      state.flags.r4_p1_done &&
+      state.flags.r4_p2_done &&
+      state.flags.r4_p3_done &&
+      state.flags.r4_p4_done;
+
+    if(ok){
+      state.completed.seal4 = true;
+      saveState(state);
+      toast("✅ Sello IV desbloqueado.");
+      goTo("r4_success");
+    }else{
+      toast("🔒 Te falta: rutas, América… y revelar el mapa con el astrolabio.");
+    }
+    return;
+  }
 
 /* --------- Puzzle handling --------- */
 function openPuzzle(puzzleId){
