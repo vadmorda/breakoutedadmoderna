@@ -24,15 +24,10 @@
     </header>
 
     <!-- Scene -->
-    <main id="scene" class="scene">
-      <div id="sceneBg" class="scene-bg"></div>
+   <!-- Scene -->
+<main id="scene" class="scene">
+  <div id="sceneBg" class="scene-bg"></div>
 
-      <section class="scene-panel">
-        <div id="sceneText" class="scene-text"></div>
-        <div id="sceneActions" class="scene-actions"></div>
-      </section>
-
-      <div id="hotspots" class="hotspots"></div>
   <aside id="hud" class="hud" aria-label="Progreso">
     <h3>Progreso</h3>
     <div class="seals">
@@ -49,6 +44,16 @@
       <button id="btnNext" class="btn">⏭ Seguir misión</button>
     </div>
   </aside>
+
+  <section class="scene-panel">
+    <div id="sceneText" class="scene-text"></div>
+    <div id="sceneActions" class="scene-actions"></div>
+  </section>
+
+  <div id="hotspots" class="hotspots"></div>
+</main>
+
+  
 
     </main>
 
