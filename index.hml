@@ -33,6 +33,23 @@
       </section>
 
       <div id="hotspots" class="hotspots"></div>
+  <aside id="hud" class="hud" aria-label="Progreso">
+    <h3>Progreso</h3>
+    <div class="seals">
+      <div id="seal1" class="seal">S1</div>
+      <div id="seal2" class="seal">S2</div>
+      <div id="seal3" class="seal">S3</div>
+      <div id="seal4" class="seal">S4</div>
+      <div id="sealF" class="seal">FIN</div>
+    </div>
+    <div class="row">
+      <span id="hudMsg" class="badge">Explora y resuelve pruebas.</span>
+    </div>
+    <div class="row">
+      <button id="btnNext" class="btn">⏭ Seguir misión</button>
+    </div>
+  </aside>
+
     </main>
 
     <!-- Inventory -->
