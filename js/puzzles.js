@@ -22,10 +22,21 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
     modal.classList.add("hidden");
   }
 
-  if(puzzle.type === "quiz"){
+if(puzzle.type === "quiz"){
     renderQuiz({ puzzle, body, feedback, onSolve, onFail });
+
   } else if(puzzle.type === "drag-sort"){
     renderDragSort({ puzzle, body, feedback, onSolve, onFail });
+
+  } else if(puzzle.type === "match"){
+    renderMatch({ puzzle, body, feedback, onSolve, onFail });
+
+  } else if(puzzle.type === "order"){
+    renderOrder({ puzzle, body, feedback, onSolve, onFail });
+
+  } else if(puzzle.type === "code"){
+    renderCode({ puzzle, body, feedback, onSolve, onFail });
+
   } else {
     body.innerHTML += `<p class="small">Tipo no implementado aún: ${puzzle.type}</p>`;
   }
