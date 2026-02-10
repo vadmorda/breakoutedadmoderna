@@ -81,5 +81,19 @@
       ],
       "hotspots": []
     }
+    {
+  "id": "cut_r1_r2",
+  "title": "Transición",
+  "bg": "./assets/img/bg_cutscene.jpg",
+  "text": [
+    "Con el <strong>Sello I</strong> en tu cuaderno, la puerta del Archivo cruje como si llevara siglos esperando…",
+    "Al otro lado, oyes golpes metálicos y un sonido rítmico: <em>clac… clac…</em>",
+    "Un aprendiz te susurra: <strong>«Aquí no se comercia con especias… se comercia con ideas.»</strong>"
+  ],
+  "actions": [
+    { "label": "➡ Entrar en la imprenta", "type": "goto", "target": "r2_printshop" }
+  ],
+  "hotspots": []
+}
   ]
 }
