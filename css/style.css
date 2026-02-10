@@ -352,3 +352,17 @@ body{
 body.modal-open .hotspots{
   pointer-events:none;
 }
+/* En dispositivos táctiles no hay hover: mostramos hotspots y etiquetas siempre */
+@media (hover: none), (pointer: coarse){
+  .hotspot{
+    outline: 2px dashed rgba(79,209,197,.55);
+    outline-offset: 2px;
+    background: rgba(79,209,197,.06);
+    border-radius: 14px;
+  }
+
+  .hotspot .tag{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
