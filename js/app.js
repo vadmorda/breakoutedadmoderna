@@ -134,6 +134,13 @@ function handleAction(action){
     return;
   }
 }
+if(action.type === "gotoNext"){
+  if(!state.completed.seal1) return goTo("r1_port");
+  if(!state.completed.seal2) return goTo("cut_r1_r2");
+  if(!state.completed.seal3) return goTo("cut_r2_r3");
+  if(!state.completed.seal4) return goTo("cut_r3_r4");
+  return toast("✅ Ya tienes los 4 sellos. Falta el reto final.");
+}
 
 function handleHotspot(hs){
   const act = hs.action;
