@@ -244,6 +244,24 @@ function handleHotspot(hs){
     }
     return;
   }
+if(act.type === "tryExitR4"){
+  const ok =
+    state.flags.r4_map_revealed &&
+    state.flags.r4_p1_done &&
+    state.flags.r4_p2_done &&
+    state.flags.r4_p3_done &&
+    state.flags.r4_p4_done;
+
+  if(ok){
+    state.completed.seal4 = true;
+    saveState(state);
+    toast("✅ Sello IV desbloqueado.");
+    goTo("r4_success");
+  }else{
+    toast("🔒 Te falta: revelar el mapa con el astrolabio y completar las 4 pruebas.");
+  }
+  return;
+}
 
 /* --------- Puzzle handling --------- */
 function openPuzzle(puzzleId){
