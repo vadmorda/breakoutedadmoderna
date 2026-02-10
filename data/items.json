@@ -8,6 +8,7 @@
     { "id": "tinta", "name": "Tinta", "desc": "Oscura y espesa. Ideal para imprimir ideas peligrosas." },
     { "id": "lupa", "name": "Lupa", "desc": "Sirve para ver detalles que el ojo ignora (y a veces lo importante está ahí)." },
 { "id": "boceto_perspectiva", "name": "Boceto con perspectiva", "desc": "Un dibujo con líneas de fuga. Puro Renacimiento." }
-
+{ "id": "astrolabio", "name": "Astrolabio", "desc": "Para orientarte con el cielo cuando el mapa no basta." },
+{ "id": "bitacora", "name": "Bitácora", "desc": "Un cuaderno de navegación con anotaciones y una clave a medias." }
   ]
 }
