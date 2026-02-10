@@ -12,6 +12,10 @@ export function canEnter(scene, state){
   }
   return true;
 }
+if(scene.id === "cut_r4_final" || scene.id === "final_archive" || scene.id === "game_complete"){
+  return !!state.completed.seal4;
+}
+
 export function canEnter(scene, state){
   // reglas mínimas: puedes ajustar luego
   if(scene.id === "r1_port" || scene.id === "r1_success") return true;
