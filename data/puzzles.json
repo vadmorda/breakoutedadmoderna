@@ -52,5 +52,72 @@
       "successText": "✅ Perfecto. Ya distingues causas de exploración y cambios culturales.",
       "failText": "❌ Algunas tarjetas están mal. Revisa: ¿es viaje/tecnología o ideas/arte?"
     }
+    {
+  "puzzles": [
+    {
+      "id": "r2_p1",
+      "title": "Humanismo: empareja ideas",
+      "type": "match",
+      "prompt": "Relaciona cada idea con su significado en el Humanismo.",
+      "left": [
+        { "id": "l1", "text": "Antropocentrismo" },
+        { "id": "l2", "text": "Razón" },
+        { "id": "l3", "text": "Vuelta a los clásicos" },
+        { "id": "l4", "text": "Imprenta" }
+      ],
+      "right": [
+        { "id": "r1", "text": "El ser humano en el centro" },
+        { "id": "r2", "text": "Pensar y comprobar antes de creer" },
+        { "id": "r3", "text": "Inspiración en Grecia y Roma" },
+        { "id": "r4", "text": "Difusión rápida de ideas" }
+      ],
+      "pairs": { "l1": "r1", "l2": "r2", "l3": "r3", "l4": "r4" },
+      "successText": "✅ Bien. Si cambias cómo piensas y cómo difundes, cambias el mundo.",
+      "failText": "❌ Revisa: ¿qué idea encaja mejor con cada efecto?",
+      "reward": { "setFlag": "r2_p1_done" },
+      "hints": [
+        "Piensa qué palabra habla del ser humano como medida.",
+        "La imprenta no cambia ideas… cambia su velocidad.",
+        "Antropocentrismo → humano al centro; Razón → comprobar; Clásicos → Grecia/Roma; Imprenta → difundir."
+      ]
+    },
+    {
+      "id": "r2_p2",
+      "title": "Imprenta: ordena el proceso",
+      "type": "order",
+      "prompt": "Ordena los pasos básicos para que una idea se convierta en un libro impreso.",
+      "items": [
+        { "id": "a", "text": "Componer el texto con tipos móviles" },
+        { "id": "b", "text": "Entintar la composición" },
+        { "id": "c", "text": "Prensar el papel" },
+        { "id": "d", "text": "Secar y distribuir copias" }
+      ],
+      "correctOrder": ["a", "b", "c", "d"],
+      "successText": "✅ Exacto. Así se multiplican los libros… y los problemas para quien manda.",
+      "failText": "❌ No del todo. Piensa: primero letras, luego tinta, luego presión, luego difusión.",
+      "reward": { "setFlag": "r2_p2_done" },
+      "hints": [
+        "Los tipos van antes que la tinta.",
+        "La prensa actúa después de entintar.",
+        "Orden: componer → entintar → prensar → secar/distribuir."
+      ]
+    },
+    {
+      "id": "r2_p3",
+      "title": "Clave humanista",
+      "type": "code",
+      "prompt": "En el pliego impreso aparece una palabra subrayada: <strong>_____</strong>.<br><br>Es la base del Humanismo (y también del método científico). Escríbela para abrir el último cierre del sello.",
+      "answer": "RAZON",
+      "successText": "✅ Correcto. La razón abre la puerta.",
+      "failText": "❌ No. Pista: empieza por R y no es “riqueza”.",
+      "reward": { "setFlag": "r2_p3_done" },
+      "hints": [
+        "No es fe ciega: es pensar y comprobar.",
+        "Se asocia a observar, medir y experimentar.",
+        "La palabra es RAZÓN (sin tilde en el código)."
+      ]
+    }
+  ]
+}
   ]
 }
