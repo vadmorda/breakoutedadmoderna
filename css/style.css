@@ -258,7 +258,11 @@ body{
   padding:12px;
   box-shadow:var(--shadow);
   backdrop-filter: blur(6px);
+  z-index:20;
 }
+.scene-panel{z-index:15;}
+.hotspots{z-index:10;}
+
 .hud h3{margin:0 0 10px; font-size:14px}
 .seals{display:grid; grid-template-columns:repeat(5, 1fr); gap:8px}
 .seal{
@@ -285,7 +289,8 @@ body{
   color:var(--muted);
   font-size:12px;
 }
-/* Spot puzzle zones (para no heredar estilo de hotspots de escena) */
+
+/* Spot puzzle zones */
 .spot-zone{
   position:absolute;
   border:2px solid rgba(255,255,255,.18);
