@@ -344,3 +344,58 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail }){
 }
 
 }
+function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
+  const wrap = document.createElement("div");
+  wrap.className = "dropzone";
+
+  const imgWrap = document.createElement("div");
+  imgWrap.style.position = "relative";
+  imgWrap.style.maxWidth = "100%";
+  imgWrap.style.borderRadius = "16px";
+  imgWrap.style.overflow = "hidden";
+  imgWrap.style.border = "1px solid #243041";
+
+  const img = document.createElement("img");
+  img.src = puzzle.image;
+  img.alt = "Imagen de la prueba";
+  img.style.width = "100%";
+  img.style.display = "block";
+
+  imgWrap.appendChild(img);
+
+  // overlays
+  (puzzle.zones || []).forEach(z=>{
+    const zone = document.createElement("button");
+    zone.type = "button";
+    zone.className = "hotspot";
+    zone.style.left = z.x + "%";
+    zone.style.top = z.y + "%";
+    zone.style.width = z.w + "%";
+    zone.style.height = z.h + "%";
+    zone.style.borderStyle = "solid";
+    zone.style.borderColor = "rgba(255,255,255,.18)";
+    zone.style.background = "rgba(255,255,255,.04)";
+    zone.title = z.label || "Zona";
+
+    zone.addEventListener("click", ()=>{
+      if(z.id === puzzle.correctZoneId){
+        feedback.innerHTML = puzzle.successText || "✅ Correcto.";
+        onSolve(puzzle);
+      }else{
+        feedback.innerHTML = puzzle.failText || "❌ No.";
+        onFail(puzzle);
+      }
+    });
+
+    imgWrap.appendChild(zone);
+  });
+
+  wrap.appendChild(imgWrap);
+  body.appendChild(wrap);
+
+  const note = document.createElement("p");
+  note.className = "small";
+  note.textContent = "Consejo: no busques el objeto bonito; busca las líneas que construyen profundidad.";
+  body.appendChild(note);
+}
+
