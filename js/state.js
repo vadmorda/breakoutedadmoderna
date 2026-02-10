@@ -19,8 +19,16 @@ export function defaultState(){
 export function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
+    
     if(!raw) return defaultState();
     const parsed = JSON.parse(raw);
+    // rellena campos mínimos por si viene de una versión anterior
+    parsed.completed ??= { seal1:false, seal2:false, seal3:false, seal4:false, final:false };
+    parsed.puzzles ??= {};
+    parsed.inventory ??= [];
+    parsed.flags ??= {};
+    parsed.attempts ??= {};
+    parsed.selectedItem ??= null;
     // very light migration safety
     if(!parsed || typeof parsed !== "object" || parsed.v !== 1) return defaultState();
     return parsed;
