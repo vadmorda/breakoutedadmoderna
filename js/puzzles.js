@@ -356,6 +356,7 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
   (puzzle.zones || []).forEach(z=>{
     const zone = document.createElement("button");
     zone.type = "button";
+    
     zone.className = "spot-zone"; // <- importante (CSS nuevo)
     zone.style.left = z.x + "%";
     zone.style.top = z.y + "%";
@@ -375,6 +376,9 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
 
     imgWrap.appendChild(zone);
   });
+
+
+  
 
   wrap.appendChild(imgWrap);
   body.appendChild(wrap);
