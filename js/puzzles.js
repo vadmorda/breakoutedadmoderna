@@ -8,6 +8,8 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
 
   title.textContent = puzzle.title || "Prueba";
   feedback.textContent = " ";
+  const tries = (state.attempts && state.attempts[puzzle.id]) ? state.attempts[puzzle.id] : 0;
+  feedback.textContent = tries ? `Intentos: ${tries}` : " ";
 
   body.innerHTML = "";
   const p = document.createElement("div");
