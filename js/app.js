@@ -138,8 +138,14 @@ if(action.type === "gotoNext"){
   if(!state.completed.seal1) return goTo("r1_port");
   if(!state.completed.seal2) return goTo("cut_r1_r2");
   if(!state.completed.seal3) return goTo("cut_r2_r3");
-  if(!state.completed.seal4) return goTo("cut_r3_r4");
-  return toast("✅ Ya tienes los 4 sellos. Falta el reto final.");
+   if(!state.completed.seal4) return goTo("cut_r3_r4");
+if(!state.completed.final) return goTo("cut_r4_final");
+return goTo("game_complete");
+}
+if(action.type === "openCodeModal"){
+  refreshExportBox();
+  document.getElementById("modalCode").classList.remove("hidden");
+  return;
 }
 
 function handleHotspot(hs){
@@ -266,6 +272,23 @@ if(act.type === "tryExitR4"){
     goTo("r4_success");
   }else{
     toast("🔒 Te falta: revelar el mapa con el astrolabio y completar las 4 pruebas.");
+  }
+  return;
+}
+if(act.type === "tryExitFinal"){
+  const ok =
+    state.flags.f_p1_done &&
+    state.flags.f_p2_done &&
+    state.flags.f_p3_done &&
+    state.flags.f_p4_done;
+
+  if(ok){
+    state.completed.final = true;
+    saveState(state);
+    toast("🔓 El Archivo se abre…");
+    goTo("game_complete");
+  }else{
+    toast("🔒 Aún no. Te faltan documentos por resolver.");
   }
   return;
 }
