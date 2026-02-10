@@ -73,6 +73,8 @@
       <div class="modal-foot">
         <div id="puzzleFeedback" class="feedback"></div>
         <button id="btnHint" class="btn ghost">💡 Pista</button>
+<button id="btnGiveUp" class="btn danger">🆘 Me rindo</button>
+
       </div>
     </div>
   </div>
