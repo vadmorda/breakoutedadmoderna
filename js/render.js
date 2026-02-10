@@ -61,4 +61,29 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
   }else{
     invHint.textContent = "Haz clic en un objeto para “seleccionarlo”.";
   }
+    // HUD seals
+  const setOn = (id, on) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.toggle("on", !!on);
+  };
+
+  setOn("seal1", state.completed?.seal1);
+  setOn("seal2", state.completed?.seal2);
+  setOn("seal3", state.completed?.seal3);
+  setOn("seal4", state.completed?.seal4);
+  setOn("sealF", state.completed?.final);
+
+  const hudMsg = document.getElementById("hudMsg");
+  if(hudMsg){
+    const next =
+      !state.completed?.seal1 ? "Objetivo: conseguir Sello I" :
+      !state.completed?.seal2 ? "Objetivo: conseguir Sello II" :
+      !state.completed?.seal3 ? "Objetivo: conseguir Sello III" :
+      !state.completed?.seal4 ? "Objetivo: conseguir Sello IV" :
+      !state.completed?.final ? "Objetivo: abrir el Archivo final" :
+      "✅ Misión completada";
+    hudMsg.textContent = next;
+  }
+
 }
