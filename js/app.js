@@ -3,6 +3,7 @@ import { canEnter } from "./router.js";
 import { renderScene } from "./render.js";
 import { openPuzzleUI } from "./puzzles.js";
 
+
 let story = null;
 let puzzles = null;
 let items = null;
@@ -384,8 +385,18 @@ function wireUI(){
     setCodeMsg("Código actualizado.");
   });
 
-  document.getElementById("btnImportCode").addEventListener("click", ()=>{
-    const code = document.getElementById("importBox").value;
+   document.getElementById("btnImportCode").addEventListener("click", ()=>{
+    const code = document.getElementById("importBox").value.trim();
+
+    // Código maestro docente
+    if(code.toUpperCase() === "TEACHER1492"){
+      state.flags.teacherMode = true;
+      saveState(state);
+      setCodeMsg("✅ Modo docente activado en este dispositivo.");
+      render();
+      return;
+    }
+
     try{
       const newState = importCode(code);
       state = newState;
@@ -396,6 +407,9 @@ function wireUI(){
       setCodeMsg("❌ " + (e?.message || "Error al restaurar."));
     }
   });
+
+  // modo docente (local): escribe TEACHER1492 en el importBox y pulsa Restaurar
+  // (no importa progreso, solo activa ayuda)
 
   // Save button
   document.getElementById("btnSave").addEventListener("click", ()=>{
