@@ -131,3 +131,5 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
     }
   });
 }
+
+}
