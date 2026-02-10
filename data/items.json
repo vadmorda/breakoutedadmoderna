@@ -6,5 +6,8 @@
 
     { "id": "tipos_moviles", "name": "Tipos móviles", "desc": "Pequeñas letras de metal. Sirven para componer textos." },
     { "id": "tinta", "name": "Tinta", "desc": "Oscura y espesa. Ideal para imprimir ideas peligrosas." },
+    { "id": "lupa", "name": "Lupa", "desc": "Sirve para ver detalles que el ojo ignora (y a veces lo importante está ahí)." },
+{ "id": "boceto_perspectiva", "name": "Boceto con perspectiva", "desc": "Un dibujo con líneas de fuga. Puro Renacimiento." }
+
   ]
 }
