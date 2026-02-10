@@ -86,7 +86,7 @@ function getHint(puzzle){
 
 /* --------- Progress logic --------- */
 function canExitR1(){
-  return !!(state.flags?.r1_p1_done && state.flags?.r1_p2_done && state.completed?.seal1);
+  return !!(state.flags?.r1_p1_done && state.flags?.r1_p2_done);
 }
 
 function nextScene(){
@@ -170,6 +170,7 @@ function handleHotspot(hs){
     if(canExitR1()){
       toast("✅ La puerta cede. Entras al archivo.");
       goTo("r1_success");
+     setSeal("seal1");
     }else{
       toast("🔒 La puerta no se abre. Te faltan pruebas.");
     }
