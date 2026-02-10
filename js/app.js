@@ -92,6 +92,7 @@ function nextScene(){
   if(!state.completed.seal2) return "cut_r1_r2";
   if(!state.completed.seal3) return "cut_r2_r3";
   if(!state.completed.seal4) return "cut_r3_r4";
+
   if(!state.completed.final) return "cut_r4_final";
   return "game_complete";
 }
