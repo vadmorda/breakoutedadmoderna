@@ -1,0 +1,56 @@
+{
+  "puzzles": [
+    {
+      "id": "r1_p1",
+      "type": "quiz",
+      "title": "Prueba 1 · ¿Qué cambia hacia la Edad Moderna?",
+      "prompt": "Elige la opción que mejor explica el paso hacia la Edad Moderna (siglos XV–XVI):",
+      "answers": [
+        { "text": "Europa se vuelve completamente rural y desaparece el comercio.", "correct": false },
+        { "text": "Crecen comercio y ciudades, se difunden nuevas ideas (Humanismo) y se impulsa la exploración.", "correct": true },
+        { "text": "Se prohíbe la imprenta y se evita estudiar los clásicos.", "correct": false }
+      ],
+      "hints": [
+        "Piensa en: comercio + ciudades + nuevas ideas.",
+        "Añade: imprenta + Humanismo + Renacimiento + exploraciones.",
+        "La correcta es la que conecta economía, cultura y expansión."
+      ],
+      "reward": {
+        "setFlag": "r1_p1_done",
+        "giveItem": "nota_cartografo"
+      },
+      "successText": "✅ Correcto. El cambio es económico, cultural y técnico (y empuja las exploraciones).",
+      "failText": "❌ No. Vuelve a pensar en comercio, Humanismo, Renacimiento y exploraciones."
+    },
+
+    {
+      "id": "r1_p2",
+      "type": "drag-sort",
+      "title": "Prueba 2 · Separa causas",
+      "prompt": "Arrastra cada tarjeta a su columna: <strong>Exploraciones</strong> o <strong>Cambios culturales</strong>.",
+      "columns": [
+        { "id": "expl", "title": "Exploraciones (por qué y con qué)" },
+        { "id": "cult", "title": "Cambios culturales (ideas y arte)" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Buscar rutas más directas a Asia (especias)", "correctColumn": "expl" },
+        { "id": "c2", "text": "Mejora de instrumentos: brújula / cartas / astrolabio", "correctColumn": "expl" },
+        { "id": "c3", "text": "Humanismo: interés por los clásicos y la razón", "correctColumn": "cult" },
+        { "id": "c4", "text": "Renacimiento: proporción, perspectiva y mecenazgo", "correctColumn": "cult" },
+        { "id": "c5", "text": "Carabela y navegación atlántica", "correctColumn": "expl" },
+        { "id": "c6", "text": "Imprenta: difusión rápida de ideas", "correctColumn": "cult" }
+      ],
+      "hints": [
+        "Exploraciones: rutas, barcos, instrumentos, navegación.",
+        "Cultura: Humanismo, Renacimiento, imprenta, nuevas ideas.",
+        "Si huele a “viaje”, es exploración. Si huele a “ideas/arte”, es cultura."
+      ],
+      "reward": {
+        "setFlag": "r1_p2_done",
+        "setSeal": "seal1"
+      },
+      "successText": "✅ Perfecto. Ya distingues causas de exploración y cambios culturales.",
+      "failText": "❌ Algunas tarjetas están mal. Revisa: ¿es viaje/tecnología o ideas/arte?"
+    }
+  ]
+}
