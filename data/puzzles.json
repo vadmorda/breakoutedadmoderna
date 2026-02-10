@@ -184,6 +184,8 @@
     "Herreriano = austero y geométrico.",
     "La respuesta correcta es Herreriano."
   ]
+  "solution": "La clave es ESTADOMODERNO (sin espacios ni tildes)."
+
 }
 {
   "id": "r4_p1",
@@ -266,6 +268,8 @@
     "La palabra es “conexión” (sin tilde).",
     "Escribe CONEXION."
   ]
+  "solution": "La clave es ESTADOMODERNO (sin espacios ni tildes)."
+
 }
 {
   "id": "r4_p1",
@@ -415,6 +419,8 @@
     "Son dos palabras: Estado + moderno.",
     "Escribe ESTADOMODERNO."
   ]
+  "solution": "La clave es ESTADOMODERNO (sin espacios ni tildes)."
+
 }
 
   ]
