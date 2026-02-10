@@ -299,3 +299,16 @@ body{
   cursor:pointer;
 }
 .spot-zone:hover{background:rgba(255,255,255,.08)}
+/* Spot puzzle zones (no confundir con hotspots de escena) */
+.spot-zone{
+  position:absolute;
+  border:2px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+  border-radius:14px;
+  cursor:pointer;
+}
+.spot-zone:hover{
+  background:rgba(79,209,197,.10);
+  border-color:rgba(79,209,197,.35);
+}
+
