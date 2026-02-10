@@ -182,4 +182,19 @@
     { "label": "➡ Ir a la transición", "type": "goto", "target": "cut_r1_r2" }
   ],
   "hotspots": []
+  {
+  "id": "cut_r2_r3",
+  "title": "Transición",
+  "bg": "./assets/img/bg_cutscene2.jpg",
+  "text": [
+    "Sales de la imprenta con el <strong>Sello II</strong>. El Archivo cambia de pasillo.",
+    "El aire huele a óleo y yeso. Escuchas a alguien decir: <em>«La belleza también es poder»</em>.",
+    "Una puerta se abre y ves una sala llena de cuadros… y secretos."
+  ],
+  "actions": [
+    { "label": "➡ Entrar en la galería", "type": "goto", "target": "r3_gallery" }
+  ],
+  "hotspots": []
+}
+
 }
