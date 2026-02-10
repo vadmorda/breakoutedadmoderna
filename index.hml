@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Escape: Edad Moderna (2º ESO)</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand">🗝️ Escape · Edad Moderna</div>
+        <div id="sceneTitle" class="scene-title"></div>
+      </div>
+
+      <div class="topbar-right">
+        <button id="btnSave" class="btn">💾 Guardar</button>
+        <button id="btnExport" class="btn">🔑 Código</button>
+        <button id="btnReset" class="btn danger">↻ Reiniciar</button>
+      </div>
+    </header>
+
+    <!-- Scene -->
+    <main id="scene" class="scene">
+      <div id="sceneBg" class="scene-bg"></div>
+
+      <section class="scene-panel">
+        <div id="sceneText" class="scene-text"></div>
+        <div id="sceneActions" class="scene-actions"></div>
+      </section>
+
+      <div id="hotspots" class="hotspots"></div>
+    </main>
+
+    <!-- Inventory -->
+    <footer class="inventory">
+      <div class="inv-title">Inventario</div>
+      <div id="invItems" class="inv-items"></div>
+      <div id="invHint" class="inv-hint">Haz clic en un objeto para “seleccionarlo”.</div>
+    </footer>
+  </div>
+
+  <!-- Modal: Puzzle -->
+  <div id="modalPuzzle" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="puzzleTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="puzzleTitle">Prueba</h2>
+        <button id="puzzleClose" class="btn">✖</button>
+      </div>
+
+      <div id="puzzleBody" class="modal-body"></div>
+
+      <div class="modal-foot">
+        <div id="puzzleFeedback" class="feedback"></div>
+        <button id="btnHint" class="btn ghost">💡 Pista</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Export/Import -->
+  <div id="modalCode" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="codeTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="codeTitle">Código de progreso</h2>
+        <button id="codeClose" class="btn">✖</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="small">
+          Tu progreso se guarda automáticamente. Aun así, puedes copiar un código por si cambias de dispositivo.
+        </p>
+
+        <label class="label">Tu código actual</label>
+        <textarea id="exportBox" class="textarea" rows="3" readonly></textarea>
+        <div class="row">
+          <button id="btnCopyCode" class="btn">📋 Copiar</button>
+          <button id="btnRefreshCode" class="btn ghost">🔄 Actualizar</button>
+        </div>
+
+        <hr class="sep" />
+
+        <label class="label">Restaurar desde un código</label>
+        <textarea id="importBox" class="textarea" rows="3" placeholder="Pega aquí el código…"></textarea>
+        <div class="row">
+          <button id="btnImportCode" class="btn">⬇ Restaurar</button>
+          <div id="codeMsg" class="small"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
