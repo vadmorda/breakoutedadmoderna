@@ -38,27 +38,28 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   }
 
   // Render según tipo
- if(puzzle.type === "quiz"){
-  renderQuiz({ puzzle, body, feedback, onSolve, onFail });
+if(puzzle.type === "quiz"){
+  renderQuiz({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else if(puzzle.type === "drag-sort"){
-  renderDragSort({ puzzle, body, feedback, onSolve, onFail });
+  renderDragSort({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else if(puzzle.type === "match"){
-  renderMatch({ puzzle, body, feedback, onSolve, onFail });
+  renderMatch({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else if(puzzle.type === "order"){
-  renderOrder({ puzzle, body, feedback, onSolve, onFail });
+  renderOrder({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else if(puzzle.type === "code"){
-  renderCode({ puzzle, body, feedback, onSolve, onFail });
+  renderCode({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else if(puzzle.type === "spot"){
-  renderSpot({ puzzle, body, feedback, onSolve, onFail });
+  renderSpot({ puzzle, body, feedback, onSolve, onFail, close });
 
 } else {
   body.innerHTML += `<p class="small">Tipo no implementado aún: ${puzzle.type}</p>`;
 }
+
 
 
   modal.classList.remove("hidden");
@@ -66,7 +67,7 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
 
 /* ---------------- Types ---------------- */
 
-function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
+function renderQuiz({ puzzle, body, feedback, onSolve, onFail, close }){
   const grid = document.createElement("div");
   grid.className = "answer-grid";
 
@@ -78,6 +79,7 @@ function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
       if(a.correct){
         feedback.innerHTML = puzzle.successText || "✅ Bien.";
         onSolve(puzzle);
+      
       }else{
         feedback.innerHTML = puzzle.failText || "❌ No.";
         onFail(puzzle);
@@ -89,7 +91,7 @@ function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   body.appendChild(grid);
 }
 
-function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
+function renderDragSort({ puzzle, body, feedback, onSolve, onFail, close }){
   const wrap = document.createElement("div");
   wrap.className = "columns";
 
@@ -173,7 +175,7 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
   });
 }
 
-function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
+function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
   const wrap = document.createElement("div");
   wrap.className = "dropzone";
   wrap.innerHTML = `<h3>Empareja</h3>`;
@@ -237,7 +239,7 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
   body.lastChild.appendChild(btn);
 }
 
-function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
+function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
   const list = document.createElement("div");
   list.className = "dropzone";
   list.innerHTML = `<h3>Arrastra para ordenar (intercambia posiciones)</h3>`;
@@ -302,7 +304,7 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
   body.appendChild(list);
 }
 
-function renderCode({ puzzle, body, feedback, onSolve, onFail }){
+function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
   const box = document.createElement("input");
   box.className = "textarea";
   box.placeholder = "Escribe la clave…";
@@ -333,7 +335,7 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail }){
   body.appendChild(row);
 }
 
-function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
+function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
   const wrap = document.createElement("div");
   wrap.className = "dropzone";
 
