@@ -94,14 +94,23 @@ body{
   inset:0;
 }
 
+/* ---------- Hotspots (invisibles hasta hover) ---------- */
 .hotspot{
   position:absolute;
-  border:2px dashed rgba(79,209,197,.45);
-  border-radius:14px;
-  background:rgba(79,209,197,.06);
+  border:0;
+  background:transparent;
   cursor:pointer;
 }
-.hotspot:hover{background:rgba(79,209,197,.12)}
+
+/* al pasar el ratón: se marca la zona */
+.hotspot:hover{
+  outline:2px dashed rgba(79,209,197,.65);
+  outline-offset:2px;
+  background:rgba(79,209,197,.06);
+  border-radius:14px;
+}
+
+/* etiqueta: oculta por defecto */
 .hotspot .tag{
   position:absolute;
   left:10px;
@@ -109,9 +118,20 @@ body{
   font-size:12px;
   padding:4px 8px;
   border-radius:999px;
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.60);
   border:1px solid rgba(255,255,255,.12);
+  opacity:0;
+  transform: translateY(4px);
+  transition: .15s ease;
+  pointer-events:none;
 }
+
+/* etiqueta visible solo en hover */
+.hotspot:hover .tag{
+  opacity:1;
+  transform: translateY(0);
+}
+
 
 .inventory{
   display:flex;
@@ -317,3 +337,15 @@ body{
 .scene-panel{ z-index:10; }
 .hud{ z-index:12; }
 .modal{ z-index:9999; }
+/* ---------- Spot puzzle zones ---------- */
+.spot-zone{
+  position:absolute;
+  border:2px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+  border-radius:14px;
+  cursor:pointer;
+}
+.spot-zone:hover{
+  background:rgba(79,209,197,.10);
+  border-color:rgba(79,209,197,.55);
+}
