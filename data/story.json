@@ -341,5 +341,78 @@
   "hotspots": []
 }
     
+{
+  "id": "cut_r3_r4",
+  "title": "Transición",
+  "bg": "./assets/img/bg_cutscene3.jpg",
+  "text": [
+    "Con el <strong>Sello III</strong>, el Archivo te conduce a una sala enorme: mapas en las paredes, instrumentos y un globo terráqueo que cruje al girar.",
+    "Una voz dice: «Las ideas cambiaron Europa… pero las <strong>rutas</strong> cambiaron el mundo.»"
+  ],
+  "actions": [
+    { "label": "➡ Entrar en la Sala de Mapas", "type": "goto", "target": "r4_maproom" }
+  ],
+  "hotspots": []
+}
+{
+  "id": "r4_maproom",
+  "title": "Reto 4 · Rutas y Mundos",
+  "bg": "./assets/img/bg_maproom.jpg",
+  "text": [
+    "Sala de mapas. Un navegante te observa: «Si no sabes por dónde vas… acabarás en cualquier sitio.»",
+    "Demuestra que entiendes: <strong>ruta portuguesa</strong>, <strong>ruta castellana</strong>, <strong>América precolombina</strong> y el gran resultado: <strong>un mundo conectado</strong>.",
+    "<span class='muted'>Tip: consigue el astrolabio y úsalo sobre el mapamundi.</span>"
+  ],
+  "actions": [
+    { "label": "🧭 Hablar con el navegante", "type": "dialog", "text": "«Portugal bordea África. Castilla cruza el Atlántico. Y América ya tenía civilizaciones.»" }
+  ],
+  "hotspots": [
+    {
+      "id": "hs_astrolabio",
+      "label": "Astrolabio",
+      "x": 10, "y": 68, "w": 16, "h": 22,
+      "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
+    },
+    {
+      "id": "hs_bitacora",
+      "label": "Bitácora",
+      "x": 30, "y": 72, "w": 18, "h": 18,
+      "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
+    },
+    {
+      "id": "hs_globe",
+      "label": "Mapamundi",
+      "x": 55, "y": 40, "w": 38, "h": 52,
+      "action": {
+        "type": "useItem",
+        "requiresItem": "astrolabio",
+        "success": { "type": "setFlag", "flag": "r4_map_revealed" },
+        "successToast": "Ajustas el astrolabio… y aparecen marcas de ruta en el mapa.",
+        "failToast": "Necesitas un instrumento para orientarte (algo del inventario)."
+      }
+    },
+
+    { "id": "hs_r4_p1", "label": "Ruta portuguesa", "x": 10, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p1" } },
+    { "id": "hs_r4_p2", "label": "Ruta castellana", "x": 38, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p2" } },
+    { "id": "hs_r4_p3", "label": "América precolombina", "x": 66, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p3" } },
+    { "id": "hs_r4_p4", "label": "Clave del sello", "x": 38, "y": 40, "w": 24, "h": 16, "action": { "type": "openPuzzle", "puzzleId": "r4_p4" } },
+
+    { "id": "hs_exit_r4", "label": "Sello IV", "x": 44, "y": 58, "w": 12, "h": 16, "action": { "type": "tryExitR4" } }
+  ]
+}
+{
+  "id": "r4_success",
+  "title": "Sello IV conseguido",
+  "bg": "./assets/img/bg_success.jpg",
+  "text": [
+    "El navegante clava su sello en tu cuaderno.",
+    "<strong>Has obtenido el SELLO IV</strong>.",
+    "<span class='muted'>Solo queda el Archivo final: Estado moderno, Reyes Católicos y religión.</span>"
+  ],
+  "actions": [
+    { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+  ],
+  "hotspots": []
+}
 
 }
