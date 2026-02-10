@@ -267,6 +267,72 @@
     "Escribe CONEXION."
   ]
 }
+{
+  "id": "r4_p1",
+  "title": "Ruta portuguesa a la India",
+  "type": "order",
+  "prompt": "Ordena el avance de Portugal hasta llegar a Asia bordeando África.",
+  "items": [
+    { "id": "a", "text": "Exploración de la costa africana" },
+    { "id": "b", "text": "Doblar el Cabo de Buena Esperanza" },
+    { "id": "c", "text": "Llegar al océano Índico" },
+    { "id": "d", "text": "Llegar a la India (rutas de especias)" }
+  ],
+  "correctOrder": ["a","b","c","d"],
+  "successText": "✅ Correcto. Portugal avanza paso a paso, asegurando rutas y puertos.",
+  "failText": "❌ Revisa el orden: costa → Cabo → Índico → India.",
+  "reward": { "setFlag": "r4_p1_done" },
+  "hints": ["Portugal bordea África.","El Cabo va antes de la India.","costa → Cabo → Índico → India."]
+}
+{
+  "id": "r4_p2",
+  "title": "La apuesta castellana",
+  "type": "spot",
+  "prompt": "Haz clic en la zona del mapa que representa la <strong>ruta atlántica hacia el oeste</strong> (la de Colón).",
+  "image": "./assets/img/pz_mapa_atlantico.jpg",
+  "zones": [
+    { "id": "z1", "label": "Rodear África", "x": 58, "y": 55, "w": 34, "h": 35 },
+    { "id": "z2", "label": "Cruzar el Atlántico", "x": 18, "y": 40, "w": 40, "h": 30 },
+    { "id": "z3", "label": "Europa interior", "x": 50, "y": 20, "w": 25, "h": 25 }
+  ],
+  "correctZoneId": "z2",
+  "successText": "✅ Exacto. Castilla cruza el Atlántico buscando Asia… y llega a América.",
+  "failText": "❌ No. La ruta correcta es mar abierto hacia el oeste.",
+  "reward": { "setFlag": "r4_p2_done" },
+  "hints": ["Cruza el océano.","Busca el Atlántico.","Entre Europa y América."]
+}
+{
+  "id": "r4_p3",
+  "title": "América antes de 1492",
+  "type": "match",
+  "prompt": "Relaciona cada civilización con una característica.",
+  "left": [
+    { "id": "l1", "text": "Mayas" },
+    { "id": "l2", "text": "Aztecas" },
+    { "id": "l3", "text": "Incas" }
+  ],
+  "right": [
+    { "id": "r1", "text": "Grandes ciudades en Mesoamérica (Tenochtitlan)" },
+    { "id": "r2", "text": "Imperio andino con red de caminos" },
+    { "id": "r3", "text": "Astronomía y calendarios" }
+  ],
+  "pairs": { "l1":"r3", "l2":"r1", "l3":"r2" },
+  "successText": "✅ Muy bien. América tenía sociedades complejas.",
+  "failText": "❌ Revisa: Andes → Incas; Tenochtitlan → Aztecas; calendarios → Mayas.",
+  "reward": { "setFlag": "r4_p3_done" },
+  "hints": ["Incas = Andes.","Aztecas = Tenochtitlan.","Mayas = calendarios."]
+}
+{
+  "id": "r4_p4",
+  "title": "Clave del Sello IV",
+  "type": "code",
+  "prompt": "La bitácora dice: <em>«Cuando dos rutas oceánicas se abren, el mundo cambia porque queda…»</em><br><br>Escribe una palabra (sin tilde) que resuma ese resultado.",
+  "answer": "CONECTADO",
+  "successText": "✅ Correcto. El mundo queda conectado por rutas oceánicas.",
+  "failText": "❌ No. Pista: empieza por CONEC-",
+  "reward": { "setFlag": "r4_p4_done" },
+  "hints": ["Une continentes.","Piensa en “mundo …”","Es CONECTADO."]
+}
 
   ]
 }
