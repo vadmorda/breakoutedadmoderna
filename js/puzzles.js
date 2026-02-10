@@ -5,9 +5,11 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   const feedback = document.getElementById("puzzleFeedback");
   const btnClose = document.getElementById("puzzleClose");
   const btnHint = document.getElementById("btnHint");
+  const btnGiveUp = document.getElementById("btnGiveUp");
 
   title.textContent = puzzle.title || "Prueba";
-  feedback.textContent = " ";
+
+  // panel superior: intentos
   const tries = (state.attempts && state.attempts[puzzle.id]) ? state.attempts[puzzle.id] : 0;
   feedback.textContent = tries ? `Intentos: ${tries}` : " ";
 
@@ -17,42 +19,51 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   p.innerHTML = puzzle.prompt || "";
   body.appendChild(p);
 
-  btnClose.onclick = () => close();
-  btnHint.onclick = () => onHint(puzzle);
-
   function close(){
     modal.classList.add("hidden");
   }
 
-if(puzzle.type === "quiz"){
-    renderQuiz({ puzzle, body, feedback, onSolve, onFail });
+  btnClose.onclick = close;
+  btnHint.onclick = () => onHint(puzzle);
 
+  // “Me rindo” (solo modo docente)
+  if(btnGiveUp){
+    btnGiveUp.onclick = () => {
+      if(!state.flags?.teacherMode){
+        feedback.textContent = "🔒 Solo disponible con modo docente.";
+        return;
+      }
+      feedback.innerHTML = `<span class="small">✅ Solución: ${puzzle.solution || "No definida."}</span>`;
+    };
+  }
+
+  // Render según tipo
+  if(puzzle.type === "quiz"){
+    renderQuiz({ puzzle, body, feedback, onSolve, onFail });
   } else if(puzzle.type === "drag-sort"){
     renderDragSort({ puzzle, body, feedback, onSolve, onFail });
-
   } else if(puzzle.type === "match"){
     renderMatch({ puzzle, body, feedback, onSolve, onFail });
-
   } else if(puzzle.type === "order"){
     renderOrder({ puzzle, body, feedback, onSolve, onFail });
-
   } else if(puzzle.type === "code"){
     renderCode({ puzzle, body, feedback, onSolve, onFail });
-
+  } else if(puzzle.type === "spot"){
+    renderSpot({ puzzle, body, feedback, onSolve, onFail });
   } else {
     body.innerHTML += `<p class="small">Tipo no implementado aún: ${puzzle.type}</p>`;
   }
 
   modal.classList.remove("hidden");
 }
-  } else if(puzzle.type === "spot"){
-    renderSpot({ puzzle, body, feedback, onSolve, onFail });
+
+/* ---------------- Types ---------------- */
 
 function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   const grid = document.createElement("div");
   grid.className = "answer-grid";
 
-  puzzle.answers.forEach(a=>{
+  (puzzle.answers || []).forEach(a=>{
     const b = document.createElement("button");
     b.className = "answer-btn";
     b.textContent = a.text;
@@ -81,22 +92,29 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
   const right = document.createElement("div");
   right.className = "dropzone";
 
-  const [c1, c2] = puzzle.columns;
+  const [c1, c2] = puzzle.columns || [];
+  if(!c1 || !c2){
+    body.innerHTML += `<p class="small">⚠️ drag-sort mal configurado (columns).</p>`;
+    return;
+  }
 
   left.innerHTML = `<h3>${c1.title}</h3><div class="drop-target" data-col="${c1.id}"></div>`;
   right.innerHTML = `<h3>${c2.title}</h3><div class="drop-target" data-col="${c2.id}"></div>`;
-
   wrap.appendChild(left);
   wrap.appendChild(right);
 
   const pool = document.createElement("div");
   pool.className = "dropzone";
-  pool.innerHTML = `<h3>Tarjetas</h3><div class="draggables"></div><div class="row"><button class="btn" id="btnCheckDrag">✅ Comprobar</button></div>`;
+  pool.innerHTML = `
+    <h3>Tarjetas</h3>
+    <div class="draggables"></div>
+    <div class="row"><button class="btn" id="btnCheckDrag">✅ Comprobar</button></div>
+  `;
   const poolInner = pool.querySelector(".draggables");
 
   const placements = {}; // cardId -> colId
 
-  puzzle.cards.forEach(card=>{
+  (puzzle.cards || []).forEach(card=>{
     const chip = document.createElement("div");
     chip.className = "draggable";
     chip.draggable = true;
@@ -109,24 +127,55 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
 
     poolInner.appendChild(chip);
   });
+
+  function wireDropTarget(el){
+    el.addEventListener("dragover", (e)=> e.preventDefault());
+    el.addEventListener("drop", (e)=>{
+      e.preventDefault();
+      const cardId = e.dataTransfer.getData("text/plain");
+      if(!cardId) return;
+      const cardEl = body.querySelector(`.draggable[data-card="${cardId}"]`);
+      if(!cardEl) return;
+
+      el.appendChild(cardEl);
+      placements[cardId] = el.dataset.col;
+      el.classList.add("filled");
+    });
+  }
+
+  body.appendChild(pool);
+  body.appendChild(wrap);
+
+  body.querySelectorAll(".drop-target").forEach(wireDropTarget);
+
+  body.querySelector("#btnCheckDrag").addEventListener("click", ()=>{
+    const cards = puzzle.cards || [];
+    const allPlaced = cards.every(c => placements[c.id]);
+    if(!allPlaced){
+      feedback.textContent = "⚠️ Aún faltan tarjetas por colocar.";
+      return;
+    }
+    const ok = cards.every(c => placements[c.id] === c.correctColumn);
+    if(ok){
+      feedback.innerHTML = puzzle.successText || "✅ Perfecto.";
+      onSolve(puzzle);
+    }else{
+      feedback.innerHTML = puzzle.failText || "❌ Revisa.";
+      onFail(puzzle);
+    }
+  });
+}
+
 function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
   const wrap = document.createElement("div");
-  wrap.className = "columns";
-
-  const left = document.createElement("div");
-  left.className = "dropzone";
-  left.innerHTML = `<h3>Columna A</h3>`;
-
-  const right = document.createElement("div");
-  right.className = "dropzone";
-  right.innerHTML = `<h3>Columna B</h3>`;
+  wrap.className = "dropzone";
+  wrap.innerHTML = `<h3>Empareja</h3>`;
 
   const selects = {}; // leftId -> rightId
 
   (puzzle.left || []).forEach(L=>{
     const row = document.createElement("div");
     row.className = "row";
-    row.style.marginTop = "8px";
 
     const label = document.createElement("div");
     label.textContent = L.text;
@@ -153,11 +202,8 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
 
     row.appendChild(label);
     row.appendChild(sel);
-    left.appendChild(row);
+    wrap.appendChild(row);
   });
-
-  wrap.appendChild(left);
-  wrap.appendChild(right);
 
   const btn = document.createElement("button");
   btn.className = "btn";
@@ -180,54 +226,25 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
   });
 
   body.appendChild(wrap);
-  body.appendChild(document.createElement("hr")).className = "sep";
-  body.appendChild(btn);
+  body.appendChild(document.createElement("div")).className = "row";
+  body.lastChild.appendChild(btn);
 }
 
 function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
   const list = document.createElement("div");
   list.className = "dropzone";
-  list.innerHTML = `<h3>Arrastra para ordenar</h3>`;
+  list.innerHTML = `<h3>Arrastra para ordenar (intercambia posiciones)</h3>`;
 
   const ul = document.createElement("div");
   ul.className = "draggables";
 
-  const order = (puzzle.items || []).map(x=>x.id);
-
-  (puzzle.items || []).forEach(it=>{
-    const chip = document.createElement("div");
-    chip.className = "draggable";
-    chip.draggable = true;
-    chip.dataset.id = it.id;
-    chip.textContent = it.text;
-
-    chip.addEventListener("dragstart", (e)=>{
-      e.dataTransfer.setData("text/plain", it.id);
-    });
-
-    chip.addEventListener("dragover", (e)=> e.preventDefault());
-    chip.addEventListener("drop", (e)=>{
-      e.preventDefault();
-      const draggedId = e.dataTransfer.getData("text/plain");
-      const targetId = chip.dataset.id;
-      if(!draggedId || draggedId === targetId) return;
-
-      // swap positions in "order"
-      const a = order.indexOf(draggedId);
-      const b = order.indexOf(targetId);
-      [order[a], order[b]] = [order[b], order[a]];
-
-      // re-render chips
-      renderChips();
-    });
-
-    ul.appendChild(chip);
-  });
+  const items = puzzle.items || [];
+  const order = items.map(x=>x.id);
 
   function renderChips(){
     ul.innerHTML = "";
     order.forEach(id=>{
-      const it = (puzzle.items || []).find(x=>x.id === id);
+      const it = items.find(x=>x.id === id);
       const chip = document.createElement("div");
       chip.className = "draggable";
       chip.draggable = true;
@@ -243,6 +260,7 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
         const draggedId = e.dataTransfer.getData("text/plain");
         const targetId = chip.dataset.id;
         if(!draggedId || draggedId === targetId) return;
+
         const a = order.indexOf(draggedId);
         const b = order.indexOf(targetId);
         [order[a], order[b]] = [order[b], order[a]];
@@ -308,44 +326,6 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail }){
   body.appendChild(row);
 }
 
-  function wireDropTarget(el){
-    el.addEventListener("dragover", (e)=> e.preventDefault());
-    el.addEventListener("drop", (e)=>{
-      e.preventDefault();
-      const cardId = e.dataTransfer.getData("text/plain");
-      if(!cardId) return;
-      const cardEl = body.querySelector(`.draggable[data-card="${cardId}"]`);
-      if(!cardEl) return;
-      el.appendChild(cardEl);
-      placements[cardId] = el.dataset.col;
-      el.classList.add("filled");
-    });
-  }
-
-  body.appendChild(pool);
-  body.appendChild(wrap);
-
-  const targets = body.querySelectorAll(".drop-target");
-  targets.forEach(wireDropTarget);
-
-  body.querySelector("#btnCheckDrag").addEventListener("click", ()=>{
-    const allPlaced = puzzle.cards.every(c => placements[c.id]);
-    if(!allPlaced){
-      feedback.textContent = "⚠️ Aún faltan tarjetas por colocar.";
-      return;
-    }
-    const ok = puzzle.cards.every(c => placements[c.id] === c.correctColumn);
-    if(ok){
-      feedback.innerHTML = puzzle.successText || "✅ Perfecto.";
-      onSolve(puzzle);
-    }else{
-      feedback.innerHTML = puzzle.failText || "❌ Revisa.";
-      onFail(puzzle);
-    }
-  });
-}
-
-}
 function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
   const wrap = document.createElement("div");
   wrap.className = "dropzone";
@@ -362,21 +342,16 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
   img.alt = "Imagen de la prueba";
   img.style.width = "100%";
   img.style.display = "block";
-
   imgWrap.appendChild(img);
 
-  // overlays
   (puzzle.zones || []).forEach(z=>{
     const zone = document.createElement("button");
     zone.type = "button";
-    zone.className = "hotspot";
+    zone.className = "spot-zone"; // <- importante (CSS nuevo)
     zone.style.left = z.x + "%";
     zone.style.top = z.y + "%";
     zone.style.width = z.w + "%";
     zone.style.height = z.h + "%";
-    zone.style.borderStyle = "solid";
-    zone.style.borderColor = "rgba(255,255,255,.18)";
-    zone.style.background = "rgba(255,255,255,.04)";
     zone.title = z.label || "Zona";
 
     zone.addEventListener("click", ()=>{
@@ -394,19 +369,4 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
 
   wrap.appendChild(imgWrap);
   body.appendChild(wrap);
-
-  const note = document.createElement("p");
-  note.className = "small";
-  note.textContent = "Consejo: no busques el objeto bonito; busca las líneas que construyen profundidad.";
-  body.appendChild(note);
 }
-
-  const btnGiveUp = document.getElementById("btnGiveUp");
-  btnGiveUp.onclick = () => {
-    // solo si el docente activó modo docente (ver FASE 9.6)
-    if(!state.flags?.teacherMode){
-      feedback.textContent = "🔒 Solo disponible con modo docente.";
-      return;
-    }
-    feedback.innerHTML = `<span class="small">✅ Solución: ${puzzle.solution || "No definida."}</span>`;
-  };
