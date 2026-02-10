@@ -94,6 +94,204 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
 
     poolInner.appendChild(chip);
   });
+function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
+  const wrap = document.createElement("div");
+  wrap.className = "columns";
+
+  const left = document.createElement("div");
+  left.className = "dropzone";
+  left.innerHTML = `<h3>Columna A</h3>`;
+
+  const right = document.createElement("div");
+  right.className = "dropzone";
+  right.innerHTML = `<h3>Columna B</h3>`;
+
+  const selects = {}; // leftId -> rightId
+
+  (puzzle.left || []).forEach(L=>{
+    const row = document.createElement("div");
+    row.className = "row";
+    row.style.marginTop = "8px";
+
+    const label = document.createElement("div");
+    label.textContent = L.text;
+    label.style.fontWeight = "800";
+
+    const sel = document.createElement("select");
+    sel.className = "textarea";
+    sel.style.padding = "8px 10px";
+    sel.style.height = "42px";
+
+    const opt0 = document.createElement("option");
+    opt0.value = "";
+    opt0.textContent = "— elige —";
+    sel.appendChild(opt0);
+
+    (puzzle.right || []).forEach(R=>{
+      const opt = document.createElement("option");
+      opt.value = R.id;
+      opt.textContent = R.text;
+      sel.appendChild(opt);
+    });
+
+    sel.addEventListener("change", ()=> { selects[L.id] = sel.value; });
+
+    row.appendChild(label);
+    row.appendChild(sel);
+    left.appendChild(row);
+  });
+
+  wrap.appendChild(left);
+  wrap.appendChild(right);
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "✅ Comprobar";
+  btn.addEventListener("click", ()=>{
+    const all = (puzzle.left || []).every(L => selects[L.id]);
+    if(!all){
+      feedback.textContent = "⚠️ Completa todas las parejas.";
+      return;
+    }
+    const pairs = puzzle.pairs || {};
+    const ok = (puzzle.left || []).every(L => selects[L.id] === pairs[L.id]);
+    if(ok){
+      feedback.innerHTML = puzzle.successText || "✅ Correcto.";
+      onSolve(puzzle);
+    }else{
+      feedback.innerHTML = puzzle.failText || "❌ Revisa.";
+      onFail(puzzle);
+    }
+  });
+
+  body.appendChild(wrap);
+  body.appendChild(document.createElement("hr")).className = "sep";
+  body.appendChild(btn);
+}
+
+function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
+  const list = document.createElement("div");
+  list.className = "dropzone";
+  list.innerHTML = `<h3>Arrastra para ordenar</h3>`;
+
+  const ul = document.createElement("div");
+  ul.className = "draggables";
+
+  const order = (puzzle.items || []).map(x=>x.id);
+
+  (puzzle.items || []).forEach(it=>{
+    const chip = document.createElement("div");
+    chip.className = "draggable";
+    chip.draggable = true;
+    chip.dataset.id = it.id;
+    chip.textContent = it.text;
+
+    chip.addEventListener("dragstart", (e)=>{
+      e.dataTransfer.setData("text/plain", it.id);
+    });
+
+    chip.addEventListener("dragover", (e)=> e.preventDefault());
+    chip.addEventListener("drop", (e)=>{
+      e.preventDefault();
+      const draggedId = e.dataTransfer.getData("text/plain");
+      const targetId = chip.dataset.id;
+      if(!draggedId || draggedId === targetId) return;
+
+      // swap positions in "order"
+      const a = order.indexOf(draggedId);
+      const b = order.indexOf(targetId);
+      [order[a], order[b]] = [order[b], order[a]];
+
+      // re-render chips
+      renderChips();
+    });
+
+    ul.appendChild(chip);
+  });
+
+  function renderChips(){
+    ul.innerHTML = "";
+    order.forEach(id=>{
+      const it = (puzzle.items || []).find(x=>x.id === id);
+      const chip = document.createElement("div");
+      chip.className = "draggable";
+      chip.draggable = true;
+      chip.dataset.id = id;
+      chip.textContent = it?.text || id;
+
+      chip.addEventListener("dragstart", (e)=>{
+        e.dataTransfer.setData("text/plain", id);
+      });
+      chip.addEventListener("dragover", (e)=> e.preventDefault());
+      chip.addEventListener("drop", (e)=>{
+        e.preventDefault();
+        const draggedId = e.dataTransfer.getData("text/plain");
+        const targetId = chip.dataset.id;
+        if(!draggedId || draggedId === targetId) return;
+        const a = order.indexOf(draggedId);
+        const b = order.indexOf(targetId);
+        [order[a], order[b]] = [order[b], order[a]];
+        renderChips();
+      });
+
+      ul.appendChild(chip);
+    });
+  }
+
+  renderChips();
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "✅ Comprobar";
+  btn.addEventListener("click", ()=>{
+    const correct = puzzle.correctOrder || [];
+    const ok = correct.length === order.length && correct.every((id, idx)=> order[idx] === id);
+    if(ok){
+      feedback.innerHTML = puzzle.successText || "✅ Correcto.";
+      onSolve(puzzle);
+    }else{
+      feedback.innerHTML = puzzle.failText || "❌ Revisa.";
+      onFail(puzzle);
+    }
+  });
+
+  list.appendChild(ul);
+  list.appendChild(document.createElement("div")).className = "row";
+  list.lastChild.appendChild(btn);
+
+  body.appendChild(list);
+}
+
+function renderCode({ puzzle, body, feedback, onSolve, onFail }){
+  const box = document.createElement("input");
+  box.className = "textarea";
+  box.placeholder = "Escribe la clave…";
+  box.autocomplete = "off";
+  box.spellcheck = false;
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "🔓 Probar";
+  btn.addEventListener("click", ()=>{
+    const ans = (puzzle.answer || "").toUpperCase().trim();
+    const val = (box.value || "").toUpperCase().trim();
+
+    if(val === ans){
+      feedback.innerHTML = puzzle.successText || "✅ Correcto.";
+      onSolve(puzzle);
+    }else{
+      feedback.innerHTML = puzzle.failText || "❌ No.";
+      onFail(puzzle);
+    }
+  });
+
+  const row = document.createElement("div");
+  row.className = "row";
+  row.appendChild(btn);
+
+  body.appendChild(box);
+  body.appendChild(row);
+}
 
   function wireDropTarget(el){
     el.addEventListener("dragover", (e)=> e.preventDefault());
