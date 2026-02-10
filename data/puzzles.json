@@ -24,4 +24,326 @@
       "id": "r1_p2",
       "type": "drag-sort",
       "title": "Prueba 2 · Separa causas",
-      "prompt": "Arras
+      "prompt": "Arrastra cada tarjeta a su columna: <strong>Exploraciones</strong> o <strong>Cambios culturales</strong>.",
+      "columns": [
+        { "id": "expl", "title": "Exploraciones (por qué y con qué)" },
+        { "id": "cult", "title": "Cambios culturales (ideas y arte)" }
+      ],
+      "cards": [
+        { "id": "c1", "text": "Buscar rutas más directas a Asia (especias)", "correctColumn": "expl" },
+        { "id": "c2", "text": "Mejora de instrumentos: brújula / cartas / astrolabio", "correctColumn": "expl" },
+        { "id": "c3", "text": "Humanismo: interés por los clásicos y la razón", "correctColumn": "cult" },
+        { "id": "c4", "text": "Renacimiento: proporción, perspectiva y mecenazgo", "correctColumn": "cult" },
+        { "id": "c5", "text": "Carabela y navegación atlántica", "correctColumn": "expl" },
+        { "id": "c6", "text": "Imprenta: difusión rápida de ideas", "correctColumn": "cult" }
+      ],
+      "hints": [
+        "Exploraciones: rutas, barcos, instrumentos, navegación.",
+        "Cultura: Humanismo, Renacimiento, imprenta, nuevas ideas.",
+        "Si huele a “viaje”, es exploración. Si huele a “ideas/arte”, es cultura."
+      ],
+      "reward": { "setFlag": "r1_p2_done", "setSeal": "seal1" },
+      "successText": "✅ Perfecto. Ya distingues causas de exploración y cambios culturales.",
+      "failText": "❌ Algunas tarjetas están mal. Revisa: ¿es viaje/tecnología o ideas/arte?"
+    },
+
+    {
+      "id": "r2_p1",
+      "title": "Humanismo: empareja ideas",
+      "type": "match",
+      "prompt": "Relaciona cada idea con su significado en el Humanismo.",
+      "left": [
+        { "id": "l1", "text": "Antropocentrismo" },
+        { "id": "l2", "text": "Razón" },
+        { "id": "l3", "text": "Vuelta a los clásicos" },
+        { "id": "l4", "text": "Imprenta" }
+      ],
+      "right": [
+        { "id": "r1", "text": "El ser humano en el centro" },
+        { "id": "r2", "text": "Pensar y comprobar antes de creer" },
+        { "id": "r3", "text": "Inspiración en Grecia y Roma" },
+        { "id": "r4", "text": "Difusión rápida de ideas" }
+      ],
+      "pairs": { "l1": "r1", "l2": "r2", "l3": "r3", "l4": "r4" },
+      "successText": "✅ Bien. Si cambias cómo piensas y cómo difundes, cambias el mundo.",
+      "failText": "❌ Revisa: ¿qué idea encaja mejor con cada efecto?",
+      "reward": { "setFlag": "r2_p1_done" },
+      "hints": [
+        "Antropocentrismo → humano al centro.",
+        "Razón → pensar y comprobar.",
+        "Clásicos → Grecia/Roma; Imprenta → difundir."
+      ]
+    },
+
+    {
+      "id": "r2_p2",
+      "title": "Imprenta: ordena el proceso",
+      "type": "order",
+      "prompt": "Ordena los pasos básicos para que una idea se convierta en un libro impreso.",
+      "items": [
+        { "id": "a", "text": "Componer el texto con tipos móviles" },
+        { "id": "b", "text": "Entintar la composición" },
+        { "id": "c", "text": "Prensar el papel" },
+        { "id": "d", "text": "Secar y distribuir copias" }
+      ],
+      "correctOrder": ["a", "b", "c", "d"],
+      "successText": "✅ Exacto. Así se multiplican los libros… y los problemas para quien manda.",
+      "failText": "❌ No del todo. Piensa: primero letras, luego tinta, luego presión, luego difusión.",
+      "reward": { "setFlag": "r2_p2_done" },
+      "hints": [
+        "Los tipos van antes que la tinta.",
+        "La prensa actúa después de entintar.",
+        "Orden: componer → entintar → prensar → secar/distribuir."
+      ]
+    },
+
+    {
+      "id": "r2_p3",
+      "title": "Clave humanista",
+      "type": "code",
+      "prompt": "En el pliego impreso aparece una palabra subrayada: <strong>_____</strong>.<br><br>Es la base del Humanismo (y también del método científico). Escríbela para abrir el último cierre del sello.",
+      "answer": "RAZON",
+      "successText": "✅ Correcto. La razón abre la puerta.",
+      "failText": "❌ No. Pista: empieza por R y no es “riqueza”.",
+      "reward": { "setFlag": "r2_p3_done" },
+      "hints": [
+        "No es fe ciega: es pensar y comprobar.",
+        "Se asocia a observar, medir y experimentar.",
+        "La palabra es RAZON (sin tilde)."
+      ]
+    },
+
+    {
+      "id": "r3_p1",
+      "title": "Detective del arte",
+      "type": "spot",
+      "prompt": "Haz clic en la zona donde se aprecia mejor la <strong>perspectiva</strong> (líneas que se juntan en un punto de fuga).",
+      "image": "./assets/img/pz_perspectiva.jpg",
+      "zones": [
+        { "id": "z1", "label": "Cielo", "x": 6, "y": 6, "w": 30, "h": 25 },
+        { "id": "z2", "label": "Suelo / camino", "x": 35, "y": 55, "w": 55, "h": 35 },
+        { "id": "z3", "label": "Rostro", "x": 70, "y": 20, "w": 22, "h": 25 }
+      ],
+      "correctZoneId": "z2",
+      "successText": "✅ Exacto. La perspectiva crea profundidad.",
+      "failText": "❌ No. Busca donde las líneas del suelo/camino tienden a juntarse.",
+      "reward": { "setFlag": "r3_p1_done" },
+      "hints": [
+        "Se nota más en suelos, calles, caminos y edificios.",
+        "Busca líneas que “van hacia el fondo”.",
+        "Suele estar en el suelo/camino."
+      ]
+    },
+
+    {
+      "id": "r3_p2",
+      "title": "Rasgos del Renacimiento",
+      "type": "match",
+      "prompt": "Relaciona cada concepto con su significado.",
+      "left": [
+        { "id": "l1", "text": "Mecenazgo" },
+        { "id": "l2", "text": "Clasicismo" },
+        { "id": "l3", "text": "Proporción" },
+        { "id": "l4", "text": "Realismo" }
+      ],
+      "right": [
+        { "id": "r1", "text": "Personas ricas/poderosas financian artistas" },
+        { "id": "r2", "text": "Inspiración en Grecia y Roma" },
+        { "id": "r3", "text": "Equilibrio y armonía en las formas" },
+        { "id": "r4", "text": "Representar la realidad con detalle" }
+      ],
+      "pairs": { "l1": "r1", "l2": "r2", "l3": "r3", "l4": "r4" },
+      "successText": "✅ Bien. El arte renacentista es belleza… y también mensaje social.",
+      "failText": "❌ Revisa: ¿quién paga? ¿en qué se inspiran? ¿qué buscan en formas y realidad?",
+      "reward": { "setFlag": "r3_p2_done" },
+      "hints": [
+        "Mecenas = patrocinador.",
+        "Clasicismo = Grecia/Roma.",
+        "Proporción = equilibrio; Realismo = detalle."
+      ]
+    },
+
+    {
+      "id": "r3_p3",
+      "title": "Renacimiento en España",
+      "type": "quiz",
+      "prompt": "¿Qué estilo del Renacimiento español es <strong>más sobrio</strong> y casi sin decoración?",
+      "answers": [
+        { "text": "Plateresco", "correct": false },
+        { "text": "Herreriano", "correct": true },
+        { "text": "Gótico", "correct": false },
+        { "text": "Románico", "correct": false }
+      ],
+      "successText": "✅ Correcto. El Herreriano es austero: transmite poder con sencillez.",
+      "failText": "❌ No. Pista: uno es muy decorado (plateros) y el otro es casi sin adornos.",
+      "reward": { "setFlag": "r3_p3_done" },
+      "hints": [
+        "Plateresco = muy decorado.",
+        "Herreriano = austero y geométrico.",
+        "La respuesta correcta es Herreriano."
+      ]
+    },
+
+    {
+      "id": "r4_p1",
+      "title": "Ruta portuguesa a la India",
+      "type": "order",
+      "prompt": "Ordena el avance de Portugal hasta llegar a Asia bordeando África.",
+      "items": [
+        { "id": "a", "text": "Exploración de la costa africana" },
+        { "id": "b", "text": "Doblar el Cabo de Buena Esperanza" },
+        { "id": "c", "text": "Llegar al océano Índico" },
+        { "id": "d", "text": "Llegar a la India (rutas de especias)" }
+      ],
+      "correctOrder": ["a", "b", "c", "d"],
+      "successText": "✅ Correcto. Portugal avanza paso a paso, asegurando rutas y puertos.",
+      "failText": "❌ Revisa: costa → Cabo → Índico → India.",
+      "reward": { "setFlag": "r4_p1_done" },
+      "hints": [
+        "Portugal bordea África.",
+        "El Cabo va antes de la India.",
+        "Orden: costa → Cabo → Índico → India."
+      ]
+    },
+
+    {
+      "id": "r4_p2",
+      "title": "La apuesta castellana",
+      "type": "spot",
+      "prompt": "Haz clic en la zona del mapa que representa la <strong>ruta atlántica hacia el oeste</strong> (la de Colón).",
+      "image": "./assets/img/pz_mapa_atlantico.jpg",
+      "zones": [
+        { "id": "z1", "label": "Rodear África", "x": 58, "y": 55, "w": 34, "h": 35 },
+        { "id": "z2", "label": "Cruzar el Atlántico", "x": 18, "y": 40, "w": 40, "h": 30 },
+        { "id": "z3", "label": "Europa interior", "x": 50, "y": 20, "w": 25, "h": 25 }
+      ],
+      "correctZoneId": "z2",
+      "successText": "✅ Exacto. Castilla cruza el Atlántico buscando Asia… y llega a América.",
+      "failText": "❌ No. La ruta correcta es mar abierto hacia el oeste.",
+      "reward": { "setFlag": "r4_p2_done" },
+      "hints": ["Cruza el océano.", "Busca el Atlántico.", "Entre Europa y América."]
+    },
+
+    {
+      "id": "r4_p3",
+      "title": "América antes de 1492",
+      "type": "match",
+      "prompt": "Relaciona cada civilización con una característica.",
+      "left": [
+        { "id": "l1", "text": "Mayas" },
+        { "id": "l2", "text": "Aztecas" },
+        { "id": "l3", "text": "Incas" }
+      ],
+      "right": [
+        { "id": "r1", "text": "Grandes ciudades en Mesoamérica (Tenochtitlan)" },
+        { "id": "r2", "text": "Imperio andino con red de caminos" },
+        { "id": "r3", "text": "Astronomía y calendarios" }
+      ],
+      "pairs": { "l1": "r3", "l2": "r1", "l3": "r2" },
+      "successText": "✅ Muy bien. América tenía sociedades complejas.",
+      "failText": "❌ Revisa: Incas = Andes; Aztecas = Tenochtitlan; Mayas = calendarios.",
+      "reward": { "setFlag": "r4_p3_done" },
+      "hints": ["Incas = Andes.", "Aztecas = Tenochtitlan.", "Mayas = calendarios."]
+    },
+
+    {
+      "id": "r4_p4",
+      "title": "Clave del Sello IV",
+      "type": "code",
+      "prompt": "La bitácora dice: <em>«Cuando dos rutas oceánicas se abren, el mundo cambia porque queda…»</em><br><br>Escribe una palabra (sin tilde) que resuma ese resultado.",
+      "answer": "CONECTADO",
+      "successText": "✅ Correcto. El mundo queda conectado por rutas oceánicas.",
+      "failText": "❌ No. Pista: empieza por CONEC-",
+      "reward": { "setFlag": "r4_p4_done" },
+      "hints": ["Une continentes.", "Piensa en “mundo …”.", "Es CONECTADO."]
+    },
+
+    {
+      "id": "f_p1",
+      "title": "Documento I · El Estado moderno",
+      "type": "match",
+      "prompt": "Relaciona cada elemento con lo que significa en el nacimiento del <strong>Estado moderno</strong>.",
+      "left": [
+        { "id": "l1", "text": "Impuestos" },
+        { "id": "l2", "text": "Ejército permanente" },
+        { "id": "l3", "text": "Burocracia" },
+        { "id": "l4", "text": "Burguesía" }
+      ],
+      "right": [
+        { "id": "r1", "text": "Funcionarios y administración del reino" },
+        { "id": "r2", "text": "Dinero para sostener al Estado" },
+        { "id": "r3", "text": "Fuerza controlada por la monarquía" },
+        { "id": "r4", "text": "Grupo urbano ligado al comercio y dinero" }
+      ],
+      "pairs": { "l1": "r2", "l2": "r3", "l3": "r1", "l4": "r4" },
+      "successText": "✅ Bien. Un Estado fuerte necesita dinero, administración y control militar.",
+      "failText": "❌ Revisa: ¿qué paga el Estado? ¿quién administra? ¿quién manda las armas? ¿quién gana poder en las ciudades?",
+      "reward": { "setFlag": "f_p1_done" },
+      "hints": [
+        "Impuestos = dinero.",
+        "Burocracia = funcionarios.",
+        "Ejército permanente = control militar; Burguesía = ciudades."
+      ]
+    },
+
+    {
+      "id": "f_p2",
+      "title": "Documento II · Reyes Católicos",
+      "type": "order",
+      "prompt": "Ordena estas ideas para explicar cómo consolidan su poder los Reyes Católicos.",
+      "items": [
+        { "id": "a", "text": "Unión dinástica (Castilla y Aragón)" },
+        { "id": "b", "text": "Refuerzo de instituciones y autoridad real" },
+        { "id": "c", "text": "Control del territorio y búsqueda de unidad religiosa" },
+        { "id": "d", "text": "Expansión y proyección exterior (1492 y más allá)" }
+      ],
+      "correctOrder": ["a", "b", "c", "d"],
+      "successText": "✅ Correcto. Unifican, refuerzan el poder y se proyectan hacia fuera.",
+      "failText": "❌ Revisa: unión → instituciones → control → expansión.",
+      "reward": { "setFlag": "f_p2_done" },
+      "hints": [
+        "Primero unión.",
+        "Las instituciones van antes de la expansión.",
+        "Unión → instituciones → control → expansión."
+      ]
+    },
+
+    {
+      "id": "f_p3",
+      "title": "Documento III · Reforma y Contrarreforma",
+      "type": "quiz",
+      "prompt": "¿Qué idea define mejor la <strong>Reforma protestante</strong> en el siglo XVI?",
+      "answers": [
+        { "text": "Fortalecer al Papa como máxima autoridad", "correct": false },
+        { "text": "Criticar abusos y romper la unidad religiosa en Europa", "correct": true },
+        { "text": "Volver al arte clásico de Grecia y Roma", "correct": false },
+        { "text": "Descubrir una nueva ruta hacia la India", "correct": false }
+      ],
+      "successText": "✅ Bien. La Reforma rompe la unidad religiosa y provoca la Contrarreforma.",
+      "failText": "❌ No. Pista: críticas religiosas y división en Europa.",
+      "reward": { "setFlag": "f_p3_done" },
+      "hints": [
+        "No es arte ni exploración.",
+        "Tiene que ver con críticas a la Iglesia.",
+        "Es la que rompe la unidad religiosa."
+      ]
+    },
+
+    {
+      "id": "f_p4",
+      "title": "Cierre del Archivo",
+      "type": "code",
+      "prompt": "La cerradura final exige una palabra clave: <strong>¿qué nace aquí?</strong><br><br>Escribe una palabra (sin tilde) que resuma el nuevo sistema de poder y organización.",
+      "answer": "ESTADOMODERNO",
+      "successText": "✅ Correcto. El Archivo reconoce el nacimiento del Estado moderno.",
+      "failText": "❌ No. Pista: son dos palabras juntas (sin espacio).",
+      "reward": { "setFlag": "f_p4_done" },
+      "hints": [
+        "Necesita impuestos, burocracia y ejército.",
+        "Dos palabras: Estado + moderno.",
+        "Escribe ESTADOMODERNO."
+      ],
+      "solution": "Respuesta: ESTADOMODERNO"
+    }
+  ]
+}
