@@ -246,3 +246,43 @@ body{
   padding:10px;
 }
 .drop-target.filled{border-style:solid; border-color:rgba(79,209,197,.35)}
+/* HUD */
+.hud{
+  position:absolute;
+  right:14px;
+  top:14px;
+  width:min(320px, calc(100% - 28px));
+  background:rgba(19,22,27,.92);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:12px;
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(6px);
+}
+.hud h3{margin:0 0 10px; font-size:14px}
+.seals{display:grid; grid-template-columns:repeat(5, 1fr); gap:8px}
+.seal{
+  border:1px solid #243041;
+  background:#0d131a;
+  border-radius:14px;
+  padding:8px 6px;
+  text-align:center;
+  font-weight:900;
+  font-size:12px;
+  color:var(--muted);
+}
+.seal.on{
+  border-color:rgba(79,209,197,.65);
+  color:var(--ink);
+  box-shadow:0 0 0 3px rgba(79,209,197,.12);
+}
+.hud .row{margin-top:10px}
+.badge{
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  color:var(--muted);
+  font-size:12px;
+}
+`
