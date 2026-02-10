@@ -1,0 +1,85 @@
+{
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Prólogo",
+      "bg": "./assets/img/bg_intro.jpg",
+      "text": [
+        "Has recibido una carta sellada con lacre. El Consejo de Cronistas te encomienda una misión: <strong>reconstruir las claves de la Edad Moderna</strong> antes de que el archivo se cierre.",
+        "<span class='muted'>Tu objetivo inmediato: conseguir el <strong>Sello I</strong> (comercio, Humanismo, Renacimiento, ciencia y exploraciones).</span>"
+      ],
+      "actions": [
+        { "label": "▶ Empezar", "type": "goto", "target": "r1_port" },
+        { "label": "↩ Continuar partida", "type": "continue" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "r1_port",
+      "title": "Reto 1 · El Puerto y el Mapa",
+      "bg": "./assets/img/bg_port.jpg",
+      "text": [
+        "Estás en un puerto europeo del siglo XV. Huele a brea, sal y especias. Un cartógrafo te mira con desconfianza.",
+        "Necesitas dos cosas: <strong>1) entender qué cambia en Europa</strong> y <strong>2) separar causas</strong> (exploraciones / cambios culturales).",
+        "<span class='muted'>Pista: haz clic en los objetos de la escena.</span>"
+      ],
+      "actions": [
+        { "label": "📜 Hablar con el cartógrafo", "type": "dialog", "text": "«Si quieres mi ayuda, demuéstrame que sabes qué cambia: comercio, ideas y poder…»" }
+      ],
+      "hotspots": [
+        {
+          "id": "hs_map",
+          "label": "Mapa antiguo",
+          "x": 58,
+          "y": 56,
+          "w": 30,
+          "h": 34,
+          "action": { "type": "giveItem", "itemId": "mapa_viejo", "toast": "Has conseguido: Mapa viejo" }
+        },
+        {
+          "id": "hs_test1",
+          "label": "Prueba 1",
+          "x": 10,
+          "y": 62,
+          "w": 32,
+          "h": 26,
+          "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
+        },
+        {
+          "id": "hs_test2",
+          "label": "Prueba 2",
+          "x": 12,
+          "y": 28,
+          "w": 30,
+          "h": 26,
+          "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
+        },
+        {
+          "id": "hs_exit",
+          "label": "Puerta del archivo",
+          "x": 78,
+          "y": 12,
+          "w": 18,
+          "h": 28,
+          "action": { "type": "tryExitR1" }
+        }
+      ]
+    },
+
+    {
+      "id": "r1_success",
+      "title": "Sello I conseguido",
+      "bg": "./assets/img/bg_success.jpg",
+      "text": [
+        "El cartógrafo asiente y estampa un sello sobre tu cuaderno.",
+        "<strong>Has obtenido el SELLO I</strong>: ya puedes avanzar al resto del archivo.",
+        "<span class='muted'>En el juego final, este sello desbloqueará el siguiente reto.</span>"
+      ],
+      "actions": [
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    }
+  ]
+}
