@@ -32,9 +32,13 @@ export function canEnter(scene, state){
   }
 
   // Final requiere Sello IV
-  if(["cut_r4_final", "final_archive", "game_complete"].includes(scene.id)){
-    return !!state.completed?.seal4;
-  }
+if(["cut_r4_final", "final_archive"].includes(scene.id)){
+  return !!state.completed?.seal4;
+}
+if(scene.id === "game_complete"){
+  return !!state.completed?.final;
+}
+
 
   // Si no está en la lista, por defecto se permite
   return true;
