@@ -321,11 +321,10 @@ function openPuzzle(puzzleId){
       saveState(state);
       render();
     },
-    onFail: (puzzle)=>{
-      incAttempt(puzzle.id);
-      saveState(state);
-      render();
-    },
+onFail: (puzzle)=>{
+  incAttempt(puzzle.id);
+  saveState(state);
+},
     onHint: (puzzle)=>{
       const hint = getHint(puzzle);
       toast("💡 " + hint);
