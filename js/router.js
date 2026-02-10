@@ -12,3 +12,12 @@ export function canEnter(scene, state){
   }
   return true;
 }
+export function canEnter(scene, state){
+  // reglas mínimas: puedes ajustar luego
+  if(scene.id === "r1_port" || scene.id === "r1_success") return true;
+  if(scene.id === "cut_r1_r2" || scene.id === "r2_printshop" || scene.id === "r2_success"){
+    return !!state.completed.seal1; // Reto 2 solo si Sello 1
+  }
+  return true;
+}
+
