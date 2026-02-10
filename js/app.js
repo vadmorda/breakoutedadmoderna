@@ -168,9 +168,11 @@ function handleHotspot(hs){
 
   if(act.type === "tryExitR1"){
     if(canExitR1()){
+          setSeal("seal1");
+    saveState(state);
       toast("✅ La puerta cede. Entras al archivo.");
       goTo("r1_success");
-     setSeal("seal1");
+     
     }else{
       toast("🔒 La puerta no se abre. Te faltan pruebas.");
     }
