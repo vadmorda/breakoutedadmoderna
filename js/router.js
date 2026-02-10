@@ -41,5 +41,8 @@ export function canEnter(scene, state){
   }
   return true;
 }
+if(scene.id === "cut_r3_r4" || scene.id === "r4_maproom" || scene.id === "r4_success"){
+  return !!state.completed.seal3;
+}
 
 
