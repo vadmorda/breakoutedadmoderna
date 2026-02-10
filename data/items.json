@@ -11,6 +11,7 @@
     { "id": "boceto_perspectiva", "name": "Boceto con perspectiva", "desc": "Un dibujo con líneas de fuga. Puro Renacimiento." },
 
     { "id": "astrolabio", "name": "Astrolabio", "desc": "Para orientarte con el cielo cuando el mapa no basta." },
-    { "id": "bitacora", "name": "Bitácora", "desc": "Un cuaderno de navegación con anotaciones y una clave a medias." }
+    { "id": "bitacora", "name": "Bitácora", "desc": "Un cuaderno de navegación con anotaciones y una clave a medias." },
+    { "id": "pliego_impreso", "name": "Pliego impreso", "desc": "Una hoja recién impresa. Subraya una palabra clave del Humanismo." }
   ]
 }
