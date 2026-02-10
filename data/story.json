@@ -196,5 +196,64 @@
   ],
   "hotspots": []
 }
+{
+  "id": "r3_gallery",
+  "title": "Reto 3 · El Arte de Mirar",
+  "bg": "./assets/img/bg_gallery.jpg",
+  "text": [
+    "Una galería renacentista. Un maestro pintor te observa: «Aquí no basta con saber… hay que <strong>saber mirar</strong>.»",
+    "Necesitas reconocer <strong>rasgos del Renacimiento</strong> y cómo se adapta en España.",
+    "<span class='muted'>Tip: consigue la lupa y úsala donde corresponda.</span>"
+  ],
+  "actions": [
+    { "label": "🎭 Hablar con el maestro", "type": "dialog", "text": "«Perspectiva, proporción, clasicismo… y un mecenas pagando la factura.»" }
+  ],
+  "hotspots": [
+    {
+      "id": "hs_lupa",
+      "label": "Lupa",
+      "x": 10,
+      "y": 68,
+      "w": 16,
+      "h": 20,
+      "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" }
+    },
+    {
+      "id": "hs_canvas",
+      "label": "Lienzo en proceso",
+      "x": 58,
+      "y": 44,
+      "w": 34,
+      "h": 48,
+      "action": {
+        "type": "useItem",
+        "requiresItem": "lupa",
+        "success": { "type": "giveItem", "itemId": "boceto_perspectiva", "setFlag": "r3_found_perspective" },
+        "successToast": "Con la lupa descubres líneas de fuga en el boceto. Perspectiva pura.",
+        "failToast": "Si tuvieses algo para ver detalles…"
+      }
+    },
+
+    { "id": "hs_r3_p1", "label": "Prueba 1 (Detalle)", "x": 12, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
+    { "id": "hs_r3_p2", "label": "Prueba 2 (Conceptos)", "x": 40, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p2" } },
+    { "id": "hs_r3_p3", "label": "Prueba 3 (España)", "x": 68, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p3" } },
+
+    { "id": "hs_exit_r3", "label": "Sello III", "x": 44, "y": 44, "w": 12, "h": 16, "action": { "type": "tryExitR3" } }
+  ]
+}
+    {
+  "id": "r3_success",
+  "title": "Sello III conseguido",
+  "bg": "./assets/img/bg_success.jpg",
+  "text": [
+    "El maestro sonríe. «Ahora sí. Ya no miras cuadros: <strong>lees fuentes históricas</strong>.»",
+    "<strong>Has obtenido el SELLO III</strong>."
+  ],
+  "actions": [
+    { "label": "➡ Volver a la intro", "type": "goto", "target": "intro" },
+    { "label": "➡ Ir a la transición", "type": "goto", "target": "cut_r2_r3" }
+  ],
+  "hotspots": []
+}
 
 }
