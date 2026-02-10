@@ -72,7 +72,7 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
   setOn("seal2", state.completed?.seal2);
   setOn("seal3", state.completed?.seal3);
   setOn("seal4", state.completed?.seal4);
-  setOn("sealF", state.completed?.final);
+  setOn("sealF", state.completed?.final || state.currentSceneId === "game_complete");;
 
   const hudMsg = document.getElementById("hudMsg");
   if(hudMsg){
@@ -81,7 +81,7 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
       !state.completed?.seal2 ? "Objetivo: conseguir Sello II" :
       !state.completed?.seal3 ? "Objetivo: conseguir Sello III" :
       !state.completed?.seal4 ? "Objetivo: conseguir Sello IV" :
-      !state.completed?.final ? "Objetivo: abrir el Archivo final" :
+      (!state.completed?.final && state.currentSceneId !== "game_complete") ? "Objetivo: abrir el Archivo final" :
       "✅ Misión completada";
     hudMsg.textContent = next;
   }
