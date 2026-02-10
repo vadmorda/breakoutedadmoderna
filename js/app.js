@@ -200,6 +200,18 @@ function handleHotspot(hs){
     }
     return;
   }
+  if(act.type === "tryExitR3"){
+    const ok = state.flags.r3_p1_done && state.flags.r3_p2_done && state.flags.r3_p3_done && state.flags.r3_found_perspective;
+    if(ok){
+      state.completed.seal3 = true;
+      saveState(state);
+      toast("✅ Sello III desbloqueado.");
+      goTo("r3_success");
+    }else{
+      toast("🔒 Te falta mirar mejor: pruebas y/o el detalle con la lupa.");
+    }
+    return;
+  }
 
   if(act.type === "giveItem"){
     giveItem(act.itemId);
