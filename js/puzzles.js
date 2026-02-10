@@ -25,7 +25,7 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
 
   btnClose.onclick = close;
   btnHint.onclick = () => onHint(puzzle);
-
+document.body.classList.remove("modal-open");
   // “Me rindo” (solo modo docente)
   if(btnGiveUp){
     btnGiveUp.onclick = () => {
@@ -61,7 +61,7 @@ if(puzzle.type === "quiz"){
 }
 
 
-
+document.body.classList.add("modal-open");
   modal.classList.remove("hidden");
 }
 
