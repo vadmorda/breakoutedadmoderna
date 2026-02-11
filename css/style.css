@@ -366,3 +366,18 @@ body.modal-open .hotspots{
     transform: translateY(0);
   }
 }
+/* === FIX CAPAS === */
+.scene-bg{ z-index: 0; }
+.hotspots{ position:absolute; inset:0; z-index: 1; }
+.scene-panel{ position:absolute; z-index: 2; }
+.hud{ position:absolute; z-index: 2; }
+
+/* El modal SIEMPRE por encima */
+.modal{ z-index: 9999; }
+.modal-card{ position:relative; z-index: 10000; }
+
+/* Evitar que la narrativa se coma media pantalla en móvil */
+.scene-panel{
+  max-height: 38vh;
+  overflow: auto;
+}
