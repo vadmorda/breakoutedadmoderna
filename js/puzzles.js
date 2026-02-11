@@ -79,7 +79,7 @@ function renderQuiz({ puzzle, body, feedback, onSolve, onFail, close }){
       if(a.correct){
         feedback.innerHTML = puzzle.successText || "✅ Bien.";
         onSolve(puzzle);
-      
+      close();
       }else{
         feedback.innerHTML = puzzle.failText || "❌ No.";
         onFail(puzzle);
@@ -168,6 +168,7 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail, close }){
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Perfecto.";
       onSolve(puzzle);
+      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
@@ -228,6 +229,7 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
+      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
@@ -291,6 +293,7 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
+      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
@@ -321,6 +324,7 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
     if(val === ans){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
+      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ No.";
       onFail(puzzle);
@@ -368,6 +372,7 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
       if(z.id === puzzle.correctZoneId){
         feedback.innerHTML = puzzle.successText || "✅ Correcto.";
         onSolve(puzzle);
+        close();
       }else{
         feedback.innerHTML = puzzle.failText || "❌ No.";
         onFail(puzzle);
