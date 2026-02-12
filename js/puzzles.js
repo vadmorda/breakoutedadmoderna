@@ -55,9 +55,6 @@ if(puzzle.type === "quiz"){
 
 } else if(puzzle.type === "spot"){
   renderSpot({ puzzle, body, feedback, onSolve, onFail, close });
-
-} else {
-  body.innerHTML += `<p class="small">Tipo no implementado aún: ${puzzle.type}</p>`;
 }
 
 
