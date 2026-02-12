@@ -418,3 +418,7 @@ body.modal-open .hotspots{
 /* Modal siempre arriba */
 .modal{ z-index: 9999; }
 .hidden{ display:none !important; }
+#modalPuzzle.hidden{
+  display:none !important;
+  pointer-events:none !important;
+}
