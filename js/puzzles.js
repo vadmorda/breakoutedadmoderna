@@ -1,3 +1,4 @@
+// js/puzzles.js
 export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   const modal = document.getElementById("modalPuzzle");
   const title = document.getElementById("puzzleTitle");
@@ -7,29 +8,34 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   const btnHint = document.getElementById("btnHint");
   const btnGiveUp = document.getElementById("btnGiveUp");
 
+  if(!modal || !title || !body || !feedback) return;
+
   title.textContent = puzzle.title || "Prueba";
 
-  // panel superior: intentos
-  const tries = (state.attempts && state.attempts[puzzle.id]) ? state.attempts[puzzle.id] : 0;
+  // intentos
+  const tries = state?.attempts?.[puzzle.id] || 0;
   feedback.textContent = tries ? `Intentos: ${tries}` : " ";
 
+  // reset body
   body.innerHTML = "";
-  const p = document.createElement("div");
-  p.className = "puzzle-prompt";
-  p.innerHTML = puzzle.prompt || "";
-  body.appendChild(p);
+  const prompt = document.createElement("div");
+  prompt.className = "puzzle-prompt";
+  prompt.innerHTML = puzzle.prompt || "";
+  body.appendChild(prompt);
 
   function close(){
     modal.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   }
 
-  btnClose.onclick = close;
-  btnHint.onclick = () => onHint(puzzle);
-document.body.classList.remove("modal-open");
+  // wiring
+  btnClose && (btnClose.onclick = close);
+  btnHint && (btnHint.onclick = () => onHint?.(puzzle));
+
   // “Me rindo” (solo modo docente)
   if(btnGiveUp){
     btnGiveUp.onclick = () => {
-      if(!state.flags?.teacherMode){
+      if(!state?.flags?.teacherMode){
         feedback.textContent = "🔒 Solo disponible con modo docente.";
         return;
       }
@@ -38,74 +44,89 @@ document.body.classList.remove("modal-open");
   }
 
   // Render según tipo
-if(puzzle.type === "quiz"){
-  renderQuiz({ puzzle, body, feedback, onSolve, onFail, close });
+  const ctx = {
+    puzzle,
+    body,
+    feedback,
+    onSolve: (pz)=>{
+      onSolve?.(pz);
+      // ✅ clave: al resolver, se cierra para que el alumno vea el avance
+      close();
+    },
+    onFail: (pz)=>{
+      onFail?.(pz);
+      // al fallar NO cerramos: permite reintentar
+    },
+    close
+  };
 
-} else if(puzzle.type === "drag-sort"){
-  renderDragSort({ puzzle, body, feedback, onSolve, onFail, close });
+  if(puzzle.type === "quiz") renderQuiz(ctx);
+  else if(puzzle.type === "drag-sort") renderDragSort(ctx);
+  else if(puzzle.type === "match") renderMatch(ctx);
+  else if(puzzle.type === "order") renderOrder(ctx);
+  else if(puzzle.type === "code") renderCode(ctx);
+  else if(puzzle.type === "spot") renderSpot(ctx);
+  else {
+    const warn = document.createElement("p");
+    warn.className = "small";
+    warn.textContent = `Tipo no implementado aún: ${puzzle.type}`;
+    body.appendChild(warn);
+  }
 
-} else if(puzzle.type === "match"){
-  renderMatch({ puzzle, body, feedback, onSolve, onFail, close });
-
-} else if(puzzle.type === "order"){
-  renderOrder({ puzzle, body, feedback, onSolve, onFail, close });
-
-} else if(puzzle.type === "code"){
-  renderCode({ puzzle, body, feedback, onSolve, onFail, close });
-
-} else if(puzzle.type === "spot"){
-  renderSpot({ puzzle, body, feedback, onSolve, onFail, close });
-}
-
-
-document.body.classList.add("modal-open");
+  // mostrar modal
+  document.body.classList.add("modal-open");
   modal.classList.remove("hidden");
 }
 
 /* ---------------- Types ---------------- */
 
-function renderQuiz({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   const grid = document.createElement("div");
   grid.className = "answer-grid";
 
   (puzzle.answers || []).forEach(a=>{
     const b = document.createElement("button");
     b.className = "answer-btn";
+    b.type = "button";
     b.textContent = a.text;
+
     b.addEventListener("click", ()=>{
       if(a.correct){
         feedback.innerHTML = puzzle.successText || "✅ Bien.";
         onSolve(puzzle);
-      close();
       }else{
         feedback.innerHTML = puzzle.failText || "❌ No.";
         onFail(puzzle);
       }
     });
+
     grid.appendChild(b);
   });
 
   body.appendChild(grid);
 }
 
-function renderDragSort({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderDragSort({ puzzle, body, feedback, onSolve, onFail }){
+  const [c1, c2] = puzzle.columns || [];
+  if(!c1 || !c2){
+    const warn = document.createElement("p");
+    warn.className = "small";
+    warn.textContent = "⚠️ drag-sort mal configurado (columns).";
+    body.appendChild(warn);
+    return;
+  }
+
   const wrap = document.createElement("div");
   wrap.className = "columns";
 
   const left = document.createElement("div");
   left.className = "dropzone";
+  left.innerHTML = `<h3>${c1.title}</h3><div class="drop-target" data-col="${c1.id}"></div>`;
 
   const right = document.createElement("div");
   right.className = "dropzone";
-
-  const [c1, c2] = puzzle.columns || [];
-  if(!c1 || !c2){
-    body.innerHTML += `<p class="small">⚠️ drag-sort mal configurado (columns).</p>`;
-    return;
-  }
-
-  left.innerHTML = `<h3>${c1.title}</h3><div class="drop-target" data-col="${c1.id}"></div>`;
   right.innerHTML = `<h3>${c2.title}</h3><div class="drop-target" data-col="${c2.id}"></div>`;
+
   wrap.appendChild(left);
   wrap.appendChild(right);
 
@@ -114,39 +135,91 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail, close }){
   pool.innerHTML = `
     <h3>Tarjetas</h3>
     <div class="draggables"></div>
-    <div class="row"><button class="btn" id="btnCheckDrag">✅ Comprobar</button></div>
+    <div class="row">
+      <button class="btn" id="btnCheckDrag" type="button">✅ Comprobar</button>
+      <button class="btn ghost" id="btnResetDrag" type="button">↩ Recolocar</button>
+    </div>
   `;
-  const poolInner = pool.querySelector(".draggables");
 
+  const poolInner = pool.querySelector(".draggables");
   const placements = {}; // cardId -> colId
 
-  (puzzle.cards || []).forEach(card=>{
+  const cards = puzzle.cards || [];
+  const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+  let selectedCardId = null;
+
+  // crear tarjetas
+  cards.forEach(card=>{
     const chip = document.createElement("div");
     chip.className = "draggable";
-    chip.draggable = true;
+    chip.draggable = !isTouch; // en táctil, mejor click-to-move
     chip.dataset.card = card.id;
     chip.textContent = card.text;
+    chip.tabIndex = 0;
 
     chip.addEventListener("dragstart", (e)=>{
-      e.dataTransfer.setData("text/plain", card.id);
+      e.dataTransfer?.setData("text/plain", card.id);
+      chip.classList.add("dragging");
+    });
+    chip.addEventListener("dragend", ()=>{
+      chip.classList.remove("dragging");
+    });
+
+    // Fallback táctil: click para “seleccionar”
+    chip.addEventListener("click", ()=>{
+      if(!isTouch) return;
+      const prev = pool.querySelector(`.draggable[data-card="${selectedCardId}"]`) ||
+                   body.querySelector(`.draggable[data-card="${selectedCardId}"]`);
+      prev?.classList.remove("selected");
+
+      selectedCardId = (selectedCardId === card.id) ? null : card.id;
+      chip.classList.toggle("selected", selectedCardId === card.id);
+      feedback.textContent = selectedCardId ? "📌 Tarjeta seleccionada. Ahora toca una columna." : " ";
     });
 
     poolInner.appendChild(chip);
   });
 
   function wireDropTarget(el){
+    // drag desktop
     el.addEventListener("dragover", (e)=> e.preventDefault());
+    el.addEventListener("dragenter", ()=> el.classList.add("hover"));
+    el.addEventListener("dragleave", ()=> el.classList.remove("hover"));
+
     el.addEventListener("drop", (e)=>{
       e.preventDefault();
-      const cardId = e.dataTransfer.getData("text/plain");
-      if(!cardId) return;
-      const cardEl = body.querySelector(`.draggable[data-card="${cardId}"]`);
-      if(!cardEl) return;
+      el.classList.remove("hover");
 
-      el.appendChild(cardEl);
-      placements[cardId] = el.dataset.col;
-      el.classList.add("filled");
+      const cardId = e.dataTransfer?.getData("text/plain");
+      if(!cardId) return;
+      placeCard(cardId, el.dataset.col, el);
     });
+
+    // click-to-move (táctil)
+    el.addEventListener("click", ()=>{
+      if(!isTouch) return;
+      if(!selectedCardId){
+        feedback.textContent = "📌 Primero selecciona una tarjeta.";
+        return;
+      }
+      placeCard(selectedCardId, el.dataset.col, el);
+      // limpiar selección visual
+      const chip = body.querySelector(`.draggable[data-card="${selectedCardId}"]`) ||
+                   pool.querySelector(`.draggable[data-card="${selectedCardId}"]`);
+      chip?.classList.remove("selected");
+      selectedCardId = null;
+      feedback.textContent = " ";
+    });
+  }
+
+  function placeCard(cardId, colId, targetEl){
+    const cardEl = body.querySelector(`.draggable[data-card="${cardId}"]`) ||
+                   pool.querySelector(`.draggable[data-card="${cardId}"]`);
+    if(!cardEl) return;
+
+    targetEl.appendChild(cardEl);
+    placements[cardId] = colId;
+    targetEl.classList.add("filled");
   }
 
   body.appendChild(pool);
@@ -154,26 +227,41 @@ function renderDragSort({ puzzle, body, feedback, onSolve, onFail, close }){
 
   body.querySelectorAll(".drop-target").forEach(wireDropTarget);
 
-  body.querySelector("#btnCheckDrag").addEventListener("click", ()=>{
-    const cards = puzzle.cards || [];
+  // comprobar
+  pool.querySelector("#btnCheckDrag").addEventListener("click", ()=>{
     const allPlaced = cards.every(c => placements[c.id]);
     if(!allPlaced){
       feedback.textContent = "⚠️ Aún faltan tarjetas por colocar.";
       return;
     }
+
     const ok = cards.every(c => placements[c.id] === c.correctColumn);
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Perfecto.";
       onSolve(puzzle);
-      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
     }
   });
+
+  // recolocar
+  pool.querySelector("#btnResetDrag").addEventListener("click", ()=>{
+    // mover todo al pool
+    cards.forEach(c=>{
+      const el = body.querySelector(`.draggable[data-card="${c.id}"]`);
+      if(el) poolInner.appendChild(el);
+      delete placements[c.id];
+    });
+    body.querySelectorAll(".drop-target").forEach(t=>{
+      t.classList.remove("filled");
+      t.classList.remove("hover");
+    });
+    feedback.textContent = "↩ Tarjetas recolocadas.";
+  });
 }
 
-function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderMatch({ puzzle, body, feedback, onSolve, onFail }){
   const wrap = document.createElement("div");
   wrap.className = "dropzone";
   wrap.innerHTML = `<h3>Empareja</h3>`;
@@ -214,6 +302,7 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
 
   const btn = document.createElement("button");
   btn.className = "btn";
+  btn.type = "button";
   btn.textContent = "✅ Comprobar";
   btn.addEventListener("click", ()=>{
     const all = (puzzle.left || []).every(L => selects[L.id]);
@@ -226,7 +315,6 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
-      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
@@ -234,14 +322,16 @@ function renderMatch({ puzzle, body, feedback, onSolve, onFail, close }){
   });
 
   body.appendChild(wrap);
-  body.appendChild(document.createElement("div")).className = "row";
-  body.lastChild.appendChild(btn);
+  const row = document.createElement("div");
+  row.className = "row";
+  row.appendChild(btn);
+  body.appendChild(row);
 }
 
-function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
   const list = document.createElement("div");
   list.className = "dropzone";
-  list.innerHTML = `<h3>Arrastra para ordenar (intercambia posiciones)</h3>`;
+  list.innerHTML = `<h3>Arrastra para ordenar</h3>`;
 
   const ul = document.createElement("div");
   ul.className = "draggables";
@@ -260,12 +350,15 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
       chip.textContent = it?.text || id;
 
       chip.addEventListener("dragstart", (e)=>{
-        e.dataTransfer.setData("text/plain", id);
+        e.dataTransfer?.setData("text/plain", id);
+        chip.classList.add("dragging");
       });
+      chip.addEventListener("dragend", ()=> chip.classList.remove("dragging"));
+
       chip.addEventListener("dragover", (e)=> e.preventDefault());
       chip.addEventListener("drop", (e)=>{
         e.preventDefault();
-        const draggedId = e.dataTransfer.getData("text/plain");
+        const draggedId = e.dataTransfer?.getData("text/plain");
         const targetId = chip.dataset.id;
         if(!draggedId || draggedId === targetId) return;
 
@@ -283,6 +376,7 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
 
   const btn = document.createElement("button");
   btn.className = "btn";
+  btn.type = "button";
   btn.textContent = "✅ Comprobar";
   btn.addEventListener("click", ()=>{
     const correct = puzzle.correctOrder || [];
@@ -290,7 +384,6 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
     if(ok){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
-      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ Revisa.";
       onFail(puzzle);
@@ -298,13 +391,15 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail, close }){
   });
 
   list.appendChild(ul);
-  list.appendChild(document.createElement("div")).className = "row";
-  list.lastChild.appendChild(btn);
+  const row = document.createElement("div");
+  row.className = "row";
+  row.appendChild(btn);
+  list.appendChild(row);
 
   body.appendChild(list);
 }
 
-function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderCode({ puzzle, body, feedback, onSolve, onFail }){
   const box = document.createElement("input");
   box.className = "textarea";
   box.placeholder = "Escribe la clave…";
@@ -313,6 +408,7 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
 
   const btn = document.createElement("button");
   btn.className = "btn";
+  btn.type = "button";
   btn.textContent = "🔓 Probar";
   btn.addEventListener("click", ()=>{
     const ans = (puzzle.answer || "").toUpperCase().trim();
@@ -321,10 +417,11 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
     if(val === ans){
       feedback.innerHTML = puzzle.successText || "✅ Correcto.";
       onSolve(puzzle);
-      close();
     }else{
       feedback.innerHTML = puzzle.failText || "❌ No.";
       onFail(puzzle);
+      box.focus();
+      box.select?.();
     }
   });
 
@@ -336,29 +433,22 @@ function renderCode({ puzzle, body, feedback, onSolve, onFail, close }){
   body.appendChild(row);
 }
 
-function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
+function renderSpot({ puzzle, body, feedback, onSolve, onFail }){
   const wrap = document.createElement("div");
   wrap.className = "dropzone";
 
   const imgWrap = document.createElement("div");
-  imgWrap.style.position = "relative";
-  imgWrap.style.maxWidth = "100%";
-  imgWrap.style.borderRadius = "16px";
-  imgWrap.style.overflow = "hidden";
-  imgWrap.style.border = "1px solid #243041";
+  imgWrap.className = "spot-wrap";
 
   const img = document.createElement("img");
   img.src = puzzle.image;
   img.alt = "Imagen de la prueba";
-  img.style.width = "100%";
-  img.style.display = "block";
   imgWrap.appendChild(img);
 
   (puzzle.zones || []).forEach(z=>{
     const zone = document.createElement("button");
     zone.type = "button";
-    
-    zone.className = "spot-zone"; // <- importante (CSS nuevo)
+    zone.className = "spot-zone";
     zone.style.left = z.x + "%";
     zone.style.top = z.y + "%";
     zone.style.width = z.w + "%";
@@ -369,7 +459,6 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
       if(z.id === puzzle.correctZoneId){
         feedback.innerHTML = puzzle.successText || "✅ Correcto.";
         onSolve(puzzle);
-        close();
       }else{
         feedback.innerHTML = puzzle.failText || "❌ No.";
         onFail(puzzle);
@@ -379,9 +468,11 @@ function renderSpot({ puzzle, body, feedback, onSolve, onFail, close }){
     imgWrap.appendChild(zone);
   });
 
-
-  
-
   wrap.appendChild(imgWrap);
   body.appendChild(wrap);
+
+  const note = document.createElement("p");
+  note.className = "small";
+  note.textContent = "Consejo: busca líneas que crean profundidad (punto de fuga).";
+  body.appendChild(note);
 }
