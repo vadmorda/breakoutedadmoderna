@@ -113,6 +113,10 @@ function goTo(sceneId){
 
   state.currentSceneId = sceneId;
   saveState(state);
+  // --- FORZAR INICIO EN INTRO (para depurar) ---
+state.currentSceneId = "intro";
+saveState(state);
+
   render();
 }
 
