@@ -381,3 +381,39 @@ body.modal-open .hotspots{
   max-height: 38vh;
   overflow: auto;
 }
+/* Hotspots visibles tipo "ventana" */
+#hotspots { position:absolute; inset:0; z-index: 5; }
+
+.hotspot{
+  position:absolute;
+  border: 1px dashed rgba(255,255,255,.25);
+  background: rgba(255,255,255,.06);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.hotspot:hover{
+  background: rgba(255,255,255,.10);
+  transform: translateY(-1px);
+}
+
+.hotspot .tag{
+  position:absolute;
+  left: 10px;
+  top: 10px;
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+/* Los paneles no bloquean el escenario */
+.scene-panel, .hud { pointer-events:none; z-index: 10; }
+.scene-panel button, .scene-panel .btn, .hud button, .hud .btn { pointer-events:auto; }
+
+/* Modal siempre arriba */
+.modal{ z-index: 9999; }
