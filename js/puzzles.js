@@ -54,8 +54,9 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
       // En algunas pruebas (pistas del Reto 4) NO cerramos automáticamente,
       // para que el jugador pueda leer el texto de éxito (CON / ECT / ADO).
       const keepOpen =
-        ["r4_p1","r4_p2","r4_p3"].includes(pz?.id) ||
-        String(pz?.successText || "").includes("Pista para la Clave");
+  ["r4_p1","r4_p2","r4_p3","f_p1","f_p2","f_p3"].includes(pz?.id) ||
+  String(pz?.successText || "").includes("Pista para la Clave") ||
+  String(pz?.successText || "").includes("Pista para el Cierre");
 
       if(keepOpen){
         // Añadimos un botón "Continuar" (una sola vez)
