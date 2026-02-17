@@ -538,7 +538,7 @@
         "l3": "r1",
         "l4": "r4"
       },
-      "successText": "✅ Bien. Un Estado fuerte necesita dinero, administración y control militar.",
+      "successText": "✅ Bien. Un Estado fuerte necesita dinero, administración y control militar. <br><br><strong>Pista para el Cierre:</strong> ESTADO",
       "failText": "❌ Revisa: ¿qué paga el Estado? ¿quién administra? ¿quién manda las armas? ¿quién gana poder en las ciudades?",
       "reward": {
         "setFlag": "f_p1_done"
@@ -578,7 +578,7 @@
         "c",
         "d"
       ],
-      "successText": "✅ Correcto. Unifican, refuerzan el poder y se proyectan hacia fuera.",
+      "successText": "✅ Correcto. Unifican, refuerzan el poder y se proyectan hacia fuera. <br><br><strong>Pista para el Cierre:</strong> MODERNO",
       "failText": "❌ Revisa: unión → instituciones → control → expansión.",
       "reward": {
         "setFlag": "f_p2_done"
@@ -612,7 +612,7 @@
           "correct": false
         }
       ],
-      "successText": "✅ Bien. La Reforma rompe la unidad religiosa y provoca la Contrarreforma.",
+      "successText": "✅ Bien. La Reforma rompe la unidad religiosa y provoca la Contrarreforma. <br><br><strong>Pista para el Cierre:</strong> (juntas: ESTADO + MODERNO)",
       "failText": "❌ No. Pista: críticas religiosas y división en Europa.",
       "reward": {
         "setFlag": "f_p3_done"
@@ -627,7 +627,7 @@
       "id": "f_p4",
       "title": "Cierre del Archivo",
       "type": "code",
-      "prompt": "La cerradura final exige una palabra clave: <strong>¿qué nace aquí?</strong><br><br>Escribe una palabra (sin tilde) que resuma el nuevo sistema de poder y organización.",
+      "prompt": "La cerradura final exige una palabra clave: <strong>¿qué nace aquí?</strong><br><br>Escribe una palabra (sin tilde) que resuma el nuevo sistema de poder y organización.<br><br><strong>Consejo:</strong> junta las pistas de los Documentos I y II (ESTADO + MODERNO) y escríbelas juntas, sin espacios.",
       "answer": "ESTADOMODERNO",
       "successText": "✅ Correcto. El Archivo reconoce el nacimiento del Estado moderno.",
       "failText": "❌ No. Pista: son dos palabras juntas (sin espacio).",
@@ -637,7 +637,8 @@
       "hints": [
         "Necesita impuestos, burocracia y ejército.",
         "Dos palabras: Estado + moderno.",
-        "Escribe ESTADOMODERNO."
+        "Escribe ESTADOMODERNO.",
+        "Recuerda: sin espacios ni tildes."
       ],
       "solution": "Respuesta: ESTADOMODERNO"
     }
