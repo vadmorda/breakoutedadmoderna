@@ -31,51 +31,13 @@ function getPuzzle(id){
 }
 
 function toast(msg){
-  // IMPORTANTE:
-  // Antes lo metíamos dentro de #sceneText, pero render() vuelve a pintar el texto de escena
-  // y la “notificación” desaparecía instantáneamente (especialmente tras usar objetos o resolver pruebas).
-  // Ahora usamos #toastArea (si existe) para que sea persistente e independiente del render.
-  const area = document.getElementById("toastArea");
-  const fallback = document.getElementById("sceneText");
-  const host = area || fallback;
-  if(!host) return;
-
-  const node = document.createElement("div");
-  node.className = area ? "toast" : "muted";
+  const el = document.getElementById("sceneText");
+  if(!el) return;
+  const node = document.createElement("p");
+  node.className = "muted";
   node.textContent = msg;
-  host.appendChild(node);
-
-  window.setTimeout(()=> node.remove(), 2600);
-}
-function openItemModal(itemId){
-  const it = itemsById[itemId];
-
-  const modal = document.getElementById("modalItem");
-  const title = document.getElementById("itemTitle");
-  const body  = document.getElementById("itemBody");
-  if(!modal || !title || !body){
-    // Si por lo que sea el modal no existe, fallback a toast (no rompe nada)
-    toast((it?.name ? it.name + ": " : "") + (it?.desc || itemId));
-    return;
-  }
-
-  title.textContent = it?.name || itemId;
-
-  let html = "";
-  if(it?.desc) html += `<p>${it.desc}</p>`;
-
-  if(itemId === "pliego_impreso"){
-    html += `
-      <hr class="sep">
-      <p class="small muted">En el pliego aparece una palabra subrayada:</p>
-      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZON</u></strong></p>
-      <p class="small muted">Sin tilde.</p>
-    `;
-  }
-
-  body.innerHTML = html || `<p class="muted">No hay información adicional.</p>`;
-  modal.classList.remove("hidden");
-  document.body.classList.add("modal-open");
+  el.appendChild(node);
+  setTimeout(()=> node.remove(), 2200);
 }
 
 /* --------- State helpers --------- */
@@ -137,6 +99,45 @@ function nextScene(){
 }
 
 /* --------- Navigation --------- */
+function closeAllModals(){
+document.getElementById("modalPuzzle")?.classList.add("hidden");
+  document.getElementById("modalCode")?.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+}
+
+
+function openItemModal(itemId){
+  const modal = document.getElementById("modalItem");
+  const title = document.getElementById("itemTitle");
+  const body  = document.getElementById("itemBody");
+  if(!modal || !title || !body) return;
+
+  const it = itemsById[itemId];
+  title.textContent = it?.name || itemId;
+
+  let html = "";
+  if(it?.desc) html += `<p>${it.desc}</p>`;
+
+  // Especial: Pliego impreso (Reto 2 · Prueba 3)
+  if(itemId === "pliego_impreso"){
+    html += `
+      <hr class="sep">
+      <p class="small muted">En el pliego aparece una palabra subrayada:</p>
+      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZÓN</u></strong></p>
+      <p class="small muted">Sin tilde. Pista directa para la “Clave humanista”.</p>
+    `;
+    state.flags = state.flags || {};
+    state.flags.r2_pliego_opened = true;
+    saveState(state);
+  }
+
+  body.innerHTML = html || "<p class=\"muted\">No hay información adicional.</p>";
+
+  closeAllModals();
+  modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
 function goTo(sceneId){
   const sc = getScene(sceneId);
   if(!sc){
@@ -151,6 +152,10 @@ function goTo(sceneId){
 
   state.currentSceneId = sceneId;
   saveState(state);
+  // --- FORZAR INICIO EN INTRO (para depurar) ---
+state.currentSceneId = "intro";
+saveState(state);
+
   render();
 }
 
@@ -162,16 +167,17 @@ function render(){
     itemsById,
     onAction: handleAction,
     onHotspot: handleHotspot,
-    onSelectItem: (itemId, opts={})=>{
-  if(opts.inspect){
-    openItemModal(itemId);
-    return;
-  }
-  state.selectedItem = (state.selectedItem === itemId) ? null : itemId;
-  saveState(state);
-  render();
-}
-
+    onSelectItem: (itemId)=>{
+      // 1) click: seleccionar objeto para usarlo
+      // 2) segundo click sobre el mismo: inspeccionarlo/“abrirlo”
+      if(state.selectedItem === itemId){
+        openItemModal(itemId);
+        return;
+      }
+      state.selectedItem = itemId;
+      saveState(state);
+      render();
+    }
   });
 }
 
@@ -393,6 +399,9 @@ function wireUI(){
   document.getElementById("puzzleClose")?.addEventListener("click", ()=>{
     document.getElementById("modalPuzzle")?.classList.add("hidden");
   });
+document.body.classList.remove("modal-open");
+  });
+
 
   // Code modal open/close
   const modalCode = document.getElementById("modalCode");
@@ -462,11 +471,22 @@ function wireUI(){
   document.getElementById("btnNext")?.addEventListener("click", ()=>{
     goTo(nextScene());
   });
+
+  // Modal de objeto (inspección)
+  document.getElementById("itemClose")?.addEventListener("click", ()=>{
+    document.getElementById("modalItem")?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
+  });
+
+  // Cerrar al hacer clic en el fondo oscuro (overlay)
+  document.getElementById("modalItem")?.addEventListener("click", (e)=>{
+    if(e.target?.id === "modalItem"){
+      document.getElementById("modalItem")?.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
 }
-document.getElementById("itemClose")?.addEventListener("click", ()=>{
-  document.getElementById("modalItem")?.classList.add("hidden");
-  document.body.classList.remove("modal-open");
-});
 
 function refreshExportBox(){
   const box = document.getElementById("exportBox");
@@ -489,3 +509,8 @@ function setCodeMsg(msg){
   saveState(state);
   render();
 })();
+document.body.classList.remove("modal-open");
+    }
+  });
+
+
