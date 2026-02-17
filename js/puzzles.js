@@ -23,26 +23,9 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   prompt.innerHTML = puzzle.prompt || "";
   body.appendChild(prompt);
 
-  function close\(\)\{
-    modal\.classList\.add\(\"hidden\"\);
-    document\.body\.classList\.remove\(\"modal-open\"\);
-  \}
-
-  // En algunos puzzles (p.ej., pistas de la Clave del Reto 4) queremos que el modal
-  // NO se cierre automáticamente al acertar, para que el alumno pueda leer el texto.
-  function ensureContinueButton(label = "Continuar"){
-    if(body.querySelector("[data-continue-btn]")) return;
-    const row = document.createElement("div");
-    row.className = "row";
-    row.style.justifyContent = "flex-end";
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "btn";
-    btn.textContent = label;
-    btn.setAttribute("data-continue-btn","1");
-    btn.addEventListener("click", close);
-    row.appendChild(btn);
-    body.appendChild(row);
+  function close(){
+    modal.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   }
 
   // wiring
@@ -68,18 +51,32 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
     onSolve: (pz)=>{
       onSolve?.(pz);
 
-      // Mantener abierto para puzzles con pista (Reto 4) o si el puzzle lo pide explícitamente.
+      // En algunas pruebas (pistas del Reto 4) NO cerramos automáticamente,
+      // para que el jugador pueda leer el texto de éxito (CON / ECT / ADO).
       const keepOpen =
-        !!puzzle.keepOpenOnSolve ||
-        ["r4_p1","r4_p2","r4_p3"].includes(puzzle.id) ||
-        String(puzzle.successText || "").includes("Pista para la Clave");
+        ["r4_p1","r4_p2","r4_p3"].includes(pz?.id) ||
+        String(pz?.successText || "").includes("Pista para la Clave");
 
       if(keepOpen){
-        ensureContinueButton("Continuar");
+        // Añadimos un botón "Continuar" (una sola vez)
+        if(!modal.querySelector(".btn-continue")){
+          const wrap = document.createElement("div");
+          wrap.className = "row";
+          wrap.style.marginTop = "12px";
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-continue";
+          btn.textContent = "Continuar";
+          btn.addEventListener("click", ()=> close());
+
+          wrap.appendChild(btn);
+          feedback.appendChild(wrap);
+        }
         return;
       }
 
-      // Por defecto, cerramos al resolver para volver a la escena.
+      // Comportamiento normal: cerrar al resolver
       close();
     },
     onFail: (pz)=>{
