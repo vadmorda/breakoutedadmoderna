@@ -24,6 +24,8 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
   // hotspots
   hsEl.innerHTML = "";
   (scene.hotspots || []).forEach(h=>{
+    // No renderizar hotspots de 'giveItem' si el objeto ya está en el inventario
+    if(h?.action?.type === 'giveItem' && state.inventory?.includes(h.action.itemId)) return;
     const d = document.createElement("div");
     d.className = "hotspot";
     d.style.left = h.x + "%";
