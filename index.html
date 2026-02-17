@@ -59,8 +59,23 @@
       <div id="invItems" class="inv-items"></div>
       <div id="invHint" class="inv-hint">Haz clic en un objeto para “seleccionarlo”.</div>
     </footer>
-  <div id="toastArea" class="toast-area" aria-live="polite" aria-atomic="true"></div>
+  </div>
 
+    <!-- Modal: Item (inspeccionar objeto) -->
+  <div id="modalItem" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="itemTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="itemTitle">Objeto</h2>
+        <button id="itemClose" class="btn">✖</button>
+      </div>
+
+      <div id="itemBody" class="modal-body"></div>
+
+      <div class="modal-foot">
+        <div class="small muted">Consejo: vuelve a hacer clic en el objeto para cerrar.</div>
+        <div></div>
+      </div>
+    </div>
   </div>
 
   <!-- Modal: Puzzle -->
