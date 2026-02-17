@@ -10,6 +10,8 @@ let items = null;
 let state = loadState();
 const itemsById = {};
 
+/* ---------------- Data ---------------- */
+
 async function loadData(){
   const [s, p, i] = await Promise.all([
     fetch("./data/story.json").then(r=>r.json()),
@@ -20,27 +22,80 @@ async function loadData(){
   puzzles = p;
   items = i;
 
-  (items.items || []).forEach(it => itemsById[it.id] = it);
+  (items.items || []).forEach(it => { itemsById[it.id] = it; });
 }
 
 function getScene(id){
-  return (story.scenes || []).find(sc => sc.id === id);
+  return (story?.scenes || []).find(sc => sc.id === id);
 }
+
+// puzzles.json en este proyecto es { puzzles: [...] }
 function getPuzzle(id){
-  return (puzzles.puzzles || []).find(pz => pz.id === id);
+  const list = puzzles?.puzzles || [];
+  return list.find(pz => pz.id === id);
 }
+
+/* ---------------- UI helpers ---------------- */
 
 function toast(msg){
-  const el = document.getElementById("sceneText");
-  if(!el) return;
-  const node = document.createElement("p");
-  node.className = "muted";
+  // Persistente (no se borra con render). Si no existe, fallback a sceneText.
+  const area = document.getElementById("toastArea");
+  const fallback = document.getElementById("sceneText");
+  const host = area || fallback;
+  if(!host) return;
+
+  const node = document.createElement("div");
+  node.className = area ? "toast" : "muted";
   node.textContent = msg;
-  el.appendChild(node);
-  setTimeout(()=> node.remove(), 2200);
+  host.appendChild(node);
+
+  window.setTimeout(()=> node.remove(), 2600);
 }
 
-/* --------- State helpers --------- */
+function closeAllModals(){
+  document.getElementById("modalPuzzle")?.classList.add("hidden");
+  document.getElementById("modalCode")?.classList.add("hidden");
+  document.getElementById("modalItem")?.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+}
+
+function openItemModal(itemId){
+  const it = itemsById[itemId];
+
+  const modal = document.getElementById("modalItem");
+  const title = document.getElementById("itemTitle");
+  const body  = document.getElementById("itemBody");
+
+  if(!modal || !title || !body){
+    toast((it?.name ? it.name + ": " : "") + (it?.desc || itemId));
+    return;
+  }
+
+  title.textContent = it?.name || itemId;
+
+  let html = "";
+  if(it?.desc) html += `<p>${it.desc}</p>`;
+
+  // Documento especial (Reto 2)
+  if(itemId === "pliego_impreso"){
+    html += `
+      <hr class="sep">
+      <p class="small muted">En el pliego aparece una palabra subrayada:</p>
+      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZON</u></strong></p>
+      <p class="small muted">Sin tilde.</p>
+    `;
+  }
+
+  body.innerHTML = html || `<p class="muted">No hay información adicional.</p>`;
+
+  // asegurar un único modal abierto
+  closeAllModals();
+  modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
+/* ---------------- State helpers ---------------- */
+
 function ensurePuzzleState(puzzleId){
   state.puzzles ??= {};
   if(!state.puzzles[puzzleId]){
@@ -84,7 +139,8 @@ function getHint(puzzle){
   return "Prueba primero un par de intentos…";
 }
 
-/* --------- Progress logic --------- */
+/* ---------------- Progress logic ---------------- */
+
 function canExitR1(){
   return !!(state.flags?.r1_p1_done && state.flags?.r1_p2_done);
 }
@@ -98,45 +154,7 @@ function nextScene(){
   return "game_complete";
 }
 
-/* --------- Navigation --------- */
-function closeAllModals(){
-document.getElementById("modalPuzzle")?.classList.add("hidden");
-  document.getElementById("modalCode")?.classList.add("hidden");
-  document.body.classList.remove("modal-open");
-}
-
-
-function openItemModal(itemId){
-  const modal = document.getElementById("modalItem");
-  const title = document.getElementById("itemTitle");
-  const body  = document.getElementById("itemBody");
-  if(!modal || !title || !body) return;
-
-  const it = itemsById[itemId];
-  title.textContent = it?.name || itemId;
-
-  let html = "";
-  if(it?.desc) html += `<p>${it.desc}</p>`;
-
-  // Especial: Pliego impreso (Reto 2 · Prueba 3)
-  if(itemId === "pliego_impreso"){
-    html += `
-      <hr class="sep">
-      <p class="small muted">En el pliego aparece una palabra subrayada:</p>
-      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZÓN</u></strong></p>
-      <p class="small muted">Sin tilde. Pista directa para la “Clave humanista”.</p>
-    `;
-    state.flags = state.flags || {};
-    state.flags.r2_pliego_opened = true;
-    saveState(state);
-  }
-
-  body.innerHTML = html || "<p class=\"muted\">No hay información adicional.</p>";
-
-  closeAllModals();
-  modal.classList.remove("hidden");
-  document.body.classList.add("modal-open");
-}
+/* ---------------- Navigation ---------------- */
 
 function goTo(sceneId){
   const sc = getScene(sceneId);
@@ -152,36 +170,33 @@ function goTo(sceneId){
 
   state.currentSceneId = sceneId;
   saveState(state);
-  // --- FORZAR INICIO EN INTRO (para depurar) ---
-state.currentSceneId = "intro";
-saveState(state);
-
   render();
 }
 
 function render(){
   const sc = getScene(state.currentSceneId) || getScene("intro");
+
   renderScene({
     scene: sc,
     state,
     itemsById,
     onAction: handleAction,
     onHotspot: handleHotspot,
-    onSelectItem: (itemId)=>{
-      // 1) click: seleccionar objeto para usarlo
-      // 2) segundo click sobre el mismo: inspeccionarlo/“abrirlo”
-      if(state.selectedItem === itemId){
+    onSelectItem: (itemId, opts = {})=>{
+      // Click = seleccionar; Doble clic / long-press = inspeccionar (render.js pasa opts.inspect)
+      if(opts.inspect){
         openItemModal(itemId);
         return;
       }
-      state.selectedItem = itemId;
+      state.selectedItem = (state.selectedItem === itemId) ? null : itemId;
       saveState(state);
       render();
     }
   });
 }
 
-/* --------- Actions --------- */
+/* ---------------- Actions ---------------- */
+
 function handleAction(action){
   if(action.type === "goto"){
     goTo(action.target);
@@ -205,23 +220,25 @@ function handleAction(action){
 
   if(action.type === "openCodeModal"){
     refreshExportBox();
+    closeAllModals();
     document.getElementById("modalCode")?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
     return;
   }
 }
 
-/* --------- Hotspots --------- */
+/* ---------------- Hotspots ---------------- */
+
 function handleHotspot(hs){
   const act = hs.action;
   if(!act) return;
 
   if(act.type === "tryExitR1"){
     if(canExitR1()){
-          setSeal("seal1");
-    saveState(state);
+      setSeal("seal1");
+      saveState(state);
       toast("✅ La puerta cede. Entras al archivo.");
       goTo("r1_success");
-     
     }else{
       toast("🔒 La puerta no se abre. Te faltan pruebas.");
     }
@@ -349,7 +366,8 @@ function handleHotspot(hs){
   }
 }
 
-/* --------- Puzzles --------- */
+/* ---------------- Puzzles ---------------- */
+
 function openPuzzle(puzzleId){
   const pz = getPuzzle(puzzleId);
   if(!pz){
@@ -370,10 +388,10 @@ function openPuzzle(puzzleId){
       saveState(state);
       render();
     },
-onFail: (puzzle)=>{
-  incAttempt(puzzle.id);
-  saveState(state);
-},
+    onFail: (puzzle)=>{
+      incAttempt(puzzle.id);
+      saveState(state);
+    },
     onHint: (puzzle)=>{
       const hint = getHint(puzzle);
       toast("💡 " + hint);
@@ -393,24 +411,35 @@ function applyReward(reward){
   }
 }
 
-/* --------- Modal wiring --------- */
+/* ---------------- Modal wiring ---------------- */
+
+function refreshExportBox(){
+  const box = document.getElementById("exportBox");
+  if(box) box.value = exportCode(state);
+}
+function setCodeMsg(msg){
+  const el = document.getElementById("codeMsg");
+  if(el) el.textContent = msg;
+}
+
 function wireUI(){
-  // cerrar puzzle modal
+  // Puzzle modal close
   document.getElementById("puzzleClose")?.addEventListener("click", ()=>{
     document.getElementById("modalPuzzle")?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
-document.body.classList.remove("modal-open");
-  });
-
 
   // Code modal open/close
   const modalCode = document.getElementById("modalCode");
   document.getElementById("btnExport")?.addEventListener("click", ()=>{
     refreshExportBox();
+    closeAllModals();
     modalCode?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
   });
   document.getElementById("codeClose")?.addEventListener("click", ()=>{
     modalCode?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
 
   document.getElementById("btnCopyCode")?.addEventListener("click", async ()=>{
@@ -464,6 +493,7 @@ document.body.classList.remove("modal-open");
     hardReset();
     state = defaultState();
     saveState(state);
+    closeAllModals();
     render();
   });
 
@@ -478,26 +508,17 @@ document.body.classList.remove("modal-open");
     document.body.classList.remove("modal-open");
   });
 
-  // Cerrar al hacer clic en el fondo oscuro (overlay)
+  // Cerrar item modal al hacer clic en el fondo oscuro (overlay)
   document.getElementById("modalItem")?.addEventListener("click", (e)=>{
     if(e.target?.id === "modalItem"){
       document.getElementById("modalItem")?.classList.add("hidden");
       document.body.classList.remove("modal-open");
     }
   });
-
 }
 
-function refreshExportBox(){
-  const box = document.getElementById("exportBox");
-  if(box) box.value = exportCode(state);
-}
-function setCodeMsg(msg){
-  const el = document.getElementById("codeMsg");
-  if(el) el.textContent = msg;
-}
+/* ---------------- Boot ---------------- */
 
-/* --------- Boot --------- */
 (async function init(){
   await loadData();
   wireUI();
@@ -509,8 +530,3 @@ function setCodeMsg(msg){
   saveState(state);
   render();
 })();
-document.body.classList.remove("modal-open");
-    }
-  });
-
-
