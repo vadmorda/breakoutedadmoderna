@@ -50,17 +50,32 @@ function toast(msg){
 function openItemModal(itemId){
   const it = itemsById[itemId];
 
-  // Texto base
-  let text = (it?.name ? it.name + ": " : "") + (it?.desc || itemId);
-
-  // Casos especiales (documentos / pistas)
-  if(itemId === "pliego_impreso"){
-    text =
-      "Pliego impreso: En el texto aparece una palabra subrayada: RAZON (sin tilde). " +
-      "Guárdala porque sirve para una prueba de clave.";
+  const modal = document.getElementById("modalItem");
+  const title = document.getElementById("itemTitle");
+  const body  = document.getElementById("itemBody");
+  if(!modal || !title || !body){
+    // Si por lo que sea el modal no existe, fallback a toast (no rompe nada)
+    toast((it?.name ? it.name + ": " : "") + (it?.desc || itemId));
+    return;
   }
 
-  toast(text);
+  title.textContent = it?.name || itemId;
+
+  let html = "";
+  if(it?.desc) html += `<p>${it.desc}</p>`;
+
+  if(itemId === "pliego_impreso"){
+    html += `
+      <hr class="sep">
+      <p class="small muted">En el pliego aparece una palabra subrayada:</p>
+      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZON</u></strong></p>
+      <p class="small muted">Sin tilde.</p>
+    `;
+  }
+
+  body.innerHTML = html || `<p class="muted">No hay información adicional.</p>`;
+  modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
 }
 
 /* --------- State helpers --------- */
