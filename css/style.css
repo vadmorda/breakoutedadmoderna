@@ -210,19 +210,44 @@ body {
 
 .sep{border:none;border-top:1px solid rgba(255,255,255,0.12);margin:14px 0;}
 
-.spot-wrap{
-  position: relative;
+
+/* ===========================
+   PARCHE: Puzzle "spot" (Detective del arte)
+   - Hace que las zonas clicables se posicionen sobre la imagen
+   - Sin hacer la prueba “más fácil” (siguen invisibles)
+=========================== */
+
+#modalPuzzle .spot-wrap{
+  position: relative; /* imprescindible para posicionar zonas en % */
   width: 100%;
   max-width: 100%;
   overflow: hidden;
 }
 
-.spot-wrap img{
+#modalPuzzle .spot-wrap img{
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.10);
   max-height: 58vh;
   object-fit: contain;
 }
+
+/* Zonas invisibles pero clicables */
+#modalPuzzle .spot-zone{
+  position: absolute;
+  z-index: 2; /* por encima de la imagen */
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0; /* no se ven */
+}
+
+/* Para teclado (no facilita, solo accesibilidad) */
+#modalPuzzle .spot-zone:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.55);
+  outline-offset: 2px;
+  opacity: 0.05;
+}
+
