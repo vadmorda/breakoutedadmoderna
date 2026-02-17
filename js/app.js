@@ -50,39 +50,15 @@ function toast(msg){
 function openItemModal(itemId){
   const it = itemsById[itemId];
 
-  // Si existe el modal de item en tu HTML, lo usamos.
-  const modal = document.getElementById("modalItem");
-  const title = document.getElementById("itemTitle");
-  const body  = document.getElementById("itemBody");
+  let text = (it?.name ? it.name + ": " : "") + (it?.desc || itemId);
 
-  if(modal && title && body){
-    title.textContent = it?.name || itemId;
-
-    let html = "";
-    if(it?.desc) html += `<p>${it.desc}</p>`;
-
-    // Caso especial: pliego impreso (Reto 2)
-    if(itemId === "pliego_impreso"){
-      html += `
-        <hr class="sep">
-        <p class="small muted">En el pliego aparece una palabra subrayada:</p>
-        <p style="font-size:22px;letter-spacing:2px;margin-top:6px">
-          <strong><u>RAZON</u></strong>
-        </p>
-        <p class="small muted">Sin tilde.</p>
-      `;
-    }
-
-    body.innerHTML = html || `<p class="muted">No hay información adicional.</p>`;
-    modal.classList.remove("hidden");
-    document.body.classList.add("modal-open");
-    return;
+  if(itemId === "pliego_impreso"){
+    text += " — En el pliego aparece la palabra RAZON (sin tilde).";
   }
 
-  // Fallback seguro si NO tienes modalItem en el HTML:
-  // mostramos la descripción en un toast largo (no rompe nada)
-  toast((it?.name ? it.name + ": " : "") + (it?.desc || itemId));
+  toast(text);
 }
+
 
 /* --------- State helpers --------- */
 function ensurePuzzleState(puzzleId){
