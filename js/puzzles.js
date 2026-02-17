@@ -23,9 +23,26 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
   prompt.innerHTML = puzzle.prompt || "";
   body.appendChild(prompt);
 
-  function close(){
-    modal.classList.add("hidden");
-    document.body.classList.remove("modal-open");
+  function close\(\)\{
+    modal\.classList\.add\(\"hidden\"\);
+    document\.body\.classList\.remove\(\"modal-open\"\);
+  \}
+
+  // En algunos puzzles (p.ej., pistas de la Clave del Reto 4) queremos que el modal
+  // NO se cierre automáticamente al acertar, para que el alumno pueda leer el texto.
+  function ensureContinueButton(label = "Continuar"){
+    if(body.querySelector("[data-continue-btn]")) return;
+    const row = document.createElement("div");
+    row.className = "row";
+    row.style.justifyContent = "flex-end";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn";
+    btn.textContent = label;
+    btn.setAttribute("data-continue-btn","1");
+    btn.addEventListener("click", close);
+    row.appendChild(btn);
+    body.appendChild(row);
   }
 
   // wiring
@@ -50,21 +67,20 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
     feedback,
     onSolve: (pz)=>{
       onSolve?.(pz);
-      // Antes se cerraba SIEMPRE al resolver.
-      // Problema: en pruebas tipo "code" (y en general cuando el texto de éxito contiene una CLAVE)
-      // el alumno no llega a leerlo porque el modal se cierra instantáneamente.
-      const shouldAutoClose = (pz.autoClose !== undefined)
-        ? !!pz.autoClose
-        : (pz.type !== "code");
 
-      if(shouldAutoClose){
-        // pequeño delay para que el feedback se vea un instante
-        window.setTimeout(close, 450);
-      }else{
-        // ayuda visual: recordar cómo cerrar
-        feedback.innerHTML = (feedback.innerHTML || "") +
-          "<div class='small muted' style='margin-top:6px'>Puedes cerrar con ✕ cuando termines de leer.</div>";
+      // Mantener abierto para puzzles con pista (Reto 4) o si el puzzle lo pide explícitamente.
+      const keepOpen =
+        !!puzzle.keepOpenOnSolve ||
+        ["r4_p1","r4_p2","r4_p3"].includes(puzzle.id) ||
+        String(puzzle.successText || "").includes("Pista para la Clave");
+
+      if(keepOpen){
+        ensureContinueButton("Continuar");
+        return;
       }
+
+      // Por defecto, cerramos al resolver para volver a la escena.
+      close();
     },
     onFail: (pz)=>{
       onFail?.(pz);
