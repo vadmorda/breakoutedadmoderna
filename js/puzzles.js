@@ -80,6 +80,15 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
 
 /* ---------------- Types ---------------- */
 
+function shuffleInPlace(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
 function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   const grid = document.createElement("div");
   grid.className = "answer-grid";
@@ -338,6 +347,9 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
 
   const items = puzzle.items || [];
   const order = items.map(x=>x.id);
+
+  // Para que no salga ya resuelto de inicio: barajamos salvo que el puzzle lo desactive
+  if(puzzle.shuffle !== false) shuffleInPlace(order);
 
   function renderChips(){
     ul.innerHTML = "";
