@@ -50,8 +50,21 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
     feedback,
     onSolve: (pz)=>{
       onSolve?.(pz);
-      // ✅ clave: al resolver, se cierra para que el alumno vea el avance
-      close();
+      // Antes se cerraba SIEMPRE al resolver.
+      // Problema: en pruebas tipo "code" (y en general cuando el texto de éxito contiene una CLAVE)
+      // el alumno no llega a leerlo porque el modal se cierra instantáneamente.
+      const shouldAutoClose = (pz.autoClose !== undefined)
+        ? !!pz.autoClose
+        : (pz.type !== "code");
+
+      if(shouldAutoClose){
+        // pequeño delay para que el feedback se vea un instante
+        window.setTimeout(close, 450);
+      }else{
+        // ayuda visual: recordar cómo cerrar
+        feedback.innerHTML = (feedback.innerHTML || "") +
+          "<div class='small muted' style='margin-top:6px'>Puedes cerrar con ✕ cuando termines de leer.</div>";
+      }
     },
     onFail: (pz)=>{
       onFail?.(pz);
@@ -79,15 +92,6 @@ export function openPuzzleUI({ puzzle, state, onSolve, onFail, onHint }){
 }
 
 /* ---------------- Types ---------------- */
-
-function shuffleInPlace(arr){
-  for(let i = arr.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
 
 function renderQuiz({ puzzle, body, feedback, onSolve, onFail }){
   const grid = document.createElement("div");
@@ -347,9 +351,6 @@ function renderOrder({ puzzle, body, feedback, onSolve, onFail }){
 
   const items = puzzle.items || [];
   const order = items.map(x=>x.id);
-
-  // Para que no salga ya resuelto de inicio: barajamos salvo que el puzzle lo desactive
-  if(puzzle.shuffle !== false) shuffleInPlace(order);
 
   function renderChips(){
     ul.innerHTML = "";
