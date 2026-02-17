@@ -124,7 +124,7 @@ function openItemModal(itemId){
     html += `
       <hr class="sep">
       <p class="small muted">En el pliego aparece una palabra subrayada:</p>
-      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZON</u></strong></p>
+      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZÓN</u></strong></p>
       <p class="small muted">Sin tilde. Pista directa para la “Clave humanista”.</p>
     `;
     state.flags = state.flags || {};
