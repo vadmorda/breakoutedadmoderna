@@ -31,6 +31,18 @@ function getPuzzle(id){
 }
 
 function toast(msg){
+  // Prefer a dedicated toast area so messages don't disappear when the scene text re-renders
+  const area = document.getElementById("toastArea");
+  if(area){
+    const node = document.createElement("div");
+    node.className = "toast";
+    node.textContent = msg;
+    area.appendChild(node);
+    setTimeout(()=> node.remove(), 2400);
+    return;
+  }
+
+  // Fallback: append inside sceneText (may be overwritten by renderScene)
   const el = document.getElementById("sceneText");
   if(!el) return;
   const node = document.createElement("p");
@@ -39,6 +51,7 @@ function toast(msg){
   el.appendChild(node);
   setTimeout(()=> node.remove(), 2200);
 }
+
 
 /* --------- State helpers --------- */
 function ensurePuzzleState(puzzleId){
@@ -99,6 +112,12 @@ function nextScene(){
 }
 
 /* --------- Navigation --------- */
+function closeAllModals(){
+  document.getElementById("modalPuzzle")?.classList.add("hidden");
+  document.getElementById("modalCode")?.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+}
+
 function goTo(sceneId){
   const sc = getScene(sceneId);
   if(!sc){
@@ -113,10 +132,6 @@ function goTo(sceneId){
 
   state.currentSceneId = sceneId;
   saveState(state);
-  // --- FORZAR INICIO EN INTRO (para depurar) ---
-state.currentSceneId = "intro";
-saveState(state);
-
   render();
 }
 
@@ -159,8 +174,10 @@ function handleAction(action){
   }
 
   if(action.type === "openCodeModal"){
+    closeAllModals();
     refreshExportBox();
     document.getElementById("modalCode")?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
     return;
   }
 }
@@ -184,9 +201,10 @@ function handleHotspot(hs){
   }
 
   if(act.type === "giveItem"){
+    const had = state.inventory?.includes(act.itemId);
     giveItem(act.itemId);
     saveState(state);
-    toast(act.toast || "Objeto conseguido.");
+    toast(had ? (act.alreadyToast || "Ya tenías ese objeto.") : (act.toast || "Objeto conseguido."));
     render();
     return;
   }
@@ -316,6 +334,8 @@ function openPuzzle(puzzleId){
   state.puzzles[pz.id].status = "in_progress";
   saveState(state);
 
+  closeAllModals();
+
   openPuzzleUI({
     puzzle: pz,
     state,
@@ -353,16 +373,35 @@ function wireUI(){
   // cerrar puzzle modal
   document.getElementById("puzzleClose")?.addEventListener("click", ()=>{
     document.getElementById("modalPuzzle")?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
 
   // Code modal open/close
   const modalCode = document.getElementById("modalCode");
+  // cerrar modales al hacer clic fuera de la tarjeta
+  document.getElementById("modalPuzzle")?.addEventListener("click", (e)=>{
+    if(e.target?.id === "modalPuzzle"){
+      document.getElementById("modalPuzzle")?.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
+  document.getElementById("modalCode")?.addEventListener("click", (e)=>{
+    if(e.target?.id === "modalCode"){
+      modalCode?.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
   document.getElementById("btnExport")?.addEventListener("click", ()=>{
+    closeAllModals();
     refreshExportBox();
     modalCode?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
   });
   document.getElementById("codeClose")?.addEventListener("click", ()=>{
     modalCode?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
 
   document.getElementById("btnCopyCode")?.addEventListener("click", async ()=>{
