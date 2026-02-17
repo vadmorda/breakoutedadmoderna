@@ -50,15 +50,18 @@ function toast(msg){
 function openItemModal(itemId){
   const it = itemsById[itemId];
 
+  // Texto base
   let text = (it?.name ? it.name + ": " : "") + (it?.desc || itemId);
 
+  // Casos especiales (documentos / pistas)
   if(itemId === "pliego_impreso"){
-    text += " — En el pliego aparece la palabra RAZON (sin tilde).";
+    text =
+      "Pliego impreso: En el texto aparece una palabra subrayada: RAZON (sin tilde). " +
+      "Guárdala porque sirve para una prueba de clave.";
   }
 
   toast(text);
 }
-
 
 /* --------- State helpers --------- */
 function ensurePuzzleState(puzzleId){
