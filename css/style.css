@@ -13,6 +13,11 @@ body {
   color: white;
 }
 
+/* Evita scroll del fondo cuando un modal está abierto */
+body.modal-open{
+  overflow: hidden;
+}
+
 /* ===========================
    LAYOUT GENERAL
 =========================== */
@@ -73,6 +78,7 @@ body {
   bottom: 20px;
   left: 20px;
   width: 420px;
+  max-width: calc(100vw - 40px);
   background: rgba(0,0,0,0.75);
   padding: 18px;
   border-radius: 14px;
@@ -90,7 +96,8 @@ body {
 .hotspots {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3; /* por encima del fondo; por debajo de HUD */
+  pointer-events: none; /* CRÍTICO: el contenedor NO debe bloquear clics */
 }
 
 .hotspot {
@@ -100,6 +107,7 @@ body {
   background: rgba(255,255,255,0.05);
   cursor: pointer;
   transition: all 0.2s ease;
+  pointer-events: auto; /* CRÍTICO: los hotspots sí reciben clic */
 }
 
 .hotspot:hover {
@@ -115,6 +123,7 @@ body {
   padding: 3px 8px;
   font-size: 12px;
   border-radius: 6px;
+  pointer-events: none;
 }
 
 /* ===========================
@@ -172,7 +181,7 @@ body {
 }
 
 /* ===========================
-   MODAL
+   MODAL (base)
 =========================== */
 
 .modal {
@@ -201,6 +210,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal-body{
+  margin-top: 12px;
+  max-height: min(62vh, 560px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.modal-foot{
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .feedback {
@@ -235,4 +260,167 @@ body {
   box-shadow: 0 8px 22px rgba(0,0,0,0.35);
   font-size: 14px;
   line-height: 1.25;
+}
+
+/* ===========================
+   PUZZLES (R1–R4 + Final)
+   Estilos aislados al modal de puzzles para NO romper el resto.
+=========================== */
+
+/* utilidades */
+#modalPuzzle .small{ font-size: 13px; opacity: 0.9; }
+#modalPuzzle .muted{ opacity: 0.75; }
+#modalPuzzle .sep{
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  margin: 14px 0;
+}
+#modalPuzzle .row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+
+/* quiz (Prueba 1, etc.) */
+#modalPuzzle .puzzle-prompt{ margin-bottom: 12px; line-height: 1.35; }
+
+#modalPuzzle .answer-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+#modalPuzzle .answer-btn{
+  text-align: left;
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#modalPuzzle .answer-btn:hover{
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(34,197,94,0.7);
+}
+
+/* order (Ruta portuguesa, procesos, etc.) */
+#modalPuzzle .columns{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+#modalPuzzle .dropzone{
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+#modalPuzzle .dropzone h3{
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+#modalPuzzle .drop-target{
+  min-height: 160px;
+  border: 2px dashed rgba(255,255,255,0.18);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#modalPuzzle .drop-target.hover{
+  border-color: rgba(34,197,94,0.8);
+  background: rgba(34,197,94,0.10);
+}
+
+#modalPuzzle .drop-target.filled{
+  border-style: solid;
+}
+
+#modalPuzzle .draggables{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#modalPuzzle .draggable{
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: grab;
+  user-select: none;
+}
+
+#modalPuzzle .draggable.dragging{ opacity: 0.6; }
+
+#modalPuzzle .draggable.selected{
+  outline: 2px solid rgba(34,197,94,0.9);
+  outline-offset: 2px;
+}
+
+/* spot (Detective del arte, Ruta castellana, mapas con clic, etc.) */
+#modalPuzzle .spot-wrap{
+  position: relative;      /* imprescindible */
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#modalPuzzle .spot-wrap img{
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 58vh;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* zonas invisibles pero clicables (NO hace la prueba más fácil) */
+#modalPuzzle .spot-zone{
+  position: absolute;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+/* accesibilidad teclado: no revela, solo permite ver foco */
+#modalPuzzle .spot-zone:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.55);
+  outline-offset: 2px;
+  opacity: 0.05;
+}
+
+/* fallback si una imagen no carga y puzzles.js muestra botones */
+#modalPuzzle .spot-fallback{
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 10px;
+}
+
+@media (max-width: 720px){
+  #modalPuzzle .columns{
+    grid-template-columns: 1fr;
+  }
+  .scene-panel{
+    width: calc(100vw - 40px);
+  }
 }
