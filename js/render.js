@@ -33,6 +33,15 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
     d.style.width = h.w + "%";
     d.style.height = h.h + "%";
     d.dataset.id = h.id;
+// Imagen opcional dentro del hotspot
+if(h.img){
+  const im = document.createElement("img");
+  im.className = "hs-img";
+  im.src = h.img;
+  im.alt = h.label || "";
+  im.loading = "lazy";
+  d.appendChild(im);
+}
 
     const tag = document.createElement("div");
     tag.className = "tag";
