@@ -124,7 +124,7 @@ function openItemModal(itemId){
     html += `
       <hr class="sep">
       <p class="small muted">En el pliego aparece una palabra subrayada:</p>
-      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZÓN</u></strong></p>
+      <p style="font-size:22px;letter-spacing:2px;margin-top:6px"><strong><u>RAZON</u></strong></p>
       <p class="small muted">Sin tilde. Pista directa para la “Clave humanista”.</p>
     `;
     state.flags = state.flags || {};
@@ -153,10 +153,6 @@ function goTo(sceneId){
 
   state.currentSceneId = sceneId;
   saveState(state);
-  // --- FORZAR INICIO EN INTRO (para depurar) ---
-state.currentSceneId = "intro";
-saveState(state);
-
   render();
 }
 
@@ -205,8 +201,10 @@ function handleAction(action){
   }
 
   if(action.type === "openCodeModal"){
+    closeAllModals();
     refreshExportBox();
     document.getElementById("modalCode")?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
     return;
   }
 }
@@ -399,6 +397,7 @@ function wireUI(){
   // cerrar puzzle modal
   document.getElementById("puzzleClose")?.addEventListener("click", ()=>{
     document.getElementById("modalPuzzle")?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
   document.getElementById("itemClose")?.addEventListener("click", ()=>{
     document.getElementById("modalItem")?.classList.add("hidden");
@@ -409,11 +408,14 @@ function wireUI(){
   // Code modal open/close
   const modalCode = document.getElementById("modalCode");
   document.getElementById("btnExport")?.addEventListener("click", ()=>{
+    closeAllModals();
     refreshExportBox();
     modalCode?.classList.remove("hidden");
+    document.body.classList.add("modal-open");
   });
   document.getElementById("codeClose")?.addEventListener("click", ()=>{
     modalCode?.classList.add("hidden");
+    document.body.classList.remove("modal-open");
   });
 
   document.getElementById("btnCopyCode")?.addEventListener("click", async ()=>{
@@ -498,7 +500,21 @@ function setCodeMsg(msg){
   render();
 })();
 
-  document.getElementById("modalItem")?.addEventListener("click", (e)=>{
+    document.getElementById("modalPuzzle")?.addEventListener("click", (e)=>{
+    if(e.target?.id === "modalPuzzle"){
+      document.getElementById("modalPuzzle")?.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
+  document.getElementById("modalCode")?.addEventListener("click", (e)=>{
+    if(e.target?.id === "modalCode"){
+      document.getElementById("modalCode")?.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    }
+  });
+
+document.getElementById("modalItem")?.addEventListener("click", (e)=>{
     if(e.target?.id === "modalItem"){
       document.getElementById("modalItem")?.classList.add("hidden");
       document.body.classList.remove("modal-open");
