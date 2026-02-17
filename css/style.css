@@ -424,3 +424,23 @@ body.modal-open{
     width: calc(100vw - 40px);
   }
 }
+/* Imagen dentro de hotspot */
+.hotspot{
+  overflow: hidden; /* para que la imagen no se salga */
+}
+
+.hotspot .hs-img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+  pointer-events: none; /* importante: no bloquea el click */
+}
+
+/* Que el texto se lea encima */
+.hotspot .tag{
+  z-index: 2;
+}
+
