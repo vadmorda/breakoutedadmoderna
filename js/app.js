@@ -463,6 +463,10 @@ function wireUI(){
     goTo(nextScene());
   });
 }
+document.getElementById("itemClose")?.addEventListener("click", ()=>{
+  document.getElementById("modalItem")?.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+});
 
 function refreshExportBox(){
   const box = document.getElementById("exportBox");
