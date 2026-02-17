@@ -14,6 +14,35 @@ body {
 }
 
 /* ===========================
+   TOPBAR
+=========================== */
+
+.topbar{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: #0b1224;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.topbar-left{
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.brand{
+  font-weight: 700;
+}
+
+.scene-title{
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+/* ===========================
    LAYOUT GENERAL
 =========================== */
 
@@ -205,4 +234,32 @@ body {
 
 .feedback {
   margin-top: 10px;
+}
+
+
+/* Evita scroll del fondo cuando un modal está abierto */
+body.modal-open{ overflow: hidden; }
+
+/* ===========================
+   TOASTS
+=========================== */
+
+.toast-area{
+  position: fixed;
+  left: 20px;
+  bottom: 140px; /* por encima del inventario */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 80; /* por encima de la escena, por debajo de modales */
+  pointer-events: none;
+}
+
+.toast{
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  pointer-events: none;
 }
