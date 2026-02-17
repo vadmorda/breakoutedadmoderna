@@ -51,7 +51,26 @@ export function renderScene({ scene, state, itemsById, onAction, onHotspot, onSe
     b.className = "inv-item" + (state.selectedItem === itemId ? " selected" : "");
     b.textContent = it ? it.name : itemId;
     b.title = it ? it.desc : "";
-    b.addEventListener("click", ()=> onSelectItem(itemId));
+   // Click: seleccionar
+b.addEventListener("click", ()=> onSelectItem(itemId));
+
+// Doble clic: inspeccionar (abrir)
+b.addEventListener("dblclick", (e)=>{
+  e.preventDefault();
+  onSelectItem(itemId, { inspect:true });
+});
+
+// Móvil/tablet: mantener pulsado para inspeccionar (450ms)
+let pressTimer = null;
+b.addEventListener("pointerdown", ()=>{
+  pressTimer = window.setTimeout(()=>{
+    onSelectItem(itemId, { inspect:true });
+  }, 450);
+});
+b.addEventListener("pointerup", ()=>{ if(pressTimer) clearTimeout(pressTimer); pressTimer=null; });
+b.addEventListener("pointerleave", ()=>{ if(pressTimer) clearTimeout(pressTimer); pressTimer=null; });
+b.addEventListener("pointercancel", ()=>{ if(pressTimer) clearTimeout(pressTimer); pressTimer=null; });
+
     invEl.appendChild(b);
   });
 
