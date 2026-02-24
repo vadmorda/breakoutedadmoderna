@@ -53,11 +53,12 @@
   "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
 },
         {
-          "id": "hs_exit",
-          "label": "Puerta del archivo",
-          "x": 78, "y": 12, "w": 18, "h": 28,
-          "action": { "type": "tryExitR1" }
-        }
+  "id": "hs_exit",
+  "label": "Puerta del archivo",
+  "img": "./assets/img/ui/r1_puerta.png",
+  "x": 78, "y": 12, "w": 18, "h": 28,
+  "action": { "type": "tryExitR1" }
+}
       ]
     },
 
