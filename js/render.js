@@ -41,6 +41,7 @@ if(h.img){
   im.alt = h.label || "";
   im.loading = "lazy";
   d.appendChild(im);
+  im.onerror = () => console.warn("❌ No carga hotspot img:", h.img);
 }
 
     const tag = document.createElement("div");
