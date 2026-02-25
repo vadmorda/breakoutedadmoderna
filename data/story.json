@@ -223,7 +223,7 @@
     "id": "hs_r3_p1",
     "label": "Prueba 1",
     "img": "./assets/img/reto3prueba1.png",
-    "x": 10, "y": 14, "w": 26, "h": 20,
+    "x": 7, "y": 14, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r3_p1" }
   },
   {
@@ -263,7 +263,7 @@
   {
     "id": "hs_exit_r3",
     "label": "Sello III",
-    "img": "./assets/img/reto3_sello3.png",
+    "img": "./assets/img/selloIII.png",
     "x": 35, "y": 68, "w": 12, "h": 16,
     "action": { "type": "tryExitR3" }
   }
