@@ -40,7 +40,7 @@
   {
     "id": "hs_test1",
     "label": "Prueba 1",
-    "img": "./assets/img/ui/r1_prueba1.jpg",
+    "img": "./assets/img/ui/r1_prueba1.png",
     "x": 10, "y": 62, "w": 32, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
   },
