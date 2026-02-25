@@ -41,7 +41,7 @@
     "id": "hs_test1",
     "label": "Prueba 1",
     "img": "./assets/img/r1_prueba1.png.png",
-    "x": 10, "y": 13, "w": 32, "h": 26,
+    "x": 28, "y": 13, "w": 32, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
   },
   {
