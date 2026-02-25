@@ -137,7 +137,7 @@
     "id": "hs_press_ink",
     "label": "Rodillo",
     "img": "./assets/img/rodillo.png",
-    "x": 62, "y": 72, "w": 28, "h": 18,
+    "x": 50, "y": 74, "w": 40, "h": 12,
     "action": {
       "type": "useItem",
       "requiresItem": "tinta",
@@ -172,7 +172,7 @@
     "id": "hs_exit_r2",
     "label": "Sello II",
     "img": "./assets/img/selloII.png",
-    "x": 44, "y": 46, "w": 14, "h": 16,
+    "x": 86, "y": 46, "w": 10, "h": 14,
     "action": { "type": "tryExitR2" }
   }
 ]
