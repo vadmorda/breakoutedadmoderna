@@ -68,28 +68,41 @@ function checksum6(input){
 }
 
 export function exportCode(state){
-  const payload = base64UrlEncode(JSON.stringify(state));
+  // NUEVO: export mínimo + compresión -> EM2
+  const minimal = minimalState(state);
+  const json = JSON.stringify(minimal);
+  const compressed = lzwCompressToBytes(json);
+  const payload = base64UrlEncodeBytes(compressed);
   const sum = checksum6(payload);
-  return `EM1.${payload}.${sum}`;
+  return `EM2.${payload}.${sum}`;
 }
 
 export function importCode(code){
   const trimmed = (code || "").trim();
   const parts = trimmed.split(".");
   if(parts.length !== 3) throw new Error("Formato inválido.");
-  if(parts[0] !== "EM1") throw new Error("Versión de código no compatible.");
+
+  const ver = parts[0];
   const payload = parts[1];
   const sum = parts[2];
-  if(checksum6(payload) !== sum) throw new Error("Checksum inválido (código corrupto).");
-  const json = base64UrlDecode(payload);
-  const state = JSON.parse(json);
-      state.completed ??= { seal1:false, seal2:false, seal3:false, seal4:false, final:false };
-  state.puzzles ??= {};
-  state.inventory ??= [];
-  state.flags ??= {};
-  state.attempts ??= {};
-  state.selectedItem ??= null;
 
-  if(!state || typeof state !== "object" || state.v !== 1) throw new Error("Estado inválido.");
-  return state;
+  if(checksum6(payload) !== sum) throw new Error("Checksum inválido (código corrupto).");
+
+  // Compatibilidad: EM1 (antiguo) y EM2 (nuevo comprimido)
+  if(ver === "EM1"){
+    const json = base64UrlDecode(payload);
+    const state = JSON.parse(json);
+    if(!state || typeof state !== "object" || state.v !== 1) throw new Error("Estado inválido.");
+    return hydrateState(state);
+  }
+
+  if(ver === "EM2"){
+    const bytes = base64UrlDecodeBytes(payload);
+    const json = lzwDecompressFromBytes(bytes);
+    const state = JSON.parse(json);
+    if(!state || typeof state !== "object" || state.v !== 1) throw new Error("Estado inválido.");
+    return hydrateState(state);
+  }
+
+  throw new Error("Versión de código no compatible.");
 }
