@@ -105,7 +105,7 @@
         { "label": "📜 Hablar con el impresor", "type": "dialog", "text": "«Sin razón no hay verdad. Sin imprenta no hay difusión.»" },
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
-   "hotspots": [
+ "hotspots": [
   {
     "id": "hs_types",
     "label": "Caja de letras",
@@ -147,7 +147,6 @@
       "failToast": "Primero coloca los tipos, luego tinta."
     }
   },
-
   {
     "id": "hs_r2_p1",
     "label": "Prueba 1",
@@ -177,9 +176,7 @@
     "action": { "type": "tryExitR2" }
   }
 ]
-        
     },
-
     {
       "id": "r2_success",
       "title": "Sello II conseguido",
@@ -194,7 +191,6 @@
       ],
       "hotspots": []
     },
-
     {
       "id": "cut_r2_r3",
       "title": "Transición",
