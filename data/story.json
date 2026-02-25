@@ -150,21 +150,21 @@
   {
     "id": "hs_r2_p1",
     "label": "Prueba 1",
-    "img": "./assets/img/reto2_prueba1.png",
+    "img": "./assets/img/reto2prueba1.png",
     "x": 10, "y": 18, "w": 26, "h": 22,
     "action": { "type": "openPuzzle", "puzzleId": "r2_p1" }
   },
   {
     "id": "hs_r2_p2",
     "label": "Prueba 2",
-    "img": "./assets/img/reto2_prueba2.png",
+    "img": "./assets/img/prueba 1.png",
     "x": 38, "y": 18, "w": 26, "h": 22,
     "action": { "type": "openPuzzle", "puzzleId": "r2_p2" }
   },
   {
     "id": "hs_r2_p3",
     "label": "Prueba 3",
-    "img": "./assets/img/reto2_prueba3.png",
+    "img": "./assets/img/prueba 3.png",
     "x": 66, "y": 18, "w": 26, "h": 22,
     "action": { "type": "openPuzzle", "puzzleId": "r2_p3" }
   },
