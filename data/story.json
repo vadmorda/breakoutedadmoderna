@@ -453,7 +453,7 @@
     "id": "hs_exit_final",
     "label": "Abrir Archivo",
     "img": "./assets/img/openfile.png",
-    "x": 44, "y": 66, "w": 12, "h": 16,
+    "x": 44, "y": 70, "w": 12, "h": 16,
     "action": { "type": "tryExitFinal" }
   }
 ]
