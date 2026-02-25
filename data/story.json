@@ -41,14 +41,14 @@
     "id": "hs_test1",
     "label": "Prueba 1",
     "img": "./assets/img/r1_prueba1.png.png",
-    "x": 10, "y": 62, "w": 32, "h": 26,
+    "x": 10, "y": 13, "w": 32, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
   },
   {
     "id": "hs_test2",
     "label": "Prueba 2",
     "img": "./assets/img/r1_prueba2.png.png",
-    "x": 12, "y": 28, "w": 30, "h": 26,
+    "x": 40, "y": 13, "w": 30, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
   },
   {
