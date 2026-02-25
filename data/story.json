@@ -40,21 +40,21 @@
   {
     "id": "hs_test1",
     "label": "Prueba 1",
-    "img": "./assets/img/ui/r1_prueba1.png.png",
+    "img": "./assets/img/r1_prueba1.png.png",
     "x": 10, "y": 62, "w": 32, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
   },
   {
     "id": "hs_test2",
     "label": "Prueba 2",
-    "img": "./assets/img/ui/r1_prueba2.png",
+    "img": "./assets/img/r1_prueba2.png.png",
     "x": 12, "y": 28, "w": 30, "h": 26,
     "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
   },
   {
     "id": "hs_exit",
     "label": "Puerta del archivo",
-    "img": "./assets/img/ui/r1_puerta.png",
+    "img": "./assets/img/r1_puerta.png.png",
     "x": 78, "y": 12, "w": 18, "h": 28,
     "action": { "type": "tryExitR1" }
   }
