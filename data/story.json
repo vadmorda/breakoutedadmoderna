@@ -114,35 +114,66 @@
     "action": { "type": "giveItem", "itemId": "tipos_moviles", "toast": "Has conseguido: Tipos móviles" }
   },
         {
-          "id": "hs_ink",
-          "label": "Tintero",
-          "x": 36, "y": 70, "w": 18, "h": 18,
-          "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
+    "id": "hs_ink",
+    "label": "Tintero",
+    "img": "./assets/img/reto2_tintero.png",
+    "x": 36, "y": 70, "w": 18, "h": 18,
+    "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
+  },
+        {
+    "id": "hs_press",
+    "label": "Prensa",
+    "img": "./assets/img/reto2_prensa.png",
+    "x": 58, "y": 40, "w": 34, "h": 50,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "tipos_moviles",
+      "success": { "type": "setFlag", "flag": "r2_press_types" },
+      "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
+      "failToast": "Necesitas algo para componer el texto."
+    }
         },
         {
-          "id": "hs_press",
-          "label": "Prensa",
-          "x": 58, "y": 40, "w": 34, "h": 50,
-          "action": {
-            "type": "useItem",
-            "requiresItem": "tipos_moviles",
-            "success": { "type": "setFlag", "flag": "r2_press_types" },
-            "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
-            "failToast": "Necesitas algo para componer el texto."
-          }
-        },
-        {
-          "id": "hs_press_ink",
-          "label": "Rodillo",
-          "x": 62, "y": 72, "w": 28, "h": 18,
-          "action": {
-            "type": "useItem",
-            "requiresItem": "tinta",
-            "requiresFlag": "r2_press_types",
-            "success": { "type": "giveItem", "itemId": "pliego_impreso", "setFlag": "r2_print_done" },
-            "successToast": "¡Clac! La prensa imprime un pliego.",
-            "failToast": "Primero coloca los tipos, luego tinta."
-          }
+    "id": "hs_press_ink",
+    "label": "Rodillo",
+    "img": "./assets/img/rodillo.png",
+    "x": 62, "y": 72, "w": 28, "h": 18,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "tinta",
+      "requiresFlag": "r2_press_types",
+      "success": { "type": "giveItem", "itemId": "pliego_impreso", "setFlag": "r2_print_done" },
+      "successToast": "¡Clac! La prensa imprime un pliego.",
+      "failToast": "Primero coloca los tipos, luego tinta."
+    },
+          {
+    "id": "hs_r2_p1",
+    "label": "Prueba 1",
+    "img": "./assets/img/reto2_prueba1.png",
+    "x": 10, "y": 18, "w": 26, "h": 22,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p1" }
+  },
+  {
+    "id": "hs_r2_p2",
+    "label": "Prueba 2",
+    "img": "./assets/img/reto2_prueba2.png",
+    "x": 38, "y": 18, "w": 26, "h": 22,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p2" }
+  },
+  {
+    "id": "hs_r2_p3",
+    "label": "Prueba 3",
+    "img": "./assets/img/reto2_prueba3.png",
+    "x": 66, "y": 18, "w": 26, "h": 22,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p3" }
+  },
+  {
+    "id": "hs_exit_r2",
+    "label": "Sello II",
+    "img": "./assets/img/reto2_sello2.png",
+    "x": 44, "y": 46, "w": 14, "h": 16,
+    "action": { "type": "tryExitR2" }
+  }
         },
         { "id": "hs_r2_p1", "label": "Prueba 1", "x": 10, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p1" } },
         { "id": "hs_r2_p2", "label": "Prueba 2", "x": 38, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p2" } },
