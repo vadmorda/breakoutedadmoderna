@@ -222,35 +222,35 @@
   {
     "id": "hs_r3_p1",
     "label": "Prueba 1",
-    "img": "./assets/img/reto3_prueba1.png",
+    "img": "./assets/img/reto3prueba1.png",
     "x": 10, "y": 14, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r3_p1" }
   },
   {
     "id": "hs_r3_p2",
     "label": "Prueba 2",
-    "img": "./assets/img/reto3_prueba2.png",
+    "img": "./assets/img/reto3prueba2.png",
     "x": 36, "y": 14, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r3_p2" }
   },
   {
     "id": "hs_r3_p3",
     "label": "Prueba 3",
-    "img": "./assets/img/reto3_prueba3.png",
+    "img": "./assets/img/reto3prueba3.png",
     "x": 64, "y": 14, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r3_p3" }
   },
   {
     "id": "hs_lupa",
     "label": "Lupa",
-    "img": "./assets/img/reto3_lupa.png",
+    "img": "./assets/img/reto3lupa.png",
     "x": 25, "y": 40, "w": 16, "h": 20,
     "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" }
   },
   {
     "id": "hs_canvas",
     "label": "Lienzo en proceso",
-    "img": "./assets/img/reto3_lienzo.png",
+    "img": "./assets/img/lienzo.png",
     "x": 56, "y": 40, "w": 34, "h": 48,
     "action": {
       "type": "useItem",
