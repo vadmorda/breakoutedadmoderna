@@ -64,7 +64,7 @@
     {
       "id": "r1_success",
       "title": "Sello I conseguido",
-      "bg": "./assets/img/bg_success.jpg",
+      "bg": "./assets/img/exito.png",
       "text": [
         "El cartógrafo asiente y estampa un sello sobre tu cuaderno.",
         "<strong>Has obtenido el SELLO I</strong>."
@@ -180,7 +180,7 @@
     {
       "id": "r2_success",
       "title": "Sello II conseguido",
-      "bg": "./assets/img/prueba 1.png",
+      "bg": "./assets/img/exito.png",
       "text": [
         "El impresor te entrega un sello y un consejo: «Las ideas viajan más rápido que los barcos.»",
         "<strong>Has obtenido el SELLO II</strong>."
@@ -273,7 +273,7 @@
     {
       "id": "r3_success",
       "title": "Sello III conseguido",
-      "bg": "./assets/img/bg_success.jpg",
+      "bg": "./assets/img/exito.png",
       "text": [
         "El maestro sonríe: «Ahora sí. Ya no miras cuadros: <strong>lees fuentes históricas</strong>.»",
         "<strong>Has obtenido el SELLO III</strong>."
@@ -383,7 +383,7 @@
     {
       "id": "r4_success",
       "title": "Sello IV conseguido",
-      "bg": "./assets/img/bg_success.jpg",
+      "bg": "./assets/img/exito.png",
       "text": [
         "<strong>Has obtenido el SELLO IV</strong>.",
         "<span class='muted'>Solo queda el Archivo final.</span>"
