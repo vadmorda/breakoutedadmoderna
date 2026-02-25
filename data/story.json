@@ -257,7 +257,7 @@
     {
       "id": "cut_r3_r4",
       "title": "Transición",
-      "bg": "./assets/img/bg_cutscene3.jpg",
+      "bg": "./assets/img/cutscene3.png",
       "text": [
         "El Archivo te conduce a una sala enorme: mapas, brújulas e instrumentos.",
         "«Las rutas cambiaron el mundo.»"
