@@ -172,7 +172,7 @@
     "id": "hs_exit_r2",
     "label": "Sello II",
     "img": "./assets/img/selloII.png",
-    "x": 38, "y": 53, "w": 10, "h": 14,
+    "x": 33, "y": 58, "w": 10, "h": 14,
     "action": { "type": "tryExitR2" }
   }
 ]
