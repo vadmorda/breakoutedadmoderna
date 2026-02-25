@@ -462,7 +462,7 @@
     {
       "id": "game_complete",
       "title": "Archivo abierto",
-      "bg": "./assets/img/bg_complete.jpg",
+      "bg": "./assets/img/archivoabierto.jpg",
       "text": [
         "El <strong>Archivo de 1492</strong> se abre.",
         "<strong>✅ MISIÓN COMPLETADA</strong>",
