@@ -172,10 +172,10 @@
         }
       ],
       "correctOrder": [
-        "a",
-        "b",
+        "d",
         "c",
-        "d"
+        "b",
+        "a"
       ],
       "successText": "✅ Exacto. Así se multiplican los libros… y los problemas para quien manda.",
       "failText": "❌ No del todo. Piensa: primero letras, luego tinta, luego presión, luego difusión.",
