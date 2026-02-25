@@ -79,7 +79,7 @@
     {
       "id": "cut_r1_r2",
       "title": "Transición",
-      "bg": "./assets/img/bg_cutscene.png",
+      "bg": "./assets/img/bg_cutscene.jpg",
       "text": [
         "Con el <strong>Sello I</strong>, la puerta del Archivo cruje como si llevara siglos esperando…",
         "Al otro lado oyes golpes metálicos: <em>clac… clac…</em>",
