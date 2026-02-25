@@ -116,7 +116,7 @@
   {
     "id": "hs_ink",
     "label": "Tintero",
-    "img": "./assets/img/reto2_tintero.png",
+    "img": "./assets/img/tinta.png",
     "x": 36, "y": 70, "w": 18, "h": 18,
     "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
   },
