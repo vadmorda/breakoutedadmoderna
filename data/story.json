@@ -398,7 +398,7 @@
     {
       "id": "cut_r4_final",
       "title": "Transición",
-      "bg": "./assets/img/cutscene_final.png",
+      "bg": "./assets/img/cutscenefinal.png",
       "text": [
         "El Archivo tiembla. Aparecen decretos, escudos y textos religiosos.",
         "<em>«Aquí nace el mundo moderno: el poder se organiza y la fe se rompe.»</em>"
