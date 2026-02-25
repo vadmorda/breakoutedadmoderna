@@ -316,21 +316,21 @@
   {
     "id": "hs_astrolabio",
     "label": "Astrolabio",
-    "img": "./assets/img/reto4_astrolabio.png",
+    "img": "./assets/img/astrolabio.png",
     "x": 10, "y": 68, "w": 16, "h": 22,
     "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
   },
   {
     "id": "hs_bitacora",
     "label": "Bitácora",
-    "img": "./assets/img/reto4_bitacora.png",
+    "img": "./assets/img/bitacora.png",
     "x": 30, "y": 72, "w": 18, "h": 18,
     "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
   },
   {
     "id": "hs_globe",
     "label": "Mapamundi",
-    "img": "./assets/img/reto4_mapamundi.png",
+    "img": "./assets/img/mapamundi.png",
     "x": 55, "y": 40, "w": 38, "h": 52,
     "action": {
       "type": "useItem",
@@ -344,21 +344,21 @@
   {
     "id": "hs_r4_p1",
     "label": "Ruta portuguesa",
-    "img": "./assets/img/reto4_prueba1.png",
+    "img": "./assets/img/reto4prueba1.png",
     "x": 10, "y": 16, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r4_p1" }
   },
   {
     "id": "hs_r4_p2",
     "label": "Ruta castellana",
-    "img": "./assets/img/reto4_prueba2.png",
+    "img": "./assets/img/reto4prueba2.png",
     "x": 38, "y": 16, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r4_p2" }
   },
   {
     "id": "hs_r4_p3",
     "label": "América",
-    "img": "./assets/img/reto4_prueba3.png",
+    "img": "./assets/img/reto4prueba3.png",
     "x": 66, "y": 16, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r4_p3" }
   },
@@ -373,7 +373,7 @@
   {
     "id": "hs_exit_r4",
     "label": "Sello IV",
-    "img": "./assets/img/reto4_sello4.png",
+    "img": "./assets/img/selloIV.png",
     "x": 44, "y": 58, "w": 12, "h": 16,
     "action": { "type": "tryExitR4" }
   }
