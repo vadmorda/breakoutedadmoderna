@@ -3,7 +3,7 @@
     {
       "id": "intro",
       "title": "Prólogo",
-      "bg": "./assets/img/bgport.png",
+      "bg": "./assets/img/portprologo.png",
       "text": [
         "Has recibido una carta sellada con lacre. El Consejo de Cronistas te encomienda una misión: <strong>reconstruir las claves de la Edad Moderna</strong> antes de que el archivo se cierre.",
         "<span class='muted'>Tu objetivo: conseguir los 4 sellos y abrir el Archivo final.</span>"
