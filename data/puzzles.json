@@ -275,26 +275,26 @@
       "right": [
         {
           "id": "r1",
-          "text": "Personas ricas/poderosas financian artistas"
-        },
-        {
-          "id": "r2",
           "text": "Inspiración en Grecia y Roma"
         },
         {
+          "id": "r2",
+          "text": "Representar la realidad con detalle"
+        },
+        {
           "id": "r3",
-          "text": "Equilibrio y armonía en las formas"
+          "text": "Personas ricas/poderosas financian artistas"
         },
         {
           "id": "r4",
-          "text": "Representar la realidad con detalle"
+          "text": "Equilibrio y armonía en las formas"
         }
       ],
       "pairs": {
-        "l1": "r1",
-        "l2": "r2",
-        "l3": "r3",
-        "l4": "r4"
+        "l1": "r3",
+        "l2": "r1",
+        "l3": "r4",
+        "l4": "r2"
       },
       "successText": "✅ Bien. El arte renacentista es belleza… y también mensaje social.",
       "failText": "❌ Revisa: ¿quién paga? ¿en qué se inspiran? ¿qué buscan en formas y realidad?",
