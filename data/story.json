@@ -232,7 +232,7 @@
             "failToast": "Si tuvieses algo para ver detalles…"
           }
         },
-        { "id": "hs_r3_p1", "label": "Prueba 1", "x": 14, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
+        { "id": "hs_r3_p1", "label": "Prueba 1", "x": 10, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
         { "id": "hs_r3_p2", "label": "Prueba 2", "x": 36, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p2" } },
         { "id": "hs_r3_p3", "label": "Prueba 3", "x": 64, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p3" } },
         { "id": "hs_exit_r3", "label": "Sello III", "x": 35, "y": 68, "w": 12, "h": 16, "action": { "type": "tryExitR3" } }
