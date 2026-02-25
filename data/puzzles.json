@@ -116,26 +116,26 @@
       "right": [
         {
           "id": "r1",
-          "text": "El ser humano en el centro"
-        },
-        {
-          "id": "r2",
-          "text": "Pensar y comprobar antes de creer"
-        },
-        {
-          "id": "r3",
           "text": "Inspiración en Grecia y Roma"
         },
         {
-          "id": "r4",
+          "id": "r2",
           "text": "Difusión rápida de ideas"
+        },
+        {
+          "id": "r3",
+          "text": "Pensar y comprobar antes de creer"
+        },
+        {
+          "id": "r4",
+          "text": "El ser humano en el centro"
         }
       ],
       "pairs": {
-        "l1": "r1",
-        "l2": "r2",
-        "l3": "r3",
-        "l4": "r4"
+        "l1": "r4",
+        "l2": "r3",
+        "l3": "r1",
+        "l4": "r2"
       },
       "successText": "✅ Bien. Si cambias cómo piensas y cómo difundes, cambias el mundo.",
       "failText": "❌ Revisa: ¿qué idea encaja mejor con cada efecto?",
