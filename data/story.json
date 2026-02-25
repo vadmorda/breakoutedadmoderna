@@ -223,7 +223,7 @@
         {
           "id": "hs_canvas",
           "label": "Lienzo en proceso",
-          "x": 48, "y": 35, "w": 34, "h": 48,
+          "x": 53, "y": 40, "w": 34, "h": 48,
           "action": {
             "type": "useItem",
             "requiresItem": "lupa",
@@ -232,9 +232,9 @@
             "failToast": "Si tuvieses algo para ver detalles…"
           }
         },
-        { "id": "hs_r3_p1", "label": "Prueba 1", "x": 12, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
-        { "id": "hs_r3_p2", "label": "Prueba 2", "x": 40, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p2" } },
-        { "id": "hs_r3_p3", "label": "Prueba 3", "x": 68, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p3" } },
+        { "id": "hs_r3_p1", "label": "Prueba 1", "x": 10, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
+        { "id": "hs_r3_p2", "label": "Prueba 2", "x": 38, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p2" } },
+        { "id": "hs_r3_p3", "label": "Prueba 3", "x": 66, "y": 14, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p3" } },
         { "id": "hs_exit_r3", "label": "Sello III", "x": 35, "y": 35, "w": 12, "h": 16, "action": { "type": "tryExitR3" } }
       ]
     },
