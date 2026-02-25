@@ -33,7 +33,7 @@
   {
     "id": "hs_map",
     "label": "Mapa antiguo",
-    "img": "./assets/img/ui/r1_mapa.jpg.png",
+    "img": "./assets/img/ui/r1_mapa.png",
     "x": 58, "y": 56, "w": 30, "h": 34,
     "action": { "type": "giveItem", "itemId": "mapa_viejo", "toast": "Has conseguido: Mapa viejo" }
   },
