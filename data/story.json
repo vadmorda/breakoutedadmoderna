@@ -223,7 +223,7 @@
         {
           "id": "hs_canvas",
           "label": "Lienzo en proceso",
-          "x": 58, "y": 44, "w": 34, "h": 48,
+          "x": 48, "y": 35, "w": 34, "h": 48,
           "action": {
             "type": "useItem",
             "requiresItem": "lupa",
