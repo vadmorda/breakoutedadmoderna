@@ -365,7 +365,7 @@
   {
     "id": "hs_r4_p4",
     "label": "Clave",
-    "img": "./assets/img/reto4_prueba4.png",
+    "img": "./assets/img/clave.png",
     "x": 30, "y": 60, "w": 24, "h": 16,
     "action": { "type": "openPuzzle", "puzzleId": "r4_p4" }
   },
@@ -398,7 +398,7 @@
     {
       "id": "cut_r4_final",
       "title": "Transición",
-      "bg": "./assets/img/bg_cutscene_final.jpg",
+      "bg": "./assets/img/cutscene_final.png",
       "text": [
         "El Archivo tiembla. Aparecen decretos, escudos y textos religiosos.",
         "<em>«Aquí nace el mundo moderno: el poder se organiza y la fe se rompe.»</em>"
@@ -413,7 +413,7 @@
     {
       "id": "final_archive",
       "title": "Reto Final · Poder, Estado y Religión",
-      "bg": "./assets/img/bg_final_room.jpg",
+      "bg": "./assets/img/final_room.png",
       "text": [
         "Última cámara. Completa los documentos para abrir el Archivo."
       ],
