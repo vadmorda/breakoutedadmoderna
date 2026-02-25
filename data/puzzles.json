@@ -156,19 +156,19 @@
       "items": [
         {
           "id": "a",
-          "text": "Componer el texto con tipos móviles"
+          "text": "Secar y distribuir copias"
         },
         {
           "id": "b",
-          "text": "Entintar la composición"
-        },
-        {
-          "id": "c",
           "text": "Prensar el papel"
         },
         {
+          "id": "c",
+          "text": "Entintar la composición"
+        },
+        {
           "id": "d",
-          "text": "Secar y distribuir copias"
+          "text": "Componer el texto con tipos móviles"
         }
       ],
       "correctOrder": [
