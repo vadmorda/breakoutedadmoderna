@@ -19,7 +19,7 @@
     {
       "id": "r1_port",
       "title": "Reto 1 · El Puerto y el Mapa",
-      "bg": "./assets/img/bg_port.jpg",
+      "bg": "./assets/img/bg_port.jpg.png",
       "text": [
         "Estás en un puerto europeo del siglo XV. Huele a brea, sal y especias. Un cartógrafo te mira con desconfianza.",
         "Necesitas dos cosas: <strong>1) entender qué cambia en Europa</strong> y <strong>2) separar causas</strong> (exploraciones / cambios culturales).",
