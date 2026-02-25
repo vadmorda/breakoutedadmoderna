@@ -366,7 +366,7 @@
     "id": "hs_r4_p4",
     "label": "Clave",
     "img": "./assets/img/reto4_prueba4.png",
-    "x": 33, "y": 60, "w": 24, "h": 16,
+    "x": 30, "y": 60, "w": 24, "h": 16,
     "action": { "type": "openPuzzle", "puzzleId": "r4_p4" }
   },
 
@@ -374,7 +374,7 @@
     "id": "hs_exit_r4",
     "label": "Sello IV",
     "img": "./assets/img/selloIV.png",
-    "x": 33, "y": 88, "w": 12, "h": 16,
+    "x": 33, "y": 82, "w": 12, "h": 16,
     "action": { "type": "tryExitR4" }
   }
 ]
