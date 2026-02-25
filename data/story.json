@@ -117,7 +117,7 @@
     "id": "hs_ink",
     "label": "Tintero",
     "img": "./assets/img/tinta.png",
-    "x": 30, "y": 40, "w": 16, "h": 18,
+    "x": 30, "y": 45, "w": 16, "h": 18,
     "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
   },
   {
@@ -172,7 +172,7 @@
     "id": "hs_exit_r2",
     "label": "Sello II",
     "img": "./assets/img/selloII.png",
-    "x": 30, "y": 46, "w": 10, "h": 14,
+    "x": 30, "y": 30, "w": 10, "h": 14,
     "action": { "type": "tryExitR2" }
   }
 ]
