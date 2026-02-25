@@ -219,7 +219,6 @@
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
 "hotspots": [
-  /* ===== PRUEBAS (arriba) ===== */
   {
     "id": "hs_r3_p1",
     "label": "Prueba 1",
@@ -241,8 +240,6 @@
     "x": 64, "y": 14, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r3_p3" }
   },
-
-  /* ===== OBJETOS (zona media) ===== */
   {
     "id": "hs_lupa",
     "label": "Lupa",
@@ -263,8 +260,6 @@
       "failToast": "Si tuvieses algo para ver detalles…"
     }
   },
-
-  /* ===== SALIDA (sello III) ===== */
   {
     "id": "hs_exit_r3",
     "label": "Sello III",
