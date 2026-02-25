@@ -219,7 +219,7 @@
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
       "hotspots": [
-        { "id": "hs_lupa", "label": "Lupa", "x": 10, "y": 68, "w": 16, "h": 20, "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" } },
+        { "id": "hs_lupa", "label": "Lupa", "x": 25, "y": 45, "w": 16, "h": 20, "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" } },
         {
           "id": "hs_canvas",
           "label": "Lienzo en proceso",
@@ -235,7 +235,7 @@
         { "id": "hs_r3_p1", "label": "Prueba 1", "x": 12, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p1" } },
         { "id": "hs_r3_p2", "label": "Prueba 2", "x": 40, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p2" } },
         { "id": "hs_r3_p3", "label": "Prueba 3", "x": 68, "y": 16, "w": 26, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r3_p3" } },
-        { "id": "hs_exit_r3", "label": "Sello III", "x": 44, "y": 44, "w": 12, "h": 16, "action": { "type": "tryExitR3" } }
+        { "id": "hs_exit_r3", "label": "Sello III", "x": 35, "y": 35, "w": 12, "h": 16, "action": { "type": "tryExitR3" } }
       ]
     },
 
