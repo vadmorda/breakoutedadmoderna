@@ -303,7 +303,7 @@
     {
       "id": "r4_maproom",
       "title": "Reto 4 · Rutas y Mundos",
-      "bg": "./assets/img/bg_maproom.jpg",
+      "bg": "./assets/img/maproom.png",
       "text": [
         "Sala de mapas. «Demuestra que entiendes rutas y mundos.»",
         "<span class='muted'>Consigue el astrolabio y úsalo sobre el mapamundi.</span>"
@@ -312,27 +312,72 @@
         { "label": "🧭 Hablar con el navegante", "type": "dialog", "text": "«Portugal bordea África. Castilla cruza el Atlántico. América ya estaba habitada.»" },
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
-      "hotspots": [
-        { "id": "hs_astrolabio", "label": "Astrolabio", "x": 10, "y": 68, "w": 16, "h": 22, "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" } },
-        { "id": "hs_bitacora", "label": "Bitácora", "x": 30, "y": 72, "w": 18, "h": 18, "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" } },
-        {
-          "id": "hs_globe",
-          "label": "Mapamundi",
-          "x": 55, "y": 40, "w": 38, "h": 52,
-          "action": {
-            "type": "useItem",
-            "requiresItem": "astrolabio",
-            "success": { "type": "setFlag", "flag": "r4_map_revealed" },
-            "successToast": "Aparecen marcas de ruta en el mapa.",
-            "failToast": "Necesitas un instrumento para orientarte."
-          }
-        },
-        { "id": "hs_r4_p1", "label": "Ruta portuguesa", "x": 10, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p1" } },
-        { "id": "hs_r4_p2", "label": "Ruta castellana", "x": 38, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p2" } },
-        { "id": "hs_r4_p3", "label": "América", "x": 66, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p3" } },
-        { "id": "hs_r4_p4", "label": "Clave", "x": 38, "y": 40, "w": 24, "h": 16, "action": { "type": "openPuzzle", "puzzleId": "r4_p4" } },
-        { "id": "hs_exit_r4", "label": "Sello IV", "x": 44, "y": 58, "w": 12, "h": 16, "action": { "type": "tryExitR4" } }
-      ]
+     "hotspots": [
+  {
+    "id": "hs_astrolabio",
+    "label": "Astrolabio",
+    "img": "./assets/img/reto4_astrolabio.png",
+    "x": 10, "y": 68, "w": 16, "h": 22,
+    "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
+  },
+  {
+    "id": "hs_bitacora",
+    "label": "Bitácora",
+    "img": "./assets/img/reto4_bitacora.png",
+    "x": 30, "y": 72, "w": 18, "h": 18,
+    "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
+  },
+  {
+    "id": "hs_globe",
+    "label": "Mapamundi",
+    "img": "./assets/img/reto4_mapamundi.png",
+    "x": 55, "y": 40, "w": 38, "h": 52,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "astrolabio",
+      "success": { "type": "setFlag", "flag": "r4_map_revealed" },
+      "successToast": "Aparecen marcas de ruta en el mapa.",
+      "failToast": "Necesitas un instrumento para orientarte."
+    }
+  },
+
+  {
+    "id": "hs_r4_p1",
+    "label": "Ruta portuguesa",
+    "img": "./assets/img/reto4_prueba1.png",
+    "x": 10, "y": 16, "w": 24, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r4_p1" }
+  },
+  {
+    "id": "hs_r4_p2",
+    "label": "Ruta castellana",
+    "img": "./assets/img/reto4_prueba2.png",
+    "x": 38, "y": 16, "w": 24, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r4_p2" }
+  },
+  {
+    "id": "hs_r4_p3",
+    "label": "América",
+    "img": "./assets/img/reto4_prueba3.png",
+    "x": 66, "y": 16, "w": 24, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r4_p3" }
+  },
+  {
+    "id": "hs_r4_p4",
+    "label": "Clave",
+    "img": "./assets/img/reto4_prueba4.png",
+    "x": 38, "y": 40, "w": 24, "h": 16,
+    "action": { "type": "openPuzzle", "puzzleId": "r4_p4" }
+  },
+
+  {
+    "id": "hs_exit_r4",
+    "label": "Sello IV",
+    "img": "./assets/img/reto4_sello4.png",
+    "x": 44, "y": 58, "w": 12, "h": 16,
+    "action": { "type": "tryExitR4" }
+  }
+]
     },
 
     {
