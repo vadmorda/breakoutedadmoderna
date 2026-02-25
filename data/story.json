@@ -180,7 +180,7 @@
     {
       "id": "r2_success",
       "title": "Sello II conseguido",
-      "bg": "./assets/img/bg_success.jpg",
+      "bg": "./assets/img/prueba 1.png",
       "text": [
         "El impresor te entrega un sello y un consejo: «Las ideas viajan más rápido que los barcos.»",
         "<strong>Has obtenido el SELLO II</strong>."
@@ -194,7 +194,7 @@
     {
       "id": "cut_r2_r3",
       "title": "Transición",
-      "bg": "./assets/img/bg_cutscene2.jpg",
+      "bg": "./assets/img/bg_cutscene2.jpg.png",
       "text": [
         "Sales de la imprenta con el <strong>Sello II</strong>.",
         "El aire huele a óleo y yeso: <em>«La belleza también es poder»</em>."
