@@ -157,14 +157,14 @@
   {
     "id": "hs_r2_p2",
     "label": "Prueba 2",
-    "img": "./assets/img/prueba 1.png",
+    "img": "./assets/img/reto2prueba2.png",
     "x": 34, "y": 6, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r2_p2" }
   },
   {
     "id": "hs_r2_p3",
     "label": "Prueba 3",
-    "img": "./assets/img/prueba 3.png",
+    "img": "./assets/img/reto2prueba3.png",
     "x": 62, "y": 6, "w": 26, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "r2_p3" }
   },
