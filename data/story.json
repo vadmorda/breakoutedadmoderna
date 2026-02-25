@@ -209,7 +209,7 @@
     {
       "id": "r3_gallery",
       "title": "Reto 3 · El Arte de Mirar",
-      "bg": "./assets/img/bg_gallery.jpg",
+      "bg": "./assets/img/gallery.png",
       "text": [
         "Una galería renacentista. Un maestro pintor te observa: «Aquí hay que <strong>saber mirar</strong>.»",
         "<span class='muted'>Consigue la lupa y úsala donde corresponda.</span>"
