@@ -123,7 +123,7 @@
   {
     "id": "hs_press",
     "label": "Prensa",
-    "img": "./assets/img/reto2_prensa.png",
+    "img": "./assets/img/prensaok.png",
     "x": 58, "y": 40, "w": 34, "h": 50,
     "action": {
       "type": "useItem",
