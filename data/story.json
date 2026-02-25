@@ -105,22 +105,22 @@
         { "label": "📜 Hablar con el impresor", "type": "dialog", "text": "«Sin razón no hay verdad. Sin imprenta no hay difusión.»" },
         { "label": "⏭ Seguir misión", "type": "gotoNext" }
       ],
-      "hotspots": [
-        {
+   "hotspots": [
+  {
     "id": "hs_types",
     "label": "Caja de letras",
     "img": "./assets/img/caracteresmoviles.png",
     "x": 8, "y": 62, "w": 26, "h": 28,
     "action": { "type": "giveItem", "itemId": "tipos_moviles", "toast": "Has conseguido: Tipos móviles" }
   },
-        {
+  {
     "id": "hs_ink",
     "label": "Tintero",
     "img": "./assets/img/reto2_tintero.png",
     "x": 36, "y": 70, "w": 18, "h": 18,
     "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
   },
-        {
+  {
     "id": "hs_press",
     "label": "Prensa",
     "img": "./assets/img/reto2_prensa.png",
@@ -132,8 +132,8 @@
       "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
       "failToast": "Necesitas algo para componer el texto."
     }
-        },
-        {
+  },
+  {
     "id": "hs_press_ink",
     "label": "Rodillo",
     "img": "./assets/img/rodillo.png",
@@ -145,8 +145,10 @@
       "success": { "type": "giveItem", "itemId": "pliego_impreso", "setFlag": "r2_print_done" },
       "successToast": "¡Clac! La prensa imprime un pliego.",
       "failToast": "Primero coloca los tipos, luego tinta."
-    },
-          {
+    }
+  },
+
+  {
     "id": "hs_r2_p1",
     "label": "Prueba 1",
     "img": "./assets/img/reto2_prueba1.png",
@@ -174,6 +176,7 @@
     "x": 44, "y": 46, "w": 14, "h": 16,
     "action": { "type": "tryExitR2" }
   }
+]
         },
         { "id": "hs_r2_p1", "label": "Prueba 1", "x": 10, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p1" } },
         { "id": "hs_r2_p2", "label": "Prueba 2", "x": 38, "y": 18, "w": 26, "h": 22, "action": { "type": "openPuzzle", "puzzleId": "r2_p2" } },
