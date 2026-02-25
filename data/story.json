@@ -1,66 +1,403 @@
+{
+  "scenes": [
+    {
+      "id": "intro",
+      "title": "Prólogo",
+      "bg": "./assets/img/bg_intro.jpg",
+      "text": [
+        "Has recibido una carta sellada con lacre. El Consejo de Cronistas te encomienda una misión: <strong>reconstruir las claves de la Edad Moderna</strong> antes de que el archivo se cierre.",
+        "<span class='muted'>Tu objetivo: conseguir los 4 sellos y abrir el Archivo final.</span>"
+      ],
+      "actions": [
+        { "label": "▶ Empezar", "type": "goto", "target": "r1_port" },
+        { "label": "↩ Continuar partida", "type": "continue" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "r1_port",
+      "title": "Reto 1 · El Puerto y el Mapa",
+      "bg": "./assets/img/reto1fondo1.png",
+      "text": [
+        "Estás en un puerto europeo del siglo XV. Huele a brea, sal y especias. Un cartógrafo te mira con desconfianza.",
+        "Necesitas dos cosas: <strong>1) entender qué cambia en Europa</strong> y <strong>2) separar causas</strong> (exploraciones / cambios culturales).",
+        "<span class='muted'>Pista: haz clic en los objetos de la escena.</span>"
+      ],
+      "actions": [
+        { "label": "📜 Hablar con el cartógrafo", "type": "dialog", "text": "«Si quieres mi ayuda, demuéstrame que sabes qué cambia: comercio, ideas y poder…»" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
 "hotspots": [
   {
-    "id": "hs_astrolabio",
-    "label": "Astrolabio",
-    "img": "./assets/img/reto4_astrolabio.png",
-    "x": 10, "y": 68, "w": 16, "h": 22,
-    "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" }
+    "id": "hs_map",
+    "label": "Mapa antiguo",
+    "img": "./assets/img/r1_mapa.png.png",
+    "x": 58, "y": 56, "w": 30, "h": 34,
+    "action": { "type": "giveItem", "itemId": "mapa_viejo", "toast": "Has conseguido: Mapa viejo" }
   },
   {
-    "id": "hs_bitacora",
-    "label": "Bitácora",
-    "img": "./assets/img/reto4_bitacora.png",
-    "x": 30, "y": 72, "w": 18, "h": 18,
-    "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" }
+    "id": "hs_test1",
+    "label": "Prueba 1",
+    "img": "./assets/img/r1_prueba1.png.png",
+    "x": 10, "y": 62, "w": 32, "h": 26,
+    "action": { "type": "openPuzzle", "puzzleId": "r1_p1" }
   },
   {
-    "id": "hs_globe",
-    "label": "Mapamundi",
-    "img": "./assets/img/reto4_mapamundi.png",
-    "x": 55, "y": 40, "w": 38, "h": 52,
-    "action": {
-      "type": "useItem",
-      "requiresItem": "astrolabio",
-      "success": { "type": "setFlag", "flag": "r4_map_revealed" },
-      "successToast": "Aparecen marcas de ruta en el mapa.",
-      "failToast": "Necesitas un instrumento para orientarte."
-    }
-  },
-
-  {
-    "id": "hs_r4_p1",
-    "label": "Ruta portuguesa",
-    "img": "./assets/img/reto4_prueba1.png",
-    "x": 10, "y": 16, "w": 24, "h": 20,
-    "action": { "type": "openPuzzle", "puzzleId": "r4_p1" }
+    "id": "hs_test2",
+    "label": "Prueba 2",
+    "img": "./assets/img/r1_prueba2.png.png",
+    "x": 12, "y": 28, "w": 30, "h": 26,
+    "action": { "type": "openPuzzle", "puzzleId": "r1_p2" }
   },
   {
-    "id": "hs_r4_p2",
-    "label": "Ruta castellana",
-    "img": "./assets/img/reto4_prueba2.png",
-    "x": 38, "y": 16, "w": 24, "h": 20,
-    "action": { "type": "openPuzzle", "puzzleId": "r4_p2" }
-  },
-  {
-    "id": "hs_r4_p3",
-    "label": "América",
-    "img": "./assets/img/reto4_prueba3.png",
-    "x": 66, "y": 16, "w": 24, "h": 20,
-    "action": { "type": "openPuzzle", "puzzleId": "r4_p3" }
-  },
-  {
-    "id": "hs_r4_p4",
-    "label": "Clave",
-    "img": "./assets/img/reto4_prueba4.png",
-    "x": 38, "y": 40, "w": 24, "h": 16,
-    "action": { "type": "openPuzzle", "puzzleId": "r4_p4" }
-  },
-
-  {
-    "id": "hs_exit_r4",
-    "label": "Sello IV",
-    "img": "./assets/img/reto4_sello4.png",
-    "x": 40, "y": 68, "w": 12, "h": 16,
-    "action": { "type": "tryExitR4" }
+    "id": "hs_exit",
+    "label": "Puerta del archivo",
+    "img": "./assets/img/r1_puerta.png.png",
+    "x": 78, "y": 12, "w": 18, "h": 28,
+    "action": { "type": "tryExitR1" }
   }
 ]
+    },
+
+    {
+      "id": "r1_success",
+      "title": "Sello I conseguido",
+      "bg": "./assets/img/bg_success.jpg",
+      "text": [
+        "El cartógrafo asiente y estampa un sello sobre tu cuaderno.",
+        "<strong>Has obtenido el SELLO I</strong>."
+      ],
+      "actions": [
+        { "label": "⏭ Seguir misión", "type": "gotoNext" },
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "cut_r1_r2",
+      "title": "Transición",
+      "bg": "./assets/img/reto2prueba1.png",
+      "text": [
+        "Con el <strong>Sello I</strong>, la puerta del Archivo cruje como si llevara siglos esperando…",
+        "Al otro lado oyes golpes metálicos: <em>clac… clac…</em>",
+        "Un aprendiz susurra: <strong>«Aquí se comercia con ideas.»</strong>"
+      ],
+      "actions": [
+        { "label": "➡ Entrar en la imprenta", "type": "goto", "target": "r2_printshop" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "r2_printshop",
+      "title": "Reto 2 · La Imprenta y las Ideas",
+      "bg": "./assets/img/imprentaok.png",
+      "text": [
+        "Estás en una imprenta. Hay letras de metal, tinta y papeles apilados.",
+        "El maestro impresor no levanta la vista: «Demuestra que entiendes el Humanismo… y haz funcionar la prensa.»",
+        "<span class='muted'>Consigue objetos y pruébalos en la prensa.</span>"
+      ],
+      "actions": [
+        { "label": "📜 Hablar con el impresor", "type": "dialog", "text": "«Sin razón no hay verdad. Sin imprenta no hay difusión.»" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+ "hotspots": [
+  {
+    "id": "hs_types",
+    "label": "Caja de letras",
+    "img": "./assets/img/caracteresmoviles.png",
+    "x": 6, "y": 34, "w": 22, "h": 26,
+    "action": { "type": "giveItem", "itemId": "tipos_moviles", "toast": "Has conseguido: Tipos móviles" }
+  },
+  {
+    "id": "hs_ink",
+    "label": "Tintero",
+    "img": "./assets/img/tinta.png",
+    "x": 30, "y": 35, "w": 16, "h": 18,
+    "action": { "type": "giveItem", "itemId": "tinta", "toast": "Has conseguido: Tinta" }
+  },
+  {
+    "id": "hs_press",
+    "label": "Prensa",
+    "img": "./assets/img/prensaok.png",
+    "x": 50, "y": 30, "w": 40, "h": 42,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "tipos_moviles",
+      "success": { "type": "setFlag", "flag": "r2_press_types" },
+      "successToast": "Colocas los tipos en la prensa. Ahora falta… tinta.",
+      "failToast": "Necesitas algo para componer el texto."
+    }
+  },
+  {
+    "id": "hs_press_ink",
+    "label": "Rodillo",
+    "img": "./assets/img/rodillo.png",
+    "x": 50, "y": 74, "w": 40, "h": 12,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "tinta",
+      "requiresFlag": "r2_press_types",
+      "success": { "type": "giveItem", "itemId": "pliego_impreso", "setFlag": "r2_print_done" },
+      "successToast": "¡Clac! La prensa imprime un pliego.",
+      "failToast": "Primero coloca los tipos, luego tinta."
+    }
+  },
+  {
+    "id": "hs_r2_p1",
+    "label": "Prueba 1",
+    "img": "./assets/img/reto2prueba1.png",
+    "x": 6, "y": 6, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p1" }
+  },
+  {
+    "id": "hs_r2_p2",
+    "label": "Prueba 2",
+    "img": "./assets/img/reto2prueba2.png",
+    "x": 34, "y": 6, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p2" }
+  },
+  {
+    "id": "hs_r2_p3",
+    "label": "Prueba 3",
+    "img": "./assets/img/reto2prueba3.png",
+    "x": 62, "y": 6, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r2_p3" }
+  },
+  {
+    "id": "hs_exit_r2",
+    "label": "Sello II",
+    "img": "./assets/img/selloII.png",
+    "x": 33, "y": 58, "w": 10, "h": 14,
+    "action": { "type": "tryExitR2" }
+  }
+]
+    },
+    {
+      "id": "r2_success",
+      "title": "Sello II conseguido",
+      "bg": "./assets/img/prueba 1.png",
+      "text": [
+        "El impresor te entrega un sello y un consejo: «Las ideas viajan más rápido que los barcos.»",
+        "<strong>Has obtenido el SELLO II</strong>."
+      ],
+      "actions": [
+        { "label": "⏭ Seguir misión", "type": "gotoNext" },
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "cut_r2_r3",
+      "title": "Transición",
+      "bg": "./assets/img/cutscene2.png",
+      "text": [
+        "Sales de la imprenta con el <strong>Sello II</strong>.",
+        "El aire huele a óleo y yeso: <em>«La belleza también es poder»</em>."
+      ],
+      "actions": [
+        { "label": "➡ Entrar en la galería", "type": "goto", "target": "r3_gallery" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "r3_gallery",
+      "title": "Reto 3 · El Arte de Mirar",
+      "bg": "./assets/img/gallery.png",
+      "text": [
+        "Una galería renacentista. Un maestro pintor te observa: «Aquí hay que <strong>saber mirar</strong>.»",
+        "<span class='muted'>Consigue la lupa y úsala donde corresponda.</span>"
+      ],
+      "actions": [
+        { "label": "🎭 Hablar con el maestro", "type": "dialog", "text": "«Perspectiva, proporción, clasicismo… y un mecenas pagando la factura.»" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+"hotspots": [
+  {
+    "id": "hs_r3_p1",
+    "label": "Prueba 1",
+    "img": "./assets/img/reto3prueba1.png",
+    "x": 7, "y": 14, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r3_p1" }
+  },
+  {
+    "id": "hs_r3_p2",
+    "label": "Prueba 2",
+    "img": "./assets/img/reto3prueba2.png",
+    "x": 36, "y": 14, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r3_p2" }
+  },
+  {
+    "id": "hs_r3_p3",
+    "label": "Prueba 3",
+    "img": "./assets/img/reto3prueba3.png",
+    "x": 64, "y": 14, "w": 26, "h": 20,
+    "action": { "type": "openPuzzle", "puzzleId": "r3_p3" }
+  },
+  {
+    "id": "hs_lupa",
+    "label": "Lupa",
+    "img": "./assets/img/reto3lupa.png",
+    "x": 25, "y": 40, "w": 16, "h": 20,
+    "action": { "type": "giveItem", "itemId": "lupa", "toast": "Has conseguido: Lupa" }
+  },
+  {
+    "id": "hs_canvas",
+    "label": "Lienzo en proceso",
+    "img": "./assets/img/lienzo.png",
+    "x": 56, "y": 40, "w": 34, "h": 48,
+    "action": {
+      "type": "useItem",
+      "requiresItem": "lupa",
+      "success": { "type": "giveItem", "itemId": "boceto_perspectiva", "setFlag": "r3_found_perspective" },
+      "successToast": "Con la lupa descubres líneas de fuga. Perspectiva pura.",
+      "failToast": "Si tuvieses algo para ver detalles…"
+    }
+  },
+  {
+    "id": "hs_exit_r3",
+    "label": "Sello III",
+    "img": "./assets/img/selloIII.png",
+    "x": 35, "y": 68, "w": 12, "h": 16,
+    "action": { "type": "tryExitR3" }
+  }
+]
+    },
+
+    {
+      "id": "r3_success",
+      "title": "Sello III conseguido",
+      "bg": "./assets/img/bg_success.jpg",
+      "text": [
+        "El maestro sonríe: «Ahora sí. Ya no miras cuadros: <strong>lees fuentes históricas</strong>.»",
+        "<strong>Has obtenido el SELLO III</strong>."
+      ],
+      "actions": [
+        { "label": "⏭ Seguir misión", "type": "gotoNext" },
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "cut_r3_r4",
+      "title": "Transición",
+      "bg": "./assets/img/cutscene3.png",
+      "text": [
+        "El Archivo te conduce a una sala enorme: mapas, brújulas e instrumentos.",
+        "«Las rutas cambiaron el mundo.»"
+      ],
+      "actions": [
+        { "label": "➡ Entrar en la Sala de Mapas", "type": "goto", "target": "r4_maproom" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "r4_maproom",
+      "title": "Reto 4 · Rutas y Mundos",
+      "bg": "./assets/img/bg_maproom.jpg",
+      "text": [
+        "Sala de mapas. «Demuestra que entiendes rutas y mundos.»",
+        "<span class='muted'>Consigue el astrolabio y úsalo sobre el mapamundi.</span>"
+      ],
+      "actions": [
+        { "label": "🧭 Hablar con el navegante", "type": "dialog", "text": "«Portugal bordea África. Castilla cruza el Atlántico. América ya estaba habitada.»" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": [
+        { "id": "hs_astrolabio", "label": "Astrolabio", "x": 10, "y": 68, "w": 16, "h": 22, "action": { "type": "giveItem", "itemId": "astrolabio", "toast": "Has conseguido: Astrolabio" } },
+        { "id": "hs_bitacora", "label": "Bitácora", "x": 30, "y": 72, "w": 18, "h": 18, "action": { "type": "giveItem", "itemId": "bitacora", "toast": "Has conseguido: Bitácora" } },
+        {
+          "id": "hs_globe",
+          "label": "Mapamundi",
+          "x": 55, "y": 40, "w": 38, "h": 52,
+          "action": {
+            "type": "useItem",
+            "requiresItem": "astrolabio",
+            "success": { "type": "setFlag", "flag": "r4_map_revealed" },
+            "successToast": "Aparecen marcas de ruta en el mapa.",
+            "failToast": "Necesitas un instrumento para orientarte."
+          }
+        },
+        { "id": "hs_r4_p1", "label": "Ruta portuguesa", "x": 10, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p1" } },
+        { "id": "hs_r4_p2", "label": "Ruta castellana", "x": 38, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p2" } },
+        { "id": "hs_r4_p3", "label": "América", "x": 66, "y": 16, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "r4_p3" } },
+        { "id": "hs_r4_p4", "label": "Clave", "x": 38, "y": 40, "w": 24, "h": 16, "action": { "type": "openPuzzle", "puzzleId": "r4_p4" } },
+        { "id": "hs_exit_r4", "label": "Sello IV", "x": 44, "y": 58, "w": 12, "h": 16, "action": { "type": "tryExitR4" } }
+      ]
+    },
+
+    {
+      "id": "r4_success",
+      "title": "Sello IV conseguido",
+      "bg": "./assets/img/bg_success.jpg",
+      "text": [
+        "<strong>Has obtenido el SELLO IV</strong>.",
+        "<span class='muted'>Solo queda el Archivo final.</span>"
+      ],
+      "actions": [
+        { "label": "⏭ Seguir misión", "type": "gotoNext" },
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "cut_r4_final",
+      "title": "Transición",
+      "bg": "./assets/img/bg_cutscene_final.jpg",
+      "text": [
+        "El Archivo tiembla. Aparecen decretos, escudos y textos religiosos.",
+        "<em>«Aquí nace el mundo moderno: el poder se organiza y la fe se rompe.»</em>"
+      ],
+      "actions": [
+        { "label": "➡ Entrar en la Cámara del Archivo", "type": "goto", "target": "final_archive" },
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": []
+    },
+
+    {
+      "id": "final_archive",
+      "title": "Reto Final · Poder, Estado y Religión",
+      "bg": "./assets/img/bg_final_room.jpg",
+      "text": [
+        "Última cámara. Completa los documentos para abrir el Archivo."
+      ],
+      "actions": [
+        { "label": "⏭ Seguir misión", "type": "gotoNext" }
+      ],
+      "hotspots": [
+        { "id": "hs_f_p1", "label": "Documento I", "x": 10, "y": 18, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "f_p1" } },
+        { "id": "hs_f_p2", "label": "Documento II", "x": 38, "y": 18, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "f_p2" } },
+        { "id": "hs_f_p3", "label": "Documento III", "x": 66, "y": 18, "w": 24, "h": 20, "action": { "type": "openPuzzle", "puzzleId": "f_p3" } },
+        { "id": "hs_f_p4", "label": "Cierre", "x": 38, "y": 46, "w": 24, "h": 18, "action": { "type": "openPuzzle", "puzzleId": "f_p4" } },
+        { "id": "hs_exit_final", "label": "Abrir Archivo", "x": 44, "y": 66, "w": 12, "h": 16, "action": { "type": "tryExitFinal" } }
+      ]
+    },
+
+    {
+      "id": "game_complete",
+      "title": "Archivo abierto",
+      "bg": "./assets/img/bg_complete.jpg",
+      "text": [
+        "El <strong>Archivo de 1492</strong> se abre.",
+        "<strong>✅ MISIÓN COMPLETADA</strong>",
+        "<span class='muted'>Puedes copiar tu código de progreso.</span>"
+      ],
+      "actions": [
+        { "label": "🔑 Ver / Copiar código", "type": "openCodeModal" },
+        { "label": "🏁 Volver al inicio", "type": "goto", "target": "intro" }
+      ],
+      "hotspots": []
+    }
+  ]
+}
