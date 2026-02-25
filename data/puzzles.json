@@ -349,26 +349,26 @@
       "items": [
         {
           "id": "a",
-          "text": "Exploración de la costa africana"
+          "text": "Llegar a la India (rutas de especias)"
         },
         {
           "id": "b",
-          "text": "Doblar el Cabo de Buena Esperanza"
-        },
-        {
-          "id": "c",
           "text": "Llegar al océano Índico"
         },
         {
+          "id": "c",
+          "text": "Doblar el Cabo de Buena Esperanza"
+        },
+        {
           "id": "d",
-          "text": "Llegar a la India (rutas de especias)"
+          "text": "Exploración de la costa africana"
         }
       ],
       "correctOrder": [
-        "a",
-        "b",
+        "d",
         "c",
-        "d"
+        "b",
+        "a"
       ],
       "successText": "✅ Correcto. Portugal avanza paso a paso, asegurando rutas y puertos. <br><br><strong>Pista para la Clave:</strong> CON",
       "failText": "❌ Revisa: costa → Cabo → Índico → India.",
