@@ -424,21 +424,21 @@
   {
     "id": "hs_f_p1",
     "label": "Documento I",
-    "img": "./assets/img/final_doc1.png",
+    "img": "./assets/img/documento1.png",
     "x": 10, "y": 18, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "f_p1" }
   },
   {
     "id": "hs_f_p2",
     "label": "Documento II",
-    "img": "./assets/img/final_doc2.png",
+    "img": "./assets/img/documento2.png",
     "x": 38, "y": 18, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "f_p2" }
   },
   {
     "id": "hs_f_p3",
     "label": "Documento III",
-    "img": "./assets/img/final_doc3.png",
+    "img": "./assets/img/documento3.png",
     "x": 66, "y": 18, "w": 24, "h": 20,
     "action": { "type": "openPuzzle", "puzzleId": "f_p3" }
   },
@@ -452,7 +452,7 @@
   {
     "id": "hs_exit_final",
     "label": "Abrir Archivo",
-    "img": "./assets/img/final_abrir.png",
+    "img": "./assets/img/openfile.png",
     "x": 44, "y": 66, "w": 12, "h": 16,
     "action": { "type": "tryExitFinal" }
   }
