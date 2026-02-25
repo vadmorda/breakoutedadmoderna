@@ -76,7 +76,6 @@ function minimalState(state){
     puzzles: state.puzzles,
     inventory: state.inventory,
     flags: state.flags
-    // attempts: state.attempts, // descomenta si quieres conservar intentos
   };
 }
 
@@ -95,10 +94,6 @@ function hydrateState(s){
   return s;
 }
 
-/*
-  LZ-String (solo lo necesario): compressToEncodedURIComponent / decompressFromEncodedURIComponent
-  Fuente original: pieroxy/lz-string (adaptado mínimo)
-*/
 const LZString = (() => {
   const f = String.fromCharCode;
   const keyStrUriSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$";
@@ -402,19 +397,13 @@ const LZString = (() => {
 
       if (enlargeIn === 0) { enlargeIn = Math.pow(2, numBits); numBits++; }
 
-      if (dictionary[next]) {
-        entry = dictionary[next];
-      } else if (next === dictSize) {
-        entry = w + w.charAt(0);
-      } else {
-        return null;
-      }
+      if (dictionary[next]) entry = dictionary[next];
+      else if (next === dictSize) entry = w + w.charAt(0);
+      else return null;
 
       result.push(entry);
-
       dictionary[dictSize++] = w + entry.charAt(0);
       enlargeIn--;
-
       w = entry;
 
       if (enlargeIn === 0) { enlargeIn = Math.pow(2, numBits); numBits++; }
@@ -423,131 +412,7 @@ const LZString = (() => {
 
   return { compressToEncodedURIComponent, decompressFromEncodedURIComponent };
 })();
-/* ---------- Compact Export helpers (EM2) ---------- */
 
-// estado mínimo (lo imprescindible para continuar)
-function minimalState(state){
-  return {
-    v: 1,
-    currentSceneId: state.currentSceneId,
-    completed: state.completed,
-    puzzles: state.puzzles,
-    inventory: state.inventory,
-    flags: state.flags
-    // attempts: state.attempts, // si quieres conservar intentos, descomenta
-  };
-}
-
-// rellena lo que falte para que el juego no se rompa al importar
-function hydrateState(s){
-  const now = Date.now();
-  s.v = 1;
-  s.currentSceneId ??= "intro";
-  s.completed ??= { seal1:false, seal2:false, seal3:false, seal4:false, final:false };
-  s.puzzles ??= {};
-  s.inventory ??= [];
-  s.flags ??= {};
-  s.attempts ??= {};
-  s.selectedItem = null;
-  s.createdAt ??= now;
-  s.updatedAt ??= now;
-  return s;
-}
-
-// Base64URL para bytes (Uint8Array)
-function base64UrlEncodeBytes(bytes){
-  let bin = "";
-  for(let i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
-  return btoa(bin).replaceAll("+","-").replaceAll("/","_").replaceAll("=","");
-}
-function base64UrlDecodeBytes(str){
-  const pad = str.length % 4 ? "=".repeat(4 - (str.length % 4)) : "";
-  const b64 = str.replaceAll("-","+").replaceAll("_","/") + pad;
-  const bin = atob(b64);
-  const out = new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
-  return out;
-}
-
-/* LZW simple (sync, sin librerías) + empaquetado a bytes */
-function lzwCompressToBytes(input){
-  const dict = new Map();
-  for(let i=0;i<256;i++) dict.set(String.fromCharCode(i), i);
-  let nextCode = 256;
-
-  let w = "";
-  const codes = [];
-
-  for(let i=0;i<input.length;i++){
-    const c = input.charAt(i);
-    const wc = w + c;
-    if(dict.has(wc)){
-      w = wc;
-    }else{
-      codes.push(dict.get(w));
-      if(nextCode < 65535){
-        dict.set(wc, nextCode++);
-      }else{
-        dict.clear();
-        for(let j=0;j<256;j++) dict.set(String.fromCharCode(j), j);
-        nextCode = 256;
-      }
-      w = c;
-    }
-  }
-  if(w) codes.push(dict.get(w));
-
-  const out = new Uint8Array(codes.length * 2);
-  for(let i=0;i<codes.length;i++){
-    const code = codes[i] & 0xffff;
-    out[i*2] = (code >> 8) & 0xff;
-    out[i*2 + 1] = code & 0xff;
-  }
-  return out;
-}
-
-function lzwDecompressFromBytes(bytes){
-  const codes = [];
-  for(let i=0;i<bytes.length;i+=2){
-    codes.push((bytes[i] << 8) | bytes[i+1]);
-  }
-  if(codes.length === 0) return "";
-
-  const dict = [];
-  for(let i=0;i<256;i++) dict[i] = String.fromCharCode(i);
-  let nextCode = 256;
-
-  let w = dict[codes[0]];
-  if(w == null) throw new Error("Código corrupto (LZW).");
-  let result = w;
-
-  for(let i=1;i<codes.length;i++){
-    const k = codes[i];
-    let entry;
-
-    if(dict[k] != null){
-      entry = dict[k];
-    }else if(k === nextCode){
-      entry = w + w.charAt(0);
-    }else{
-      throw new Error("Código corrupto (LZW).");
-    }
-
-    result += entry;
-
-    if(nextCode < 65535){
-      dict[nextCode++] = w + entry.charAt(0);
-    }else{
-      dict.length = 0;
-      for(let j=0;j<256;j++) dict[j] = String.fromCharCode(j);
-      nextCode = 256;
-    }
-
-    w = entry;
-  }
-
-  return result;
-}
 export function exportCode(state){
   const minimal = minimalState(state);
   const json = JSON.stringify(minimal);
@@ -574,14 +439,9 @@ export function importCode(code){
     return hydrateState(state);
   }
 
-  if(ver === "EM2"){
-    // Si decides mantener EM2 por compatibilidad, deja tu ruta actual EM2 aquí.
-    // Si no, puedes eliminar este bloque.
-    throw new Error("Código EM2 no soportado en esta versión.");
-  }
-
   if(ver === "EM3"){
     const json = LZString.decompressFromEncodedURIComponent(payload);
+    if(!json) throw new Error("Código inválido o incompleto.");
     const state = JSON.parse(json);
     if(!state || typeof state !== "object" || state.v !== 1) throw new Error("Estado inválido.");
     return hydrateState(state);
